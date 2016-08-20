@@ -7,8 +7,7 @@ export default {
 
   // 404 路由
   '*': {
-    name: 'index',
-    component: (resolve) => require(['views/home/Index.vue'], resolve)
+    component: (resolve) => require(['views/Home.vue'], resolve)
   },
 
   '/home': {
@@ -26,8 +25,13 @@ export default {
     component: (resolve) => require(['views/goods/Search.vue'], resolve)
   },
 
+  'goods/list': {
+    name: 'goods-list',
+    component: (resolve) => require(['views/goods/List.vue'], resolve)
+  },
+
   '/user': {
     name: 'user-home',
     component: (resolve) => require(['views/user/Home.vue'], resolve)
-  }
+  },
 }

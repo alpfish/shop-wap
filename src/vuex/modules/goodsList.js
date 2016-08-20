@@ -1,31 +1,42 @@
 import {
-  SET_GOODS_LIST_CURRENT}
+  SET_GOODS_LIST,
+  SET_GOODS_LIST_CACHE,
+  SET_GOODS_LIST_LOADED,
+  SET_GOODS_LIST_LOADED_SUCCESS,}
   from 'src/vuex/mutationTypes'
 
-//状态容器
 const state = {
 
-  // 当前列表
-  current: [],
-  // 浏览历史
-  // viewed: [],
-  // 猜你喜欢
-  // guessLike: [],
-  // 推荐商品
-  // recommend: []
-
-  // 显示风格
-  // 如: 单列，双列，单行...
-  // style: 'default',
-
+  // 搜索数据
+  searched:[],
+  // 列表缓存
+  // 于客户端内存，以减少请求次数和加快响应速度
+  // 格式为 queryJson => searched 键值对的Map结构数据
+  cache: new Map(),
+  style: 'default',
+  loaded: false,
+  loadedSuccess: true,
 }
 
-//变更方法
 const mutations = {
 
-  SET_GOODS_LIST_CURRENT (state, goods) {
-    state.current = goods
-  }
+  [SET_GOODS_LIST] (state, searched) {
+    state.searched = searched
+  },
+
+  [SET_GOODS_LIST_CACHE] (state, queryJson, searched) {
+    queryJson = _.isString(queryJson) ? queryJson : JSON.stringify(queryJson)
+    state.cache.set(queryJson, searched)
+  },
+
+  [SET_GOODS_LIST_LOADED] (state, resBool) {
+    state.loaded = resBool
+  },
+
+  [SET_GOODS_LIST_LOADED_SUCCESS] (state, resBool) {
+    state.loadedSuccess = resBool
+  },
+
 
 }
 

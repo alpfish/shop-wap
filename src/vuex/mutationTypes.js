@@ -1,10 +1,19 @@
 /******
  * 商品
  */
-// 设置商品列表 goods.list.items
+// 设置商品列表
 export const SET_GOODS_LIST_CURRENT = 'SET_GOODS_LIST_CURRENT'
-// 设置详情商品条目 goods.currentItem
+
+// 商品列表
+export const SET_GOODS_LIST = 'SET_GOODS_LIST'
+export const SET_GOODS_LIST_CACHE = 'SET_GOODS_LIST_CACHE'
+export const SET_GOODS_LIST_LOADED = 'SET_GOODS_LIST_LOADED'
+export const SET_GOODS_LIST_LOADED_SUCCESS = 'SET_GOODS_LIST_LOADED_SUCCESS'
+
+// 设置详情商品条目
 export const SET_GOODS_DETAIL_ITEM = 'SET_GOODS_DETAIL_ITEM'
+// 设置商品类目树
+export const SET_GOODS_CATEGORY_TREE = 'SET_GOODS_CATEGORY_TREE'
 
 /********
  * 购物车

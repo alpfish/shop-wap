@@ -1,0 +1,104 @@
+import Vue from 'vue'
+import VueResource from 'vue-resource'
+import { API_ROOT } from 'src/config'
+
+Vue.use(VueResource)
+
+class Api{
+  /**
+   * [Api公共请求方法]
+   * 通过回调函数返回搜索数据及错误回调
+   *
+   * @param Object params 请求参数
+   * @param function success 成功回调
+   * @param function errors  失败回调
+   *
+   * @return function success 成功回调
+   * @return function errors  失败回调
+   */
+  request( params = {}, success, errors )
+  {
+    // 公共请求头
+    Vue.http.options.headers = {
+    }
+    Vue
+      .http({
+        // 服务器地址
+        root: API_ROOT,
+        // api地址
+        url: params.url || '',
+        // 请求方法
+        method: params.method || GET,
+        // 参数
+        params: params.data === Object(params.data) ? params.data : {},
+        // 限时
+        timeout: 5000,
+      })
+      .then((response) => {     // 成功回调
+        success(response.data)
+      }
+      ,(response) => {      // 错误回调
+        errors(response)
+      })
+  }
+
+  /**
+   * [商品搜索]
+   * 通过回调函数返回搜索数据
+   */
+  search( query={}, success, errors )
+  {
+    this.request (
+      {
+        url: 'goods/search',
+        method: 'GET',
+        data: {
+          // 需要获取的商品 id 数组
+          ids: [],
+          // 搜索类目id
+          cid: query.cid || 0,
+          // 搜索关键词
+          keywords: query.keywords || null,
+          // 搜索标签 (如：广告商品，推荐商品，猜你喜欢，热销，秒杀...)
+          tag: query.tag || null
+        }
+      },
+      (res) => {
+        setTimeout(() => success(res), 100)
+        console.log('===> 搜索商品')
+      },
+      (res) => {
+        setTimeout(() => errors(res), 100)
+        console.log('===> 搜索商品失败!', res)
+      }
+    )
+  }
+
+  /**
+   * [获取商品类目列表]
+   */
+  getGoodsCategoriesList( success, errors )
+  {
+    this.request (
+      {
+        url: 'goods/categories',
+        method: 'GET',
+        data: {
+        }
+      },
+      (res) => {
+        setTimeout(() => success(res), 100)
+        console.log('===> 获取类目')
+
+      },
+      (res) => {
+        setTimeout(() => errors(res), 100)
+        console.log('===> 获取类目失败!', res)
+      }
+    )
+  }
+
+
+}
+
+export default new Api()

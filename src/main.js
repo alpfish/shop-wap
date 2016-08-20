@@ -1,10 +1,13 @@
+// 全局帮助函数
+import _ from 'lodash/core'
 import Vue from 'vue'
+import store from 'src/vuex/store'
 import Router from 'vue-router'
 import RouterMap from 'src/router-map'
 import RouterConfig from 'src/router-config'
-import store from 'src/vuex/store'
+// 客户端缓存全局方法
+import Cache from 'libs/cache'
 import FastClick from 'fastclick'
-
 
 // 指令
 import BackLink from 'src/directives/back-link'
