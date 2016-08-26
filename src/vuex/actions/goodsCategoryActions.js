@@ -1,21 +1,17 @@
 import * as types from 'src/vuex/mutationTypes'
 import Api from 'libs/api'
+import Cache from 'libs/cache'
 
 // 设置商品类目树状态
-export const setGoodsCategoryTree = function({dispatch}) {
+export const setTree = function({dispatch}) {
+  Api.getGoodsCategoryTree(
+    (success) => {
+      dispatch(types.SET_GOODS_CATEGORY_TREE, success.categories)
+    },
+    (errors) => console.log(errors)
+  )
+}
 
-  let key = 'GoodsCategoryTree'
-  let value = Cache.get(key)
-  if (_.isEmpty(value)) {
-    Api.getGoodsCategoryTree(
-      (success) => {
-        value = success.categories
-        Cache.set(key, value, { exp: 24*60*60 })
-        dispatch(types.SET_GOODS_CATEGORY_TREE, value)
-      },
-      (errors) => console.log(errors)
-    )
-  } else {
-    dispatch(types.SET_GOODS_CATEGORY_TREE, value)
-  }
+export const setCurrentPid = function({dispatch}, pid) {
+  dispatch (types.SET_GOODS_CATEGORY_CURRENT_PID, pid)
 }

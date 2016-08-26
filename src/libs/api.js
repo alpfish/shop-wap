@@ -1,10 +1,19 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import { API_ROOT } from 'src/config'
+import Cache from 'libs/cache'
 
 Vue.use(VueResource)
 
-class Api{
+let memory = new Map()
+
+class Api {
+
+  constructor (memory)
+  {
+    this.memory = memory
+  }
+
   /**
    * [Api公共请求方法]
    * 通过回调函数返回搜索数据及错误回调
@@ -16,7 +25,7 @@ class Api{
    * @return function success 成功回调
    * @return function errors  失败回调
    */
-  request( params = {}, success, errors )
+  request (params = {}, success, errors)
   {
     // 公共请求头
     Vue.http.options.headers = {
@@ -45,48 +54,64 @@ class Api{
   /**
    * 商品搜索
    */
-  search( query={}, success, errors )
+  search (query = {}, success, errors)
   {
-    this.request (
-      {
-        url: 'goods/search',
-        method: 'GET',
-        data: query, // 查询对象参数包括{cid, keywords, ids, tag, page, per_page...}
-      },
-      (res) => {
-        setTimeout(() => success(res), 100)
-        console.log('===> 搜索商品')
-      },
-      (res) => {
-        setTimeout(() => errors(res), 100)
-        console.log('===> 搜索商品失败!', res)
-      }
-    )
+    let _request = {
+      url: 'goods/search',
+      method: 'GET',
+      data: query, // 查询对象参数包括{cid, keywords, ids, tag, page, per_page...}
+    }
+
+    let key = JSON.stringify(_request)
+    if (this.memory.has(key)) {
+      success(this.memory.get(key))
+    } else {
+      this.request (
+        _request,
+        (res) => {
+          setTimeout(() => success(res), 0)
+          this.memory.set(key, res)
+          console.log('===> 搜索商品')
+        },
+        (res) => {
+          setTimeout(() => errors(res), 0)
+          console.log('===> 搜索商品失败!', res)
+        }
+      )
+    }
   }
 
   /**
    * 获取商品类目树
    */
-  getGoodsCategoryTree( success, errors )
+  getGoodsCategoryTree (success, errors)
   {
-    this.request (
-      {
-        url: 'goods/category/tree',
-        method: 'GET',
-        data: {}
-      },
-      (res) => {
-        setTimeout(() => success(res), 100)
-        console.log('===> 获取类目树')
-      },
-      (res) => {
-        setTimeout(() => errors(res), 100)
-        console.log('===> 获取类目树失败!', res)
-      }
-    )
+    let _request = {
+      url: 'goods/category/tree',
+      method: 'GET',
+      data: {}
+    }
+    let key = 'goods_category_tree'
+    let value = Cache.get (key)
+    if (null !== value) {
+      success (value)
+    } else {
+      this.request (
+        _request,
+        (res) => {
+          success (res)
+          Cache.set (key, res, { exp: 24*60*60 })
+          console.log ('===> 获取类目树')
+        },
+        (res) => {
+          errors (res)
+          console.log ('===> 获取类目树失败!', res)
+        }
+      )
+    }
   }
 
 
 }
 
-export default new Api()
+export default new Api(memory)

@@ -17,16 +17,13 @@ module.exports = {
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {
       'src': path.resolve(__dirname, '../src'),
-      'api': path.resolve(__dirname, '../src/api'),
       'assets': path.resolve(__dirname, '../src/assets'),
       'components': path.resolve(__dirname, '../src/components'),
       'libs': path.resolve(__dirname, '../src/libs'),
       'views': path.resolve(__dirname, '../src/views'),
       'modules': path.resolve(__dirname, '../src/vuex/modules'),
       'actions': path.resolve(__dirname, '../src/vuex/actions'),
-      'getters': path.resolve(__dirname, '../src/vuex/getters'),
-      'vux-components': 'vux/src/components/',
-      'vum': path.resolve(__dirname, '../src/assets/vum')
+      'getters': path.resolve(__dirname, '../src/vuex/getters')
     }
   },
   resolveLoader: {
@@ -37,10 +34,6 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue'
-      },
-      {
-        test: /vux.src.*?js$/,
-        loader: 'babel'
       },
       {
         test: /\.js$/,
@@ -77,5 +70,4 @@ module.exports = {
   vue: {
     loaders: utils.cssLoaders()
   }
-
 }

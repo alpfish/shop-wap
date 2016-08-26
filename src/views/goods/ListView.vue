@@ -1,12 +1,11 @@
 <template>
   <span>
 
-    <p v-for="p in goods | orderBy 'id'">
-    {{ p.id}}
-    <p></p><p></p><p></p><p></p>
-    <p></p><p></p><p></p><p></p>
-    <p></p><p></p><p></p><p></p>
+    <p v-for="p of goods">
+    {{ p.id }} &nbsp {{ p.price }}
     </p>
+    <list></list>
+
     <p v-if="!loaded">
       loading...
     </p>
@@ -21,6 +20,7 @@
 
 <script>
 import {setGoodsList, addToGoodsList} from 'actions/goodsListActions'
+import List from 'components/goods/list/style/ListComponent'
 
 export default {
   data() {
@@ -31,7 +31,7 @@ export default {
 
   vuex: {
     getters: {
-      goods:         ({goodsList}) => goodsList.searched.goods,
+      goods:         ({goodsList}) => Array.from(goodsList.searched.goods),
       total:         ({goodsList}) => goodsList.searched.total,
       page:          ({goodsList}) => goodsList.searched.page,
       per_page:      ({goodsList}) => goodsList.searched.per_page,
@@ -65,6 +65,10 @@ export default {
   ready() {
     this.setGoodsList(this.query)
   },
+
+  components: {
+    List
+  }
 }
 
 </script>

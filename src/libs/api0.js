@@ -43,8 +43,7 @@ class Api{
   }
 
   /**
-   * [商品搜索]
-   * 通过回调函数返回搜索数据
+   * 商品搜索
    */
   search( query={}, success, errors )
   {
@@ -52,16 +51,7 @@ class Api{
       {
         url: 'goods/search',
         method: 'GET',
-        data: {
-          // 需要获取的商品 id 数组
-          ids: [],
-          // 搜索类目id
-          cid: query.cid || 0,
-          // 搜索关键词
-          keywords: query.keywords || null,
-          // 搜索标签 (如：广告商品，推荐商品，猜你喜欢，热销，秒杀...)
-          tag: query.tag || null
-        }
+        data: query, // 查询对象参数包括{cid, keywords, ids, tag, page, per_page...}
       },
       (res) => {
         setTimeout(() => success(res), 100)
@@ -75,25 +65,23 @@ class Api{
   }
 
   /**
-   * [获取商品类目列表]
+   * 获取商品类目树
    */
-  getGoodsCategoriesList( success, errors )
+  getGoodsCategoryTree( success, errors )
   {
     this.request (
       {
-        url: 'goods/categories',
+        url: 'goods/category/tree',
         method: 'GET',
-        data: {
-        }
+        data: {}
       },
       (res) => {
         setTimeout(() => success(res), 100)
-        console.log('===> 获取类目')
-
+        console.log('===> 获取类目树')
       },
       (res) => {
         setTimeout(() => errors(res), 100)
-        console.log('===> 获取类目失败!', res)
+        console.log('===> 获取类目树失败!', res)
       }
     )
   }

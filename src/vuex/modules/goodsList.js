@@ -1,18 +1,17 @@
 import {
   SET_GOODS_LIST,
-  SET_GOODS_LIST_CACHE,
   SET_GOODS_LIST_LOADED,
   SET_GOODS_LIST_LOADED_SUCCESS,}
   from 'src/vuex/mutationTypes'
 
 const state = {
-
   // 搜索数据
-  searched:[],
-  // 列表缓存
-  // 于客户端内存，以减少请求次数和加快响应速度
-  // 格式为 queryJson => searched 键值对的Map结构数据
-  cache: new Map(),
+  searched: {
+    'goods': new Set(),
+    'total': null,
+    'page': null,
+    'per_page': null
+  },
   style: 'default',
   loaded: false,
   loadedSuccess: true,
@@ -20,13 +19,15 @@ const state = {
 
 const mutations = {
 
-  [SET_GOODS_LIST] (state, searched) {
-    state.searched = searched
-  },
-
-  [SET_GOODS_LIST_CACHE] (state, queryJson, searched) {
-    queryJson = _.isString(queryJson) ? queryJson : JSON.stringify(queryJson)
-    state.cache.set(queryJson, searched)
+  [SET_GOODS_LIST] (state, searched = null) {
+    if (_.isNull(searched)) {
+        state.searched.goods = new Set()
+    } else {
+      state.searched.goods = new Set([...state.searched.goods, ...searched.goods])
+      state.searched.total = searched.total
+      state.searched.page = searched.page
+      state.searched.per_page = searched.per_page
+    }
   },
 
   [SET_GOODS_LIST_LOADED] (state, resBool) {
@@ -36,7 +37,6 @@ const mutations = {
   [SET_GOODS_LIST_LOADED_SUCCESS] (state, resBool) {
     state.loadedSuccess = resBool
   },
-
 
 }
 
