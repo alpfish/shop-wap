@@ -18,7 +18,7 @@ export default {
   },
   '/search': {
     name: 'search',
-    component: (resolve) => require(['views/goods/Search.vue'], resolve)
+    component: (resolve) => require(['views/goods/SearchView.vue'], resolve)
   },
   'goods/list': {
     name: 'goods-list',

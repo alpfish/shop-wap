@@ -1,64 +1,136 @@
 <template>
-  <h1>
-    hELLO
-  </H1>
-  <!-- <div class="page">
-    <content>
-      <div class="list-block media-list">
-        <ul>
-          <li v-for="p in goods">
-            <a class="item-content item-button my-list-item">
-              <div class="item-media my-li_img_wap">
-                <img :src="IMG_ROOT + p.thumb" width="124">
-              </div>
-              <div class="item-inner">
-                <span class="my-list-item-title">
-                  {{ p.name }}
-                </span>
-                <p class="my-list-sold">
-                  <small>销量：{{ p.sales }} 件</small>
-                </p>
-                <div class="my-list-tag">
-                  {{ p.tag_prom || p.features  || "&nbsp" }}
-                </div>
-                <div class="my-list-price">
-                  <small>¥ </small>
-                  <strong>{{ p.price }}</strong>
-                  <span class="my-list-sold"><small><del>{{ p.orig != '0.00' ? '¥'+p.orig : '' }}</del></small></span>
-                  <i class="icon icon-cart pull-right"></i>
-                </div>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </content>
-  </div> -->
+  <ul class="mui-table-view" v-infinite-scroll="loadMore()" infinite-scroll-disabled="loading" infinite-scroll-distance="50">
+    <li class="mui-table-view-cell mui-media" v-for="item in list" >
+      <a href="javascript:;">
+        <img class="mui-media-object mui-pull-left" :src="IMG_ROOT + item.thumb">
+        <div class="mui-media-body">
+          <div class='mui-ellipsis-2 item-name' v-text="item.name"></div>
+          <div class="item-tag mui-ellipsis">{{ item.tag_prom || item.features  || "&nbsp;" }}</div>
+          <p class="item-sales">{{ item.sales === '1' ? '&nbsp;' : "销量:"+item.sales+"件" }}</p>
+          <div>
+            <span class="item-price">¥{{ item.price }}</span>
+            <span class="item-sales"><del>{{ item.orig != '0.00' ? '¥'+item.orig : '¥'+item.price }}</del></span>
+            <div class="proBuy"><span class="mui-icon-extra mui-icon-extra-cart mui-pull-right cart"></span></div>
+          </div>
+        </div>
+      </a>
+    </li>
+  </ul>
+  <loading v-show="loading">加载中...</loading>
 </template>
 
-<script>
-import { IMG_ROOT } from 'src/config'
-//import { addToCart } from 'actions/cartActions'
-
-
-export default{
-  data: function() {
-    return {
-      IMG_ROOT: IMG_ROOT
-    }
-  },
-  vuex: {
-    getters: {
-    },
-    actions: {
-      // addToCart
-    }
-  },
-  components: {
+<style scoped lang="less">
+  @import "../../../../assets/styles/my-mui-variables.less";
+  .mui-table-view:after, .mui-table-view:before {
+    height: 0px;
   }
+  .mui-table-view-cell {
+    padding: 8px 10px;
+  }
+  .mui-media-object {
+    line-height: 118px;
+    max-width: 118px;
+    height: 118px;
+  }
+  .mui-media-body {
+    padding-left: 5px;
+  }
+  .mui-table-view-cell:after {
+    left: 138px;
+    background-color: @color-grey-light;
+  }
+  .item-name {
+    margin-top: 5px;
+    color: @color-black;
+    font-size: 14px;
+    line-height: 18px;
+    height: 36px;
+  }
+  .item-tag {
+    margin-top: 5px;
+    font-size: 11px;
+    color: @color-blue;
+  }
+  .item-sales {
+    color: @color-grey;
+    font-size: 11px;
+    line-height: 15px;
+    font-family: arial;
+    margin-top: 5px;
+  }
+  .item-price {
+    // color: lighten(@color-brand, 10%);
+    color: darken(@color-brand, 1%);
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .proBuy {
+    top: 85px;
+    position: absolute;
+    right: 12px;
+    display: block;
+  }
+  .cart {
+    width: 36px;
+    height: 36px;
+    display: inline-block;
+    border-radius: 20px;
+    text-indent: 7px;
+    line-height: 37px;
+    background-color: @color-grey-light;
+    color: #e8374d;
+    overflow: hidden;
+  }
+  .cart:before {
+    color: @color-brand;
+    font-size: 22px;
 }
-</script>
-
-<style>
-
 </style>
+
+<script type="text/babel">
+  // mint-ui 无限加载组件
+  // 使用 babel-plugin-component 自动导入样式文件及按需加载
+  // 文档: http://mint-ui.github.io/docs/#!/zh-cn
+  import Vue from 'vue'
+  import { InfiniteScroll } from 'mint-ui'
+  Vue.use( InfiniteScroll )
+
+  import { IMG_ROOT } from 'src/config'
+  import Loading from 'components/common/loading'
+
+  export default {
+    props: {
+      list: {
+        type: Array,
+        required: true
+      },
+      loading: {
+        type: Boolean,
+        required: true
+      },
+      allLoaded: {
+        type: Boolean,
+        required: true
+      }
+    },
+
+    data: function() {
+      return {
+        IMG_ROOT: IMG_ROOT
+      }
+    },
+
+    methods: {
+      loadMore() {
+        if (!this.allLoaded) {
+          this.$dispatch('load-more')
+        }
+      }
+    },
+
+    components: {
+      InfiniteScroll,
+      Loading
+    },
+  };
+</script>

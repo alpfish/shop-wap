@@ -9,9 +9,9 @@ export const setGoodsList = function ({dispatch, state}, query = {}) {
   Api.search (
     query,
     (res) => {
-      dispatch (types.SET_GOODS_LIST, res)
       dispatch (types.SET_GOODS_LIST_LOADED, true)
       dispatch (types.SET_GOODS_LIST_LOADED_SUCCESS, true)
+      dispatch (types.SET_GOODS_LIST, res)
     },
     (res) => {
       dispatch (types.SET_GOODS_LIST_LOADED, true)

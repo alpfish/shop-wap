@@ -64,7 +64,7 @@ class Api {
 
     let key = JSON.stringify(_request)
     if (this.memory.has(key)) {
-      success(this.memory.get(key))
+      setTimeout(() => success(this.memory.get(key)), 0)
     } else {
       this.request (
         _request,
@@ -94,17 +94,17 @@ class Api {
     let key = 'goods_category_tree'
     let value = Cache.get (key)
     if (null !== value) {
-      success (value)
+      setTimeout(() => success(value), 0)
     } else {
       this.request (
         _request,
         (res) => {
-          success (res)
-          Cache.set (key, res, { exp: 24*60*60 })
+          setTimeout(() => success(res), 0)
+          setTimeout(() => Cache.set (key, res, { exp: 24*60*60 }), 0)
           console.log ('===> 获取类目树')
         },
         (res) => {
-          errors (res)
+          setTimeout(() => errors (res), 0)
           console.log ('===> 获取类目树失败!', res)
         }
       )

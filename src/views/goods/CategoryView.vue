@@ -6,10 +6,10 @@
   </header>
 
   <div class="mui-content mui-row mui-fullscreen" style="background-color: #fff">
-    <loading v-if="!sons"></loading>
+    <loading v-if="!sons">加载中</loading>
     <!-- 左侧 -->
     <div class="mui-col-xs-3">
-      <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical"  style="background-color: #eee">
+      <div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical" >
         <a v-for="parent of tree | orderBy 'sort'" @click='setPid(parent.cid)' :class="parent.cid === currentPid ? 'mui-active' : ''" class="mui-control-item">
           {{ parent.name }}</a></div></div>
     <!-- 右侧 -->
@@ -27,58 +27,57 @@
 </template>
 
 <script>
-import {setTree, setCurrentPid} from 'actions/goodsCategoryActions'
-import Loading from 'components/common/loading'
-import ImagePlaceholder from 'components/common/image-placeholder'
+  import {setTree, setCurrentPid} from 'actions/goodsCategoryActions'
+  import Loading from 'components/common/loading'
+  import ImagePlaceholder from 'components/common/image-placeholder'
 
-export default {
-  computed: {
-    parent: function() {
-      return _.head (_.sortBy (this.tree.filter ( item => item.cid == this.currentPid ), 'sort'))
-    },
-    sons: function() {
-      if (!_.isEmpty(this.parent)) {
-        return this.parent.son
+  export default {
+    computed: {
+      parent: function() {
+        return _.head (_.sortBy (this.tree.filter ( item => item.cid == this.currentPid ), 'sort'))
+      },
+      sons: function() {
+        if (!_.isEmpty(this.parent)) {
+          return this.parent.son
+        }
       }
-    }
-  },
-  methods: {
-    setPid: function(pid) {
-      return setTimeout (() => this.setCurrentPid(pid), 0)
-    }
-  },
-  vuex: {
-    getters: {
-      tree: ({goodsCategory}) => goodsCategory.tree,
-      currentPid: ({goodsCategory}) => goodsCategory.currentPid
     },
-    actions: {
-      setTree,
-      setCurrentPid
+    methods: {
+      setPid: function(pid) {
+        return setTimeout (() => this.setCurrentPid(pid), 0)
+      }
+    },
+    vuex: {
+      getters: {
+        tree: ({goodsCategory}) => goodsCategory.tree,
+        currentPid: ({goodsCategory}) => goodsCategory.currentPid
+      },
+      actions: {
+        setTree,
+        setCurrentPid
+      }
+    },
+    ready() {
+      if (_.isEmpty(this.tree)) {
+        this.setTree()
+        setTimeout(() => this.setCurrentPid(), 1500)
+      }
+      mui.init({
+        swipeBack: true //启用右滑关闭功能
+      });
+    },
+    components: {
+      Loading,
+      ImagePlaceholder
     }
-  },
-  ready() {
-    if (_.isEmpty(this.tree)) {
-      this.setTree()
-      setTimeout(() => this.setCurrentPid(), 1500)
-    }
-    mui.init({
-      swipeBack: true //启用右滑关闭功能
-    });
-  },
-  components: {
-    Loading,
-    ImagePlaceholder
   }
-}
 </script>
 
-<style>
-  .son-name {
-    color: #666;
-    font-size: 0.8rem;
-    text-align: left;
-    line-height: 2rem;
+<style scoped lang="less">
+  @import "../../assets/styles/my-mui-variables.less";
+
+  .mui-icon {
+    color: #000;
   }
   /*图片背景*/
   .wap-img {
@@ -89,11 +88,6 @@ export default {
     background-size: 75%
   }
 
-  .mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body{
-    font-size: 1rem;
-    margin-top: 0.5rem;
-    color: #333;
-  }
   .mui-row.mui-fullscreen>[class*="mui-col-"] {
     height: 100%;
   }
@@ -105,10 +99,36 @@ export default {
   }
   /*左侧类目显示*/
   .mui-segmented-control .mui-control-item {
-    line-height: 60px;
     width: 100%;
+    line-height: 60px;
+    color: @color-black;
+    background-color: @color-grey-light;
   }
+  // 左侧激活类目颜色
   .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
-    background-color: #fff;
+    border-left: 3px solid @color-brand;
+  }
+  // 去右侧分隔线
+  .mui-table-view:before {
+      height: 0;
+  }
+  .mui-table-view:after {
+      height: 0;
+  }
+  .mui-table-view{
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    line-height: 0.95rem;
+    color: @color-black;
+  }
+  .son-name {
+    color: @color-grey;
+    text-align: left;
+    height: .7rem;
+    font-size: .65rem;
+    line-height: .7rem;
+    padding-left: .3rem;
+    border-left: 3px solid @color-grey;
   }
 </style>
