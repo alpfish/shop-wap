@@ -1,99 +1,87 @@
 <template>
 <div class="box">
-  <p>&nbsp;</p>
-  <textfield :field="mobile" @validate="validateMobile"></textfield>
-  <textfield :field="password" @validate="validatePassword"></textfield>
-  <textfield :field="passwordConfirmation" @validate="validatePasswordConfirmation"></textfield><p> &nbsp;</p>
-  <m-button type="primary" size="large">注册</m-button>
-
+  <textfield type='tel' icon="zhanghao" label="手机" placeholder="请输入手机号码"
+    :value.sync="mobile.value"
+    :rules="mobile.rules"
+    :errors="mobile.errors"
+    :passed.sync="mobile.passed"></textfield>
+  <textfield type='password' icon="mima" label="密码" placeholder="请输入密码"
+    :value.sync="password.value"
+    :rules="password.rules"
+    :errors="password.errors"
+    :passed.sync="password.passed"></textfield>
+  <textfield type='password' icon="mima" label="确认密码" placeholder="请再次输入密码"
+    :value.sync="repassword.value"
+    :rules="repassword.rules"
+    :errors="repassword.errors"
+    :perror="repassword.perror"
+    :passed.sync="repassword.passed"></textfield>
+  <button-area>
+    <button-row>
+      <button big fill raised :color="buttonColor" text="注册" @click="vpassword"></button>
+    </button-row>
+  </button-area>
 </div>
 </template>
 
 <script>
-import textfield from 'components/ui/textfield'
-import MButton from 'components/ui/button'
-import validate from 'libs/validate'
+import Button from 'components/ui/button/button'
+import ButtonRow from 'components/ui/button/button-row'
+import ButtonArea from 'components/ui/button/button-area'
+import Textfield from 'components/ui/forms/textfield'
 
 export default {
   data() {
-      return {
-        mobile: {
-          type: 'tel',
-          value: '',
-          label: '手机',
-          placeholder: '请输入手机号',
-          state: '',
-          message: '',
-        },
-        password: {
-          type: 'password',
-          value: '',
-          label: '密码',
-          placeholder: '请输入密码',
-          state: '',
-          message: '',
-        },
-        passwordConfirmation: {
-          type: 'password',
-          value: '',
-          label: '确认密码',
-          placeholder: '再次输入密码',
-          state: '',
-          message: '',
-        },
-      }
-    },
-    methods: {
-      validateMobile(value) {
-        let state = 'error'
-        let message = ''
-        if (!validate.required(value)) {
-          message = '需要填写手机号。'
-        } else if (!validate.mobile(value)) {
-          message = '需要填写一个有效的11位数的手机号。'
-        } else {
-          state = 'success'
-        }
-        this.mobile.state = state
-        this.mobile.message = message
-        return state === 'success' ? true : false
+    return {
+      mobile: {
+        value: '',
+        rules: 'required|mobile',
+        errors: '请输入手机号码。|手机号码格式不正确。',
+        perror: '',
+        passed: false,
       },
-      validatePassword(value) {
-        let state = 'error'
-        let message = ''
-        if (!validate.required(value)) {
-          message = '需要填写密码。'
-        } else if (!validate.minlength(value, 6)) {
-          message = '密码需要最小6个长度的字符。'
-        } else if (!validate.maxlength(value, 24)) {
-          message = '密码长度需要小于24个字符。'
-        } else {
-          state = 'success'
-        }
-        this.password.state = state
-        this.password.message = message
-        return state === 'success' ? true : false
+      password: {
+        value: '',
+        rules: 'required|min_length(6)|max_length(20)',
+        errors: '请输入密码。|密码最小需要6位。|密码最大不能超过20位',
+        perror: '',
+        passed: false,
       },
-      validatePasswordConfirmation(value) {
-        let state = 'error'
-        let message = ''
-        if (!validate.required(value)) {
-          message = '需要填写确认密码。'
-        } else if (value !== this.password.value) {
-          state = 'error'
-          message = '两次输入的密码需要一致。'
-        } else {
-          state = 'success'
-        }
-        this.passwordConfirmation.state = state
-        this.passwordConfirmation.message = message
-        return state === 'success' ? true : false
+      repassword: {
+        value: '',
+        rules: 'required|min_length(6)|max_length(20)',
+        errors: '请输入确认密码。|密码最小需要6位。|密码最大不能超过20位',
+        perror: '',
+        passed: false,
       },
-    },
-    components: {
-      textfield,
-      MButton
     }
+  },
+  computed: {
+    allPassed () {
+      return this.mobile.passed
+          && this.password.passed
+          && this.repassword.passed
+          && this.password.value === this.repassword.value
+    },
+    buttonColor () {
+      return this.allPassed ? 'blue' : 'red'
+    },
+  },
+  methods: {
+    vpassword () {
+      if (this.password.value != this.repassword.value) {
+        this.repassword.perror = '两次输入的密码需要一致。'
+      } else {
+        this.repassword.perror = ''
+      }
+    }
+  },
+  components: {
+    Textfield,
+    Button,
+    ButtonRow,
+    ButtonArea,
+  }
 }
 </script>
 

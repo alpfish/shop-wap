@@ -40,6 +40,10 @@ router.map({
     name: 'register',
     component: (resolve) => require(['views/member/register.vue'], resolve)
   },
+  '/member/login': {
+    name: 'login',
+    component: (resolve) => require(['views/member/login.vue'], resolve)
+  },
 })
 
 export default router
