@@ -37,8 +37,8 @@
   }
   .sort-arrow {
     display: inline-block;
-    position: relative;;
-    top: 6px;
+    position: relative;
+    vertical-align: middle;
   }
   .triangle-top,
   .triangle-bottom {

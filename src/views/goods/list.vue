@@ -8,10 +8,10 @@
 </template>
 
 <script>
-  import TopNav from 'components/goods/list/TopNavComponent'
-  import Sort from 'components/goods/list/TopSortComponent'
-  import List from 'components/goods/list/style/ListComponent'
-  import {setGoodsList, addToGoodsList} from 'actions/goodsListActions'
+  import TopNav from 'components/goods/list/top-nav'
+  import Sort from 'components/goods/list/top-sort'
+  import List from 'components/goods/list/style/list'
+  import {setGoodsList, addToGoodsList} from 'actions/goods-list'
 
   export default {
     vuex: {

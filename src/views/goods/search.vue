@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import Search from 'components/goods/search/SearchComponent'
+  import Search from 'components/goods/search/search'
 
   export default {
     components: {

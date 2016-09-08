@@ -1,0 +1,123 @@
+// by alpfish 2016-08-27
+// 在 mui 基础上自定义风格
+// 使用 mui 的个人分支仓库 alpfish/mui，分支来源于 https://github.com/loopArray/mui
+// 该分支为 mui 增加 gulp 和 less 构建方式，相对于 scss 构建更加简单方便
+
+// ***按以下约定将 mui 风格与项目自定义风格统一
+// 1. 此页面 mui 原有的变量名不能改动
+// 2. 原有变量名不能满足的情况下，可增加少许自定义变量名，需注明
+// 3. 在项目中使用此页变量
+// 4. 在 mui 中引入该页相关变量，使用 gulp + less 重新构建
+// 5. 在项目中替换重新构建的 mui.min.css
+
+// -----------------------
+// 自定义变量，项目中使用有效
+// -----------------------
+@color-brand:      #C31200; // 品牌色
+@color-black:      #000000; // 黑色（深色）
+@color-white:      #ffffff; // 白色（或奶白）
+@color-grey:       #848689; // 灰色
+@color-grey-light: #EEEEEE; // 浅灰色
+@color-bg:         #FEFEFE; // 背景
+
+// 红、橙、黄、绿、青、蓝、紫
+@color-red:    #B92300;
+@color-orange: #E16E16;
+@color-yellow: #FFBC28;
+@color-green:  #B9F08B;
+@color-teal:   #65C0C3;
+@color-blue:   #04BBC2;
+@color-purple: #C36592;
+
+// -------------------------------------------------
+// 以下为 mui 内置变量，名称不可改变
+
+//
+// Variables`
+// --------------------------------------------------
+@namespace: mui-;
+
+// Type
+// --------------------------------------------------
+@font-family-default: "Helvetica Neue", Helvetica, sans-serif;
+@font-size-default: 17px;
+@font-weight: 500;
+@font-weight-light: 400;
+@line-height-default: 21px;
+
+// Colors
+// --------------------------------------------------
+// Main theme colors
+// blue theme
+// @primary-color: #007aff;
+// @chrome-color:  rgb(247,247,247);
+// green theme
+// @primary-color: #4cd964;
+// @chrome-color:  rgba(247,247,247,.98);
+
+// 主色（品牌色）
+@primary-color: #C31200;
+@chrome-color:  rgb(255,255,255);
+
+// 动作颜色 Action colors
+@default-color:  #000000; // 默认
+@positive-color: #008C7D; // 积极
+@negative-color: #848689; // 消极
+@warning-color:  #E16E16; // 警告
+@royal-color:    #C36592; // 高贵
+@grey-color:     #848689; // 灰色
+
+
+// Bars
+// --------------------------------------------------
+
+@bar-base-height:  44px;
+@bar-tab-height:   50px;
+@bar-side-spacing: 10px;
+
+
+// Cards
+// --------------------------------------------------
+
+// @card-bg: #F1EAE5;
+@card-bg: #EEE;
+
+
+// Buttons
+// --------------------------------------------------
+
+@button-font-size: 14px;
+
+
+// Transitions
+// --------------------------------------------------
+
+@timing-fuction: cubic-bezier(.1,.5,.1,1); // Inspired by @c2prods
+
+
+// Borders
+// --------------------------------------------------
+
+@border-default: 1px solid #ddd;
+//@border-radius: 6px;
+@border-radius: 0px;
+
+// Z-Layers
+// --------------------------------------------------
+@z-layers-default:           1;
+@z-layers-below:            -1;
+@z-layers-max:           10000;
+
+@z-layers-bar:              10;
+@z-layers-btn:              20;
+@z-layers-icon:             20;
+
+@z-layers-backdrop:        998;
+@z-layers-modal:           999;
+
+@z-layers-popover:         999;
+@z-layers-arrow:          1000;
+
+@z-layers-scrollbar:      9998;
+
+@z-layers-toast:          9999;

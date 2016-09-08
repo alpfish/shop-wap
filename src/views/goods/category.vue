@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {setTree, setCurrentPid} from 'actions/goodsCategoryActions'
+  import {setTree, setCurrentPid} from 'actions/goods-category'
   import Loading from 'components/common/loading'
   import ImagePlaceholder from 'components/common/image-placeholder'
 

@@ -1,7 +1,7 @@
 import {
   SET_GOODS_CATEGORY_TREE,
   SET_GOODS_CATEGORY_CURRENT_PID}
-  from '../mutationTypes'
+  from 'src/vuex/mutation-types'
 
 const state = {
   tree: [],

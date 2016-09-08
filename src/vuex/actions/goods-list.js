@@ -1,4 +1,4 @@
-import * as types from 'src/vuex/mutationTypes'
+import * as types from 'src/vuex/mutation-types'
 import Api from 'libs/api'
 
 // 设置列表数据

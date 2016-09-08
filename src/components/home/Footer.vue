@@ -9,7 +9,7 @@
   <a v-link="{name: 'search'}">
     搜索
   </a>
-  <a v-link="{name: 'user-home'}">
+  <a v-link="{name: 'member'}">
     我的
   </a>
 </template>

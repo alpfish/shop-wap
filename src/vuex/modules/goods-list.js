@@ -1,8 +1,9 @@
 import {
   SET_GOODS_LIST,
   SET_GOODS_LIST_LOADED,
-  SET_GOODS_LIST_LOADED_SUCCESS,}
-  from 'src/vuex/mutationTypes'
+  SET_GOODS_LIST_LOADED_SUCCESS,
+}
+from 'src/vuex/mutation-types'
 
 const state = {
   // 搜索数据
@@ -19,9 +20,9 @@ const state = {
 
 const mutations = {
 
-  [SET_GOODS_LIST] (state, searched = null) {
+  [SET_GOODS_LIST](state, searched = null) {
     if (_.isNull(searched)) {
-        state.searched.goods = new Set()
+      state.searched.goods = new Set()
     } else {
       state.searched.goods = new Set([...state.searched.goods, ...searched.goods])
       state.searched.total = searched.total
@@ -30,11 +31,11 @@ const mutations = {
     }
   },
 
-  [SET_GOODS_LIST_LOADED] (state, resBool) {
+  [SET_GOODS_LIST_LOADED](state, resBool) {
     state.loaded = resBool
   },
 
-  [SET_GOODS_LIST_LOADED_SUCCESS] (state, resBool) {
+  [SET_GOODS_LIST_LOADED_SUCCESS](state, resBool) {
     state.loadedSuccess = resBool
   },
 

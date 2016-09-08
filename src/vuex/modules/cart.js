@@ -1,7 +1,7 @@
 import {
   ADD_TO_CART,
   UPDATE_CART_MIRROR}
-  from 'src/vuex/mutationTypes'
+  from 'src/vuex/mutation-types'
 
 const state = {
 
@@ -30,7 +30,7 @@ const mutations = {
   // 添加，减少或删除 added 中的商品
   ADD_TO_CART (state, iterm, quantity) {
     quantity = Number(quantity) || 1
-    const record = state.added.find(k => k.id === iterm.id)
+    let record = state.added.find(k => k.id === iterm.id)
     if (!record) {
       state.added.push({
        id: iterm.id,

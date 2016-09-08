@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import {addToCart, updateCartMirror} from 'actions/cartActions'
-import {getGoods} from 'getters/cartGetters'
+import {addToCart, updateCartMirror} from 'actions/cart'
+import {getGoods} from 'getters/cart'
 
 export default{
   vuex: {

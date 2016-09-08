@@ -1,6 +1,5 @@
-import * as types from 'src/vuex/mutationTypes'
+import * as types from 'src/vuex/mutation-types'
 import Api from 'libs/api'
-import Cache from 'libs/cache'
 
 // 设置商品类目树状态
 export const setTree = function({dispatch}) {
