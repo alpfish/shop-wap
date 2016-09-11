@@ -4,7 +4,7 @@
  */
 import WebStorageCache from 'libs/vendor/web-storage-cache.js'
 
-let Cache = new WebStorageCache
-Cache.deleteAllExpires()
+let LS = new WebStorageCache
+LS.deleteAllExpires()
 
-export default Cache
+export default LS

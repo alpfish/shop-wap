@@ -23,7 +23,6 @@ module.exports = {
       'views': path.resolve(__dirname, '../src/views'),
       'modules': path.resolve(__dirname, '../src/vuex/modules'),
       'actions': path.resolve(__dirname, '../src/vuex/actions'),
-      'getters': path.resolve(__dirname, '../src/vuex/getters')
     }
   },
   resolveLoader: {

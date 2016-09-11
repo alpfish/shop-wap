@@ -2,7 +2,8 @@ import Vue from 'vue'
 import LS from 'libs/local-storage'
 import Cookie from 'libs/vendor/vue-cookie'
 import {
-  API_ROOT
+  API_ROOT,
+  TOKEN_KEY,
 } from 'src/config'
 import VueResource from 'vue-resource'
 
@@ -12,9 +13,6 @@ Vue.use(VueResource)
 // 内存缓存
 let memory = new Map()
 
-// 认证缓存键
-const tokenKey = 'token'
-
 // 响应拦截
 Vue.http.interceptors.push((request, next) => {
   next((response) => {
@@ -23,10 +21,8 @@ Vue.http.interceptors.push((request, next) => {
     // https://github.com/vuejs/vue-resource/issues/215
     if ('Authorization' in response.headers) {
       // 双缓存, 避免浏览器或微信等环境失败
-      LS.set(tokenKey, response.headers['Authorization'], {
-        exp: 60 * 60 * 24 * 7
-      })
-      Cookie.set(tokenKey, response.headers['Authorization'], 7)
+      LS.set(TOKEN_KEY, response.headers['Authorization'], { exp: 60 * 60 * 24 * 7 })
+      Cookie.set(TOKEN_KEY, response.headers['Authorization'], 7)
     }
 
     // BUG：https://github.com/vuejs/vue-resource/issues/317  新版本修复后去掉
@@ -68,7 +64,7 @@ class Api {
 
     // 返回认证 token
     // 使用 Authorization 头传送 token 会产生两次请求，故采用参数传送
-    let token = LS.get(tokenKey) ? LS.get(tokenKey) : Cookie.get(tokenKey)
+    let token = LS.get(TOKEN_KEY) ? LS.get(TOKEN_KEY) : Cookie.get(TOKEN_KEY)
     if (token) {
       Object.assign(params, {
         'token': token
@@ -87,16 +83,38 @@ class Api {
         // 限时
         timeout: 5000,
       })
-      // 成功回调
+      // 成功回调, 数据: response.data
       .then((response) => {
-        success(response.data)
+        success(response)
       }, (response) => { // 错误回调
         error(response)
-        let status = response.status
-        if (status >= 500) {
-          console.log(`服务器错误! status: ${status}  message: ${response.statusText}`);
+        if (response.status >= 500) {
+          console.log(`==> 服务器错误! status: ${response.status}  message: ${response.statusText}`);
         }
       })
+  }
+
+  // 路由中间件使用 token 自动登录
+  tokenLogin(success, error) {
+    let token = LS.get(TOKEN_KEY) ? LS.get(TOKEN_KEY) : Cookie.get(TOKEN_KEY)
+    if (token) {
+      this.request (
+        {
+          url: 'member/login/token',
+          method: 'GET'
+        },
+        (res) => {
+          success(res)
+        },
+        (res) => {
+          LS.delete(TOKEN_KEY)
+          Cookie.delete(TOKEN_KEY)
+          error(res)
+        }
+      )
+    } else {
+      error()
+    }
   }
 
   /**
@@ -116,8 +134,8 @@ class Api {
       this.request(
         options,
         (res) => {
-          setTimeout(() => success(res), 0)
-          this.memory.set(key, res)
+          setTimeout(() => success(res.data), 0)
+          this.memory.set(key, res.data)
           console.log('===> 搜索商品')
         },
         (res) => {
@@ -145,8 +163,8 @@ class Api {
       this.request(
         options,
         (res) => {
-          setTimeout(() => success(res), 0)
-          setTimeout(() => LS.set(key, res, {
+          setTimeout(() => success(res.data), 0)
+          setTimeout(() => LS.set(key, res.data, {
             exp: 24 * 60 * 60
           }), 0)
           console.log('===> 获取类目树')

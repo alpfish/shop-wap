@@ -12,9 +12,9 @@
           :placeholder="placeholder">
       </textarea>
       <icon name="shanchu3" :size="16" class="clear"  v-show="!!value && focus" @click="value = ''"></icon>
+      <!-- 父组件错误最好显示后自动消失 -->
+      <div class="error" v-if="(error || perror) && !focus"><icon :size="11" name="error">&nbsp;{{ error ? error : perror}}</icon></div>
     </label>
-    <!-- 父组件错误最好显示后自动消失 -->
-    <div class="error" v-if="error || perror">{{ error ? error : perror}}</div>
   </item-form>
 </template>
 
@@ -27,7 +27,7 @@
  * 借鉴于 vue-carbon/blob
  * https://github.com/myronliu347/vue-carbon/blob/master/src/forms/textField.vue
  *
- * @param {string} [value=''] - 输入数据，须使用 :value.sync 双向同步父组件才可获取数据
+ * @param {string} [value=''] - :value.sync 输入数据
  * @param {string} [label=''] - label
  * @param {string} [icon=''] - 图标
  * @param {string} [type='text'] - 文本框类型，支持 text,password,tel,number,search,select,textarea,time,url,date,datetime-local,email
@@ -36,14 +36,15 @@
  * @param {number} [rows=1] - 文本域行数，只有类型为 textarea 时才有效
  * @param {boolean} [label-float=false] - label 浮动
  *
- * 数据验证参数：
+ * 数据验证
+ *
+ * 验证时机：失焦 与 值改变时
+ * 显示时机：失焦
  *
  * @param {string} [rules=''] - 验证规则字串，使用 '|' 分隔，调用参数与使用函数一样。如：'required|max_length(12)|min_length(2)'
  * @param {string} [errors=''] - 规则相对应的错误显示信息，如：'请输入XXX|长度不能大于12|长度不能小于2'
- * @param {string} [perror=''] - 父组件指定错误信息，优先显示
- * @param {boolean} [passed=false] - 是否通过验证，须使用 :passed.sync 双向同步父组件才可获取验证结果
- *
- *
+ * @param {string} [perror=''] - :perror.sync 父组件错误信息，要同步值改变 perror 就消除的目的，须用双向同步
+ * @param {boolean} [passed=false] - :passed.sync 是否通过验证（并且 !perror），须用双向同步父组件才可获取验证结果
  *
  * @example
  * <icon :size="18" name="gouwuche">
@@ -122,6 +123,7 @@ export default {
         })
         this.error = v.error
         this.passed = v.passed
+        this.passed = this.perror ? false : this.passed
       }
     },
 
@@ -153,10 +155,8 @@ export default {
     onblur () {
       // 验证
       this.validate()
-      // 失焦后最后改变状态，避免 QQ 浏览器执行其他操作无效，如清除输入
-      setTimeout(function () {
-        this.focus = false
-      }, 0);
+      // 失焦最后改变状态，避免 QQ 浏览器执行其他操作无效，如清除输入
+      setTimeout(() => this.focus = false, 0);
     }
   },
   ready () {
@@ -166,7 +166,12 @@ export default {
     value () {
       this.resizeTextarea()
       this.$emit('input-change', this.value)
-      this.validated = true
+      this.perror = ''
+      this.validate()
+    },
+    perror () {
+      // 有 perror 时，让 passed 为假
+      this.validate()
     }
   },
   components: {
@@ -199,16 +204,6 @@ export default {
     background: @black;
     transform: scaleY(2) !important;
   }
-}
-.error {
-  color: @red;
-  font-size: 12px;
-}
-.clear {
-  color: @grey;
-  position: absolute;
-  right:8px;
-  bottom: 8px;
 }
 input[type="date"],
 input[type="datetime-local"],
@@ -243,5 +238,18 @@ textarea {
   &::-webkit-input-placeholder {
     color: #7e848c;
   }
+}
+
+.clear {
+  color: @grey;
+  position: absolute;
+  right:8px;
+  bottom: 8px;
+}
+.error {
+  color: @red;
+  position: absolute;
+  left: 0;
+  bottom: -22px;
 }
 </style>

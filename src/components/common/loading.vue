@@ -1,18 +1,17 @@
 <template>
-<div class='loading'>
-  <slot>加载中</slot>
-  <p></p>
-  <mt-spinner :type="2" color="rgb(100, 100, 100)" :size="30"></mt-spinner>
+<div class="loading">
+  <slot></slot>
+  <mt-spinner :type="3" :size="30"></mt-spinner>
 </div>
 </template>
 
 <style scoped>
   .loading {
-      color: #777;
-      text-align: center;;
-      font-size: 0.8rem;
-      margin-top: 20px;
-      margin-bottom: 50px;
+    color: @currentColor;
+    text-align: center;
+    /*font-size: 0.8rem;
+    margin-top: 20px;
+    margin-bottom: 50px;*/
   }
 </style>
 
@@ -25,6 +24,12 @@
   Vue.use( Spinner )
 
   export default {
+    props: {
+      color: {
+        type: String,
+        default: ''
+      }
+    },
     components: {
       mtSpinner: Spinner
     }

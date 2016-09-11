@@ -3,6 +3,8 @@
  * 借鉴于
  * https://github.com/jaywcjlove/validator.js
  *
+ * 支持规则： required, mobile, email, tel, url, min, max, min_length, max_length, integer, confirm
+ *
  * 使用例子：
  *
  * import Validator from '../utils/validator'
@@ -124,6 +126,16 @@ const _testHook = {
   integer(field) {
     return /^(-?[1-9]\d*|0)$/.test(backVal(field))
   },
+  // 密码确认
+  // 需要对 password.value 添加一条 watch , 及时更新确认密码字段的规则，如下：
+  // watch: {
+  //   "password.value": function(val) {
+  //     this.repassword.rules = `required|min_length(6)|max_length(20)|confirm(${val})`
+  //   },
+  // },
+  confirm(field, confirm) {
+    return (backVal(field) === confirm)
+  }
 }
 
 class Validator {

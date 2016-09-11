@@ -11,6 +11,10 @@ export const SET_GOODS_LIST_LOADED_SUCCESS = 'SET_GOODS_LIST_LOADED_SUCCESS'
   // 详情
 export const SET_GOODS_DETAIL_ITEM = 'SET_GOODS_DETAIL_ITEM'
 
+// 认证
+export const SET_AUTH = 'SET_AUTH'
+export const CANCEL_AUTH = 'CANCEL_AUTH'
+
 /**********
  * 购物车 *
  **********/
