@@ -20,9 +20,11 @@ module.exports = {
       'assets': path.resolve(__dirname, '../src/assets'),
       'components': path.resolve(__dirname, '../src/components'),
       'libs': path.resolve(__dirname, '../src/libs'),
+      'ui': path.resolve(__dirname, '../src/ui'),
       'views': path.resolve(__dirname, '../src/views'),
       'modules': path.resolve(__dirname, '../src/vuex/modules'),
       'actions': path.resolve(__dirname, '../src/vuex/actions'),
+      'vux-components': 'vux/src/components/',
     }
   },
   resolveLoader: {
@@ -39,6 +41,10 @@ module.exports = {
         loader: 'babel',
         include: projectRoot,
         exclude: /node_modules/
+      },
+      {
+        test: /vux.src.*?js$/,
+        loader: 'babel'
       },
       {
         test: /\.json$/,
@@ -63,7 +69,7 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
     ]
   },
   vue: {

@@ -22,7 +22,7 @@
 </template>
 
 <style scoped lang="less">
-  @import "../../../assets/styles/my-mui-variables.less";
+  @import "../../../ui/style/_vars.less";
 
   .mui-row {
     margin-bottom: 5px;
@@ -33,7 +33,7 @@
     box-shadow: 0 1px 6px #ccc;
   }
   .active {
-    color: @color-brand;
+    color: @brand-color;
   }
   .sort-arrow {
     display: inline-block;
@@ -48,16 +48,16 @@
     border: 4px solid transparent;
   }
   .triangle-top {
-    border-top-color: @color-grey;
+    border-top-color: @gray;
   }
   .triangle-bottom {
-    border-bottom-color: @color-grey;
+    border-bottom-color: @gray;
   }
   .triangle-top.active{
-    border-top-color: @color-brand;
+    border-top-color: @brand-color;
   }
   .triangle-bottom.active{
-    border-bottom-color: @color-brand;
+    border-bottom-color: @brand-color;
   }
 </style>
 

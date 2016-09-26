@@ -1,15 +1,47 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from 'src/vuex/store'
 import Api from 'libs/api'
 
-Vue.use(VueRouter)
 
+Vue.use(VueRouter)
 const router = new VueRouter({
-  transitionOnLoad: true
+  transitionOnLoad: false
 })
 
-// 路由中间件
+// sync router params
+import { sync } from 'vuex-router-sync'
+import store from 'src/vuex/store'
+
+let history = window.sessionStorage
+history.clear()
+let historyCount = history.getItem('count') * 1 || 0
+history.setItem('/', 0)
+
+// 页面加载及过渡效果
+const commit = store.commit || store.dispatch
+router.beforeEach(({ to, from, next }) => {
+  const toIndex = history.getItem(to.path)
+  const fromIndex = history.getItem(from.path)
+  if (toIndex) {
+    if (toIndex > fromIndex) {
+      commit('UPDATE_DIRECTION', 'forward')
+    } else {
+      commit('UPDATE_DIRECTION', 'reverse')
+    }
+  } else {
+    ++historyCount
+    history.setItem('count', historyCount)
+    to.path !== '/' && history.setItem(to.path, historyCount)
+    commit('UPDATE_DIRECTION', 'forward')
+  }
+  commit('UPDATE_LOADING', true)
+  setTimeout(next, 50)
+})
+router.afterEach(() => {
+  commit('UPDATE_LOADING', false)
+})
+
+// 路由认证中间件
 router.beforeEach((transition) => {
   if (transition.to.auth) {
     // 身份认证
@@ -31,10 +63,16 @@ router.beforeEach((transition) => {
   } else {
     transition.next()
   }
-
 });
 
+// 同步路由状态
+sync(store, router)
+
 router.map({
+  'test': {
+    name: 'test',
+    component: (resolve) => require(['views/test.vue'], resolve)
+  },
   '*': {
     name: '404',
     component: (resolve) => require(['views/404.vue'], resolve)

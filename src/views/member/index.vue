@@ -1,6 +1,6 @@
 <template>
-<div>
-  <button-area>
+<div class="page center">
+  <button-area >
     <p>Welcome! {{ username }}</p>
     <button-row>
       <button fill big raised color="red" text="退出" @click="exit"></button>
@@ -10,10 +10,7 @@
 </template>
 
 <script>
-import Button from 'components/ui/button/button'
-import ButtonRow from 'components/ui/button/button-row'
-import ButtonArea from 'components/ui/button/button-area'
-
+import { Button, ButtonRow, ButtonArea } from 'ui/components'
 import {
   logout
 } from 'actions/member'
@@ -40,3 +37,19 @@ export default {
   }
 }
 </script>
+<style lang="less">
+//@import '../../ui/style/index.less';
+.page {
+  position:fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+</style>

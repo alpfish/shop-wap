@@ -60,7 +60,3 @@
     }
   }
 </script>
-
-<style scoped lang="less">
-  @import "../../assets/styles/my-mui-variables.less";
-</style>

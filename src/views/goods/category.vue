@@ -28,7 +28,7 @@
 
 <script>
   import {setTree, setCurrentPid} from 'actions/goods-category'
-  import Loading from 'components/common/loading'
+  import { Loading } from 'ui/components'
   import ImagePlaceholder from 'components/common/image-placeholder'
 
   export default {
@@ -74,7 +74,7 @@
 </script>
 
 <style scoped lang="less">
-  @import "../../assets/styles/my-mui-variables.less";
+  @import "../../ui/style/_vars.less";
 
   .mui-icon {
     color: #000;
@@ -101,12 +101,12 @@
   .mui-segmented-control .mui-control-item {
     width: 100%;
     line-height: 60px;
-    color: @color-black;
-    background-color: @color-grey-light;
+    color: @black;
+    background-color: @gray-light;
   }
   // 左侧激活类目颜色
   .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
-    border-left: 3px solid @color-brand;
+    border-left: 3px solid @brand-color;
   }
   // 去右侧分隔线
   .mui-table-view:before {
@@ -120,15 +120,15 @@
     margin-bottom: 0.5rem;
     font-size: 0.85rem;
     line-height: 0.95rem;
-    color: @color-black;
+    color: @black;
   }
   .son-name {
-    color: @color-grey;
+    color: @gray;
     text-align: left;
     height: .7rem;
     font-size: .65rem;
     line-height: .7rem;
     padding-left: .3rem;
-    border-left: 3px solid @color-grey;
+    border-left: 3px solid @gray;
   }
 </style>

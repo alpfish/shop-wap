@@ -20,7 +20,7 @@
 </template>
 
 <style scoped lang="less">
-  @import "../../../../assets/styles/my-mui-variables.less";
+  @import "../../../../ui/style/_vars.less";
   .mui-table-view:after, .mui-table-view:before {
     height: 0px;
   }
@@ -37,11 +37,11 @@
   }
   .mui-table-view-cell:after {
     left: 138px;
-    background-color: @color-grey-light;
+    background-color: @gray-light;
   }
   .item-name {
     margin-top: 5px;
-    color: @color-black;
+    color: @black;
     font-size: 14px;
     line-height: 18px;
     height: 36px;
@@ -49,10 +49,10 @@
   .item-tag {
     margin-top: 5px;
     font-size: 11px;
-    color: @color-blue;
+    color: @blue;
   }
   .item-sales {
-    color: @color-grey;
+    color: @gray;
     font-size: 11px;
     line-height: 15px;
     font-family: arial;
@@ -60,7 +60,7 @@
   }
   .item-price {
     // color: lighten(@color-brand, 10%);
-    color: darken(@color-brand, 1%);
+    color: darken(@brand-color, 1%);
     font-size: 16px;
     font-weight: 600;
   }
@@ -77,12 +77,12 @@
     border-radius: 20px;
     text-indent: 7px;
     line-height: 37px;
-    background-color: @color-grey-light;
+    background-color: @gray-light;
     color: #e8374d;
     overflow: hidden;
   }
   .cart:before {
-    color: @color-brand;
+    color: @brand-color;
     font-size: 22px;
 }
 </style>
@@ -96,7 +96,7 @@
   Vue.use( InfiniteScroll )
 
   import { IMG_ROOT } from 'src/config'
-  import Loading from 'components/common/loading'
+  import { Loading } from 'ui/components'
 
   export default {
     props: {

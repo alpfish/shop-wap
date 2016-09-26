@@ -1,8 +1,8 @@
 <style scoped lang="less">
-  @import "../assets/styles/my-mui-variables.less";
+  @import "../ui/style/_vars.less";
 
   .not-found .link {
-      color: @color-black;
+      color: @black;
   }
   .not-found .text {
       margin-top: 50px;
@@ -19,7 +19,7 @@
   .not-found {
       padding: 150px 0 160px;
       height: 100%;
-      background-color: @color-blue;
+      background-color: @blue;
       overflow: hidden;
   }
   #main {

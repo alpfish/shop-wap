@@ -14,14 +14,15 @@
 </header>
 </template>
 
-<style scoped lang="less">@import "../../../assets/styles/my-mui-variables.less";
+<style scoped lang="less">
+@import "../../../ui/style/_vars.less";
 
 .mui-action-back {
     color: #000;
 }
 .mui-bar {
-    background-color: lighten(@color-grey-light, 4%);
-    box-shadow: 1px 1px 0 @color-grey-light;
+    background-color: lighten(@gray-light, 4%);
+    box-shadow: 1px 1px 0 @gray-light;
 }
 .mui-row {
     text-align: center;

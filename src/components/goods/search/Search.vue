@@ -26,7 +26,7 @@
 </template>
 
 <style scoped lang="less">
-  @import "../../../assets/styles/my-mui-variables.less";
+  @import "../../../ui/style/_vars.less";
 
   .page {
       position: fixed;
@@ -35,14 +35,14 @@
       right: 0;
       left: 0;
       font: 14px/1.5 arial;
-      color: @color-grey;
+      color: @gray;
       z-index: 999999;
-      background-color: @color-grey-light;
+      background-color: @gray-light;
   }
   .search {
     position: relative;
     // background-color: rgba(0,0,0,.85);
-    background-color: fade(@color-black, 85%);
+    background-color: fade(@black, 85%);
     box-shadow: 0 1px 3px #000;
     height: 50px;
   }
@@ -86,7 +86,7 @@
       top: 10px;
       width: 50px;
       font-size: 30px;
-      color: @color-grey-light;
+      color: @gray-light;
       // color: #FFF;
   }
 

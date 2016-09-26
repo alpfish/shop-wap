@@ -1,48 +1,38 @@
 <template>
-<div class="page">
-  <header-bar>
-    <button slot="left" text="返回"  @click="back"></button>
-    <button slot="right" text="注册"  @click="register"></button>
-  </header-bar>
-  <content>
-    <textfield type='tel' focus icon="zhanghao" label="帐号" placeholder="手机号/会员名"
-      :value.sync="account.value"
-      :rules="account.rules"
-      :errors="account.errors"
-      :perror.sync="account.perror"
-      :passed.sync="account.passed"></textfield>
-    <textfield type='password' icon="mima" label="密码" placeholder="请输入密码"
-      :value.sync="password.value"
-      :rules="password.rules"
-      :errors="password.errors"
-      :perror.sync="password.perror"
-      :passed.sync="password.passed"></textfield>
-    <button-area>
-      <button-row>
-        <button fill big raised :color="buttonColor" text="登录"
-          @click="login">
-          <span v-if="loading">登录中 ...</span>
-        </button>
-      </button-row>
-    </button-area>
-    <toast center icon="success" text="已经登录" v-if="auth"></toast>
-    <toast center icon="success" text="登录成功" v-if="success"></toast>
-    <toast center icon="fail" text="登录失败" v-if="fail"></toast>
-    <toast center text="请修改后登录" v-if="canNotClick"></toast>
-    <p>&nbsp;</p>
-  </content>
+<div>
+  <x-header back title="会员登录">
+    <button slot="right" icon="wode2" text="注册" @click="register"></button>
+  </x-header>
+  <textfield type='text' icon="zhanghao" label="帐号" placeholder="手机号/会员名"
+    :value.sync="account.value"
+    :rules="account.rules"
+    :errors="account.errors"
+    :perror.sync="account.perror"
+    :passed.sync="account.passed"></textfield>
+  <textfield type='password' icon="mima" label="密码" placeholder="请输入密码"
+    :value.sync="password.value"
+    :rules="password.rules"
+    :errors="password.errors"
+    :perror.sync="password.perror"
+    :passed.sync="password.passed"></textfield>
+  <button-area>
+    <button-row>
+      <button fill big raised :color="buttonColor" text="登录"
+        @click="login">
+        <span v-if="loading">登录中 ...</span>
+      </button>
+    </button-row>
+  </button-area>
+  <toast center icon="success" text="登录成功" v-if="success"></toast>
+  <toast center icon="fail" text="登录失败" v-if="fail"></toast>
+  <toast center text="请修改后登录" v-if="canNotClick"></toast>
+  <p>&nbsp;</p>
 </div>
 
 </template>
 
 <script>
-import HeaderBar from 'components/ui/bars/headerBar'
-import Content from 'components/ui/content'
-import Textfield from 'components/ui/forms/textfield'
-import Button from 'components/ui/button/button'
-import ButtonRow from 'components/ui/button/button-row'
-import ButtonArea from 'components/ui/button/button-area'
-import Toast from 'components/ui/toast'
+import {XHeader, Button, ButtonRow, ButtonArea, Textfield, Toast} from 'ui/components'
 import {login} from 'actions/member'
 
 export default {
@@ -122,9 +112,6 @@ export default {
     register() {
       this.$route.router.go('/member/register');
     },
-    back () {
-      window.history.back()
-    },
   },
   ready() {
     if (this.auth) {
@@ -135,8 +122,7 @@ export default {
     }
   },
   components: {
-    HeaderBar,
-    Content,
+    XHeader,
     Textfield,
     Button,
     ButtonRow,

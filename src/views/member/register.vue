@@ -1,9 +1,8 @@
 <template>
 <div>
-  <header-bar>
-    <button slot="left" text="返回"  @click="back"></button>
-    <button slot="right" text="登录"  @click="login"></button>
-  </header-bar>
+  <x-header back title="会员注册">
+    <button slot="right" icon="wode" text="登录" @click="login"></button>
+  </x-header>
   <textfield type='tel' icon="zhanghao" label="手机" placeholder="输入手机号"
     :value.sync="mobile.value"
     :rules="mobile.rules"
@@ -37,12 +36,7 @@
 </template>
 
 <script>
-import HeaderBar from 'components/ui/bars/headerBar'
-import Textfield from 'components/ui/forms/textfield'
-import Button from 'components/ui/button/button'
-import ButtonRow from 'components/ui/button/button-row'
-import ButtonArea from 'components/ui/button/button-area'
-import Toast from 'components/ui/toast'
+import {XHeader, Button, ButtonRow, ButtonArea, Textfield, Toast} from 'ui/components'
 import {register} from 'actions/member'
 
 export default {
@@ -132,9 +126,6 @@ export default {
     login() {
       this.$route.router.go('/member/login');
     },
-    back () {
-      window.history.back()
-    },
   },
   watch: {
     "password.value": function(val) {
@@ -142,7 +133,7 @@ export default {
     },
   },
   components: {
-    HeaderBar,
+    XHeader,
     Textfield,
     Button,
     ButtonRow,

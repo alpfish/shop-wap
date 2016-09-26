@@ -1,3 +1,7 @@
+// 应用
+export const UPDATE_LOADING = 'UPDATE_LOADING'
+export const UPDATE_DIRECTION = 'UPDATE_DIRECTION'
+
 /********
  * 商品 *
  ********/
