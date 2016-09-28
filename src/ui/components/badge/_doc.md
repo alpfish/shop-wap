@@ -16,4 +16,5 @@
 ## Props
 | 参数 | 说明 |	类型 | 可选值 | 默认值 |
 | :---- | :---- | :---- | :---- | :---- |
-| text | 文字 | Boolean |  | 无 | 
+| text | 文字 | Boolean |  | 无 |
+| color | 颜色  | String | .js style文件中的颜色 | red |

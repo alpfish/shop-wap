@@ -1,48 +1,23 @@
 <template>
   <div>
     <loading place="page" :show="loading" color="brand" size="14px"></loading>
-    <router-view
+    <!-- <router-view
     :transition="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')"
-    ></router-view>
-    <view-box>
-      <router-view
-      :transition="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')"
-      ></router-view>
-      <tabbar slot="bottom">
-        <tabbar-item v-link="{name: 'home'}" :active="route.name == 'home'">
-          <icon slot="icon" name="shouye" :size="18" ></icon>
-          <span slot="label">首页</span>
-        </tabbar-item>
-        <tabbar-item v-link="{name: 'category'}" :active="route.name == 'category'">
-          <icon slot="icon" name="fenlei1" :size="18"></icon>
-          <span slot="label">商品分类</span>
-        </tabbar-item>
-        <tabbar-item badge="2" :active="route.name == 'cart'">
-          <icon slot="icon" name="gouwuche" :size="18"></icon>
-          <span slot="label">购物车</span>
-        </tabbar-item>
-        <tabbar-item dot v-link="{name: 'member'}"  :active="isMember">
-          <icon slot="icon" name="wode" :size="18"></icon>
-          <span slot="label">我的</span>
-        </tabbar-item>
-      </tabbar>
-    </view-box>
+    ></router-view> -->
+    <!-- 无过滤效果 -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import store from './vuex/store'
-// import { Loading } from './ui/components'
-import { ViewBox, Loading, Icon, Tabbar, TabbarItem} from './ui/components'
+import { ViewBox, Loading} from './ui/components'
 
 export default {
   store: store,
   components: {
     ViewBox,
     Loading,
-    Icon,
-    Tabbar,
-    TabbarItem,
   },
   vuex: {
     getters: {
@@ -76,7 +51,7 @@ html, body {
   overflow-x: hidden;
 }
 body {
-  background-color: @bg-color;
+  background-color: @bg-body;
 }
 /* v-r-transition, default is {forward: 'forward', back: 'back'}*/
 .forward-enter, .forward-leave {

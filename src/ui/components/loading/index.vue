@@ -2,7 +2,7 @@
 <template>
 <div v-show="show" :style="pageMasker">
   <div :class="{'loading-inline': place == 'inline', 'loading-row': place == 'row', 'loading-page': place == 'page'}">
-    <beat :color="getColor" :size="size"></beat>
+    <beat :color="loadingColor" :size="size"></beat>
     <!-- <clip :color="getColor" size="35px"></clip> -->
     <!-- <spinner type="ripple"></spinner> -->
     <p class="loading-text" v-show="place !='inline'"><slot></slot></p>
@@ -14,8 +14,7 @@
 import Beat from './loader/beat'
 // import Clip from './loader/clip'
 // import Spinner from '../spinner'
-import { toRGB } from './converter'
-import { color } from '../../style/_vars'
+import { getColor } from '../../style/_vars'
 
 export default {
   components: {
@@ -34,7 +33,7 @@ export default {
     },
     color: {
       type: String,
-      default: 'brand' // brand, black, white, gray, red, orange, yellow, green, teal, blue, purple
+      default: 'brand'
     },
     size: {
       type: String,
@@ -42,13 +41,11 @@ export default {
     },
   },
   computed: {
-    getColor() {
-      let loaderColor = /,/.test(color[this.color]) ? color[this.color] : toRGB(color[this.color].replace('#', '')).join(',')
-      return `rgba(${loaderColor}, 0.9)`
+    loadingColor() {
+      return getColor(this.color, 0.9)
     },
     pageMasker () {
       if (this.place == 'page') {
-        // let bgColor = /,/.test(color[this.color]) ? color[this.color] : toRGB(color[this.color].replace('#', '')).join(',')
         return {
           position: 'absolute',
           top: 0,
@@ -56,7 +53,6 @@ export default {
           bottom: 0,
           right: 0,
           zIndex: 999,
-          // backgroundColor: `rgba(${bgColor}, 0.05)`,
           backgroundColor: 'rgba(255,255,255,0.5)',
           // backgroundColor: 'rgba(0,0,0,0.1)',
         }

@@ -2,7 +2,7 @@
 <template>
 <div class="header-bar" :class="{ 'fixed': fixed }">
   <div class="left">
-    <icon name="back" :size="18" @click="back" v-if="back || backtext"></icon><span @click="back" v-if="backtext">返回</span>
+    <icon-button icon="back" @click="back" v-if="back || backtext"></icon-button><span @click="back" v-if="backtext">返回</span>
     <slot name="left"></slot>
   </div>
   <div class="title"  v-text="title"><slot></slot></div>
@@ -13,11 +13,12 @@
 </template>
 
 <script>
-import Icon from '../icon'
+import { Icon, IconButton } from '../icon'
 
 export default {
   components: {
     Icon,
+    IconButton,
   },
   props: {
     title: {
@@ -55,15 +56,13 @@ export default {
   justify-content: flex-start;
   align-items: center;
   font-size: 14px;
-  color: @white;
-  // color: @black;
-  background-color: lighten(@gray, 1%);
-  // background-color: lighten(@gray-light, 2%);
-  height: @header-height;
-  line-height: @header-height;
+  color: @text-color-header;
+  background-color: lighten(@bg-header, 1%);
+  height: @height-header;
+  line-height: @height-header;
   z-index: @zindex-header;
   width: 100%;
-  box-shadow: 0px 1px 5px lighten(@gray-light, 15%);
+  box-shadow: 0 0px 8px lighten(@gray, 20%);
   .flex-shrink(0);
   &.fixed {
     position: fixed;
@@ -90,9 +89,12 @@ export default {
   .button {
     background: none;
     font-size: 14px;
-    height: @header-height;
-    color: lighten(@white, 10%);
-    // color: lighten(@black, 10%);
+    height: @height-header;
+    color: lighten(@text-color-header, 10%);
+  }
+  .iconfont {
+    color: lighten(@text-color-header, 10%);
+    font-size: 18px;
   }
 }
 </style>

@@ -1,11 +1,25 @@
+<!-- Badge -->
 <template>
-  <span v-text="text" :class="['vux-badge', {'vux-badge-single': text.length === 1}]"></span>
+  <span v-text="text" :class="['vux-badge', {'vux-badge-single': text.length === 1}]" :style="style"></span>
 </template>
 
 <script>
+import {getColor} from 'ui/style/_vars'
+
 export default {
   props: {
-    text: [String, Number]
+    text: [String, Number],
+    color:{
+      type: String,
+      default: 'red'
+    }
+  },
+  data() {
+    return {
+      style: {
+        background: getColor(this.color)
+      }
+    }
   }
 }
 </script>
@@ -16,7 +30,6 @@ export default {
 .vux-badge {
   display: inline-block;
   text-align: center;
-  background: @badge-bg-color;
   color: #fff;
   font-size: 12px;
   height: 16px;

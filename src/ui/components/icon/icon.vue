@@ -1,8 +1,9 @@
 <template>
-  <i class="iconfont" :class="classNames" :style="{'font-size': size + 'px', 'color': color}"><slot></slot></i>
+  <i class="iconfont" :class="classNames" :style="style"><slot></slot></i>
 </template>
 
 <script>
+import {getColor} from 'ui/style/_vars'
 export default {
   props: {
     name: {
@@ -23,6 +24,12 @@ export default {
       let obj = {}
       obj['icon-' + this.name] = true
       return obj
+    },
+    style () {
+      return {
+        fontSize: `${this.size}px`,
+        color: getColor(this.color)
+      }
     }
   }
 }
@@ -31,7 +38,8 @@ export default {
 <style lang="css">
 @import "../../../assets/iconfont/iconfont.css";
 
-.icon{
+.iconfont {
   position: relative;
+  font-weight: 100;
 }
 </style>

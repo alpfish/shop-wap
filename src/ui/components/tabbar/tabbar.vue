@@ -12,19 +12,19 @@ export default {
 }
 </script>
 
-<style lang="less">@import "../../style/base/fn.less";
+<style lang="less">
+@import "../../style/base/fn.less";
 
 .weui_tabbar {
     display: flex;
     position: absolute;
-    z-index: @tabbar-zindex;
+    z-index: @zindex-tabbar;
     bottom: 0;
     width: 100%;
-    background-color: #f7f7fa;
+    background-color: @bg-tabbar;
     &:before {
         .setTopLine(@gray);
     }
-
 }
 .weui_tabbar_item {
     display: block;
@@ -65,9 +65,9 @@ export default {
 }
 .weui_tabbar_icon > sup {
     position: absolute;
-    top: -8px;
+    top: -5px;
     left: 100%;
     transform: translateX(-50%);
-    z-index: @tabbar-zindex + 1;
+    z-index: @zindex-tabbar + 1;
 }
 </style>

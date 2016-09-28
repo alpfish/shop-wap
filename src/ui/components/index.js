@@ -2,7 +2,6 @@
 import Style from '../style/index.vue' // eslint-disable-line
 
 import Badge from './badge'
-import Icon from './icon'
 import Loading from './loading'
 import Ripple from './ripple'
 import Spinner from './spinner'
@@ -11,7 +10,8 @@ import Toast from './toast'
 import ViewBox from './view-box'
 import XHeader from './x-header'
 
-import { Button, ButtonRow, ButtonArea, FloatButton} from './button'
+import { Button, ButtonRow, ButtonArea, FloatButton } from './button'
+import { Icon, IconButton } from './icon'
 import { Tabbar, TabbarItem } from './tabbar'
 
 const ui = {
@@ -21,6 +21,7 @@ const ui = {
   ButtonArea,
   FloatButton,
   Icon,
+  IconButton,
   Loading,
   Ripple,
   Spinner,

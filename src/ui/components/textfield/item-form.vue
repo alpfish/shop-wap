@@ -28,7 +28,7 @@
  * <icon :size="18" name="gouwuche">
  */
 
-import icon from '../icon'
+import { Icon } from '../icon'
 export default {
   props: {
     label: {
@@ -49,7 +49,7 @@ export default {
     }
   },
   components: {
-    icon
+    Icon
   }
 }
 </script>
@@ -61,7 +61,7 @@ export default {
   position: relative;
   padding-left: 16px;
   min-height: 48px;
-  color: @body_color;
+  color: @gray;
   font-size: 14px;
   display: flex;
   &.focus-state,
@@ -72,7 +72,7 @@ export default {
   }
   &.focus-state {
     .floating-label {
-      color: @black;
+      color: @brand-color;
     }
   }
 }
@@ -118,12 +118,12 @@ export default {
 }
 .floating-label {
   transform-origin: left;
-  transform: scale(13/12) translateY(21px);
-  color: @body_color;
+  transform: scale(14/12) translateY(21px);
+  color: @gray;
   width: auto;
   max-width: 75%;
 }
 .item-form.focus-state{
-  color: @black;
+  color: @brand-color;
 }
 </style>

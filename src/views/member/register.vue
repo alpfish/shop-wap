@@ -1,7 +1,7 @@
 <template>
 <div>
   <x-header back title="会员注册">
-    <button slot="right" icon="wode" text="登录" @click="login"></button>
+    <button slot="right" text="登录" @click="login"></button>
   </x-header>
   <textfield type='tel' icon="zhanghao" label="手机" placeholder="输入手机号"
     :value.sync="mobile.value"
@@ -21,16 +21,16 @@
     :errors="repassword.errors"
     :perror.sync="repassword.perror"
     :passed.sync="repassword.passed"></textfield>
-  <button-area>
-    <button-row>
-      <button big fill raised :color="buttonColor" text="注册" @click="register">
-        <span v-if="loading">注册中 ...</span>
-      </button>
-    </button-row>
-  </button-area>
+  <button-row>
+    <button fill raised
+      @click="register"
+      :color="buttonColor"
+      :disabled="(loading)"
+      :text="loading ? '注册中 ...' : '注册'"></button>
+  </button-row>
   <toast center icon="success" text="注册成功" v-if="success"></toast>
   <toast center icon="fail" text="注册失败" v-if="fail"></toast>
-  <toast center text="请修改后注册" v-if="canNotClick"></toast>
+  <toast center text="请正确填写表单" v-if="canNotClick"></toast>
   <p>&nbsp;</p>
 </div>
 </template>

@@ -1,14 +1,14 @@
 <template>
-<a href="javascript:;" class="float-button" :class="classNames" v-el:button>
-  <!-- <icon :name="icon"></icon> -->
+<a href="javascript:;" class="float-button" :class="classNames" :style="style" v-el:button>
   <icon :name="icon" :size="20"></icon>
   <ripple color="rgba(255, 255, 255, .3)" :trigger="$els.button"></ripple>
 </a>
 </template>
 
 <script>
-import icon from '../icon'
+import icon from '../icon/icon'
 import ripple from '../ripple'
+import {getColor} from '../../style/_vars'
 export default {
   props: {
     icon: {
@@ -21,7 +21,7 @@ export default {
     },
     color: {
       type: String,
-      default: 'blue'
+      default: 'brand'
     }
   },
   components: {
@@ -31,9 +31,13 @@ export default {
   computed: {
     classNames () {
       let className = {}
-      className['float-button-' + this.color] = true
       className['float-button-fixed'] = this.fixed
       return className
+    },
+    style () {
+      return {
+         backgroundColor: getColor(this.color)
+      }
     }
   }
 }
@@ -49,11 +53,8 @@ export default {
   align-items: center;
   justify-content: center;
   line-height: 1;
-  // width: 56px;
-  // height: 56px;
   width: 45px;
   height: 45px;
-  background-color: @color;
   border: none;
   appearance: none;
   text-decoration: none;
@@ -75,25 +76,5 @@ export default {
   position: fixed;
   right: 16px;
   bottom: 16px;
-}
-
-.float-button-carbon{
-  background-color: @color;
-}
-
-.float-button-red{
-  background-color: @red;
-}
-
-.float-button-green{
-  background-color: @green;
-}
-
-.float-button-blue{
-  background-color: @blue;
-}
-
-.float-button-amber{
-  background-color: @amber;
 }
 </style>

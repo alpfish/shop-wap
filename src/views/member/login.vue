@@ -1,31 +1,35 @@
 <template>
 <div>
   <x-header back title="会员登录">
-    <button slot="right" icon="wode2" text="注册" @click="register"></button>
+    <button slot="right" text="注册" @click="register"></button>
   </x-header>
-  <textfield type='text' icon="zhanghao" label="帐号" placeholder="手机号/会员名"
+  <textfield type='text' icon="zhanghao" label="手机号/会员名" label-float
     :value.sync="account.value"
     :rules="account.rules"
     :errors="account.errors"
     :perror.sync="account.perror"
     :passed.sync="account.passed"></textfield>
-  <textfield type='password' icon="mima" label="密码" placeholder="请输入密码"
+  <textfield type='password' icon="mima" label="密码" label-float
     :value.sync="password.value"
     :rules="password.rules"
     :errors="password.errors"
     :perror.sync="password.perror"
     :passed.sync="password.passed"></textfield>
-  <button-area>
-    <button-row>
-      <button fill big raised :color="buttonColor" text="登录"
-        @click="login">
-        <span v-if="loading">登录中 ...</span>
-      </button>
-    </button-row>
-  </button-area>
+  <button-row>
+    <button fill raised
+      @click="login"
+      :color="buttonColor"
+      :disabled="(loading)"
+      :text="loading ? '登录中 ...' : '登录'"></button>
+  </button-row>
+  <button-row>
+  <button mini @click="register">注册会员</button>
+  <button mini>忘记密码</button>
+  </button-row>
+
   <toast center icon="success" text="登录成功" v-if="success"></toast>
   <toast center icon="fail" text="登录失败" v-if="fail"></toast>
-  <toast center text="请修改后登录" v-if="canNotClick"></toast>
+  <toast center text="请正确填写表单" v-if="canNotClick"></toast>
   <p>&nbsp;</p>
 </div>
 

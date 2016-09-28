@@ -10,8 +10,9 @@
 import Ripple from '../ripple'
 import Icon from '../icon/icon'
 import {
-  getColor
+  color, getColor
 } from 'ui/style/_vars'
+import {toRGB} from 'ui/utils/converter'
 
 export default {
   components: {
@@ -25,7 +26,10 @@ export default {
     fill: Boolean,
     raised: Boolean,
     disabled: Boolean,
-    color: String,
+    color: {
+      type: String,
+      default: ''
+    }
   },
   computed: {
     buttonClass() {
@@ -35,16 +39,17 @@ export default {
       }
     },
     style() {
-      let bgColor = getColor(this.color)
-      let borderColor = getColor('semi', 0)
+      // TODO getColor
+      let bgColor = color[this.color] ? color[this.color] : ''
+      let borderColor = this.getRGBA(color['semi'], 0)
       let style = {
-        color: getColor('semi'),
+        color: color['semi'],
         backgroundColor: 'none',
         border: `1px solid ${borderColor}`,
       }
       // 颜色填充
-      if (this.fill  && getColor(this.color)) {
-        style['color'] = getColor('white')
+      if (this.fill  && color[this.color]) {
+        style['color'] = color['white']
         style['backgroundColor'] = bgColor
         style['border'] = `0px solid rgba(0, 0, 0, .2)`
       }
@@ -53,20 +58,27 @@ export default {
         style['border'] = `0px solid rgba(0, 0, 0, .2)`
       }
       // 彩色边框
-      if (!this.fill && !this.raised && getColor(this.color)) {
-        style['color'] =  getColor(this.color)
+      if (!this.fill && !this.raised && color[this.color]) {
+        style['color'] = color[this.color]
         style['backgroundColor'] = 'none'
-        borderColor =  getColor(this.color, 0.3)
+        borderColor = this.getRGBA(color[this.color], 0.3)
         style['border'] = `1px solid ${borderColor}`
       }
       // 禁用
       if (this.disabled) {
         // 文字颜色前面已确定
-        style['color'] =  getColor(style['color'], 0.6)
+        style['color'] = this.getRGBA(style['color'], 0.6)
       }
       return style
     }
   },
+  methods: {
+    getRGBA(hex, alpha) {
+      hex = /,/.test(hex) ? hex : toRGB(hex.replace('#', '')).join(',')
+      return `rgba(${hex}, ${alpha})`
+    },
+  }
+
 }
 </script>
 

@@ -1,11 +1,18 @@
 <template>
-<span>
+<div>
+  <!-- 原mui header -->
   <header class="mui-bar mui-bar-nav">
     <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
     <h1 class="mui-title">商品分类</h1>
   </header>
-
+  <!-- 自定义Header -->
+  <x-header back fixed title="商品分类">
+    <button icon="sousuo" text="搜索" slot="right" ></button>
+  </x-header>
+  <!-- 临时撑出Header范围 -->
+  <div style="height: 48px"></div>
   <div class="mui-content mui-row mui-fullscreen" style="background-color: #fff">
+
     <loading v-if="!sons">加载中</loading>
     <!-- 左侧 -->
     <div class="mui-col-xs-3">
@@ -23,12 +30,12 @@
                 <img class="mui-media-object wap-img" :src="end.img || '../../../static/imgs/img_bg_120.gif'">
                 <span class="mui-media-body">{{ end.name }}</span></a></li></ul></div></div>
   </div>
-</span>
+</div>
 </template>
 
 <script>
   import {setTree, setCurrentPid} from 'actions/goods-category'
-  import { Loading } from 'ui/components'
+  import { Loading, XHeader, Button } from 'ui/components'
   import ImagePlaceholder from 'components/common/image-placeholder'
 
   export default {
@@ -62,13 +69,15 @@
         this.setTree()
         setTimeout(() => this.setCurrentPid(), 1500)
       }
-      mui.init({
-        swipeBack: true //启用右滑关闭功能
-      });
+      // mui.init({
+      //   swipeBack: true //启用右滑关闭功能
+      // });
     },
     components: {
       Loading,
-      ImagePlaceholder
+      ImagePlaceholder,
+      XHeader,
+      Button,
     }
   }
 </script>
@@ -100,13 +109,16 @@
   /*左侧类目显示*/
   .mui-segmented-control .mui-control-item {
     width: 100%;
+    font-size: 15px;
     line-height: 60px;
-    color: @black;
-    background-color: @gray-light;
+    color: @semi;
+    background-color: #eee;
   }
   // 左侧激活类目颜色
   .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
     border-left: 3px solid @brand-color;
+    font-size: 16px;
+    font-weight: 600;
   }
   // 去右侧分隔线
   .mui-table-view:before {
@@ -115,19 +127,19 @@
   .mui-table-view:after {
       height: 0;
   }
-  .mui-table-view{
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-size: 0.85rem;
-    line-height: 0.95rem;
-    color: @black;
+  .mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+    // margin-top: 0;
+    // margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 12px;
+    color: @semi;
   }
   .son-name {
     color: @gray;
     text-align: left;
-    height: .7rem;
-    font-size: .65rem;
-    line-height: .7rem;
+    height: 16px;
+    font-size: 10px;
+    line-height: 16px;
     padding-left: .3rem;
     border-left: 3px solid @gray;
   }

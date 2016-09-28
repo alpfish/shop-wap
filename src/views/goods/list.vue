@@ -1,6 +1,6 @@
 <template>
   <div class="mui-content">
-    <top-nav></top-nav>
+    <x-header title="商品列表"></x-header>
     <sort @sort="setGoodsList"></sort>
     <list :list="goods" :loading="!loaded" :all-loaded="!hasMore" @load-more="getMore"></list>
     <p v-if="loaded && !loadedSuccess">服务器忙，请稍后再试...</p>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import TopNav from 'components/goods/list/top-nav'
+  import {XHeader} from 'ui/components'
   import Sort from 'components/goods/list/top-sort'
   import List from 'components/goods/list/style/list'
   import {setGoodsList, addToGoodsList} from 'actions/goods-list'
@@ -54,7 +54,7 @@
     },
 
     components: {
-      TopNav,
+      XHeader,
       Sort,
       List,
     }

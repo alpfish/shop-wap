@@ -35,7 +35,7 @@ router.beforeEach(({ to, from, next }) => {
     commit('UPDATE_DIRECTION', 'forward')
   }
   commit('UPDATE_LOADING', true)
-  setTimeout(next, 50)
+  setTimeout(next, 0)
 })
 router.afterEach(() => {
   commit('UPDATE_LOADING', false)
@@ -96,6 +96,10 @@ router.map({
   'goods/list': {
     name: 'goods-list',
     component: (resolve) => require(['views/goods/list.vue'], resolve)
+  },
+  'cart/list': {
+    name: 'cart-list',
+    component: (resolve) => require(['views/cart/list.vue'], resolve)
   },
   '/member': {
     name: 'member',

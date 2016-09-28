@@ -11,10 +11,10 @@
           @blur="this.focus = false"  v-model="value"
           :placeholder="placeholder">
       </textarea>
+      <icon name="shanchu3" :size="16" class="clear"  v-show="!!value && focus" @click="value = ''"></icon>
+      <!-- 父组件错误最好显示后自动消失 -->
+      <div class="error" v-if="(error || perror) && !focus"><icon :size="11" name="error">&nbsp;{{ error ? error : perror}}</icon></div>
     </label>
-    <div class="clear"><icon name="shanchu3" :size="18"  v-if="!!value" @click="value = ''"></icon></div>
-    <!-- 父组件错误最好显示后自动消失 -->
-    <div class="error" v-if="(error || perror) && !focus"><icon name="error" color="red" :size="12">{{ error ? error : perror}}</icon></div>
   </item-form>
 </template>
 
@@ -198,8 +198,8 @@ export default {
   &.not-empty-state:after,
   .focus-state &:after,
   .not-empty-state &:after {
-    background: @semi;
-    transform: scaleY(1) !important;
+    background: @black;
+    transform: scaleY(2) !important;
   }
 }
 input[type="date"],
@@ -229,22 +229,24 @@ textarea {
   margin: 0;
   width: 100%;
   height: 36px;
-  color: @semi;
+  color: @color;
   font-size: 16px;
   font-family: inherit;
   &::-webkit-input-placeholder {
-    color: @gray;
+    color: #7e848c;
   }
 }
+
 .clear {
-  color: @semi;
+  color: @gray;
   position: absolute;
-  right: 25px;
-  bottom: 15px;
+  right:8px;
+  bottom: 8px;
 }
 .error {
+  color: @red;
   position: absolute;
-  left: 75px;
-  bottom: -12px;
+  left: 0;
+  bottom: -22px;
 }
 </style>

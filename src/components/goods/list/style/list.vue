@@ -10,7 +10,7 @@
           <div>
             <span class="item-price">¥{{ item.price }}</span>
             <span class="item-sales"><del>{{ item.orig != '0.00' ? '¥'+item.orig : '¥'+item.price }}</del></span>
-            <div class="proBuy"><span class="mui-icon-extra mui-icon-extra-cart mui-pull-right cart"></span></div>
+            <div class="proBuy"><icon-button icon="gouwuche" fill color="red"></icon-button></div>
           </div>
         </div>
       </a>
@@ -60,7 +60,7 @@
   }
   .item-price {
     // color: lighten(@color-brand, 10%);
-    color: darken(@brand-color, 1%);
+    color: darken(@red, 1%);
     font-size: 16px;
     font-weight: 600;
   }
@@ -96,7 +96,7 @@
   Vue.use( InfiniteScroll )
 
   import { IMG_ROOT } from 'src/config'
-  import { Loading } from 'ui/components'
+  import { Loading, IconButton } from 'ui/components'
 
   export default {
     props: {
@@ -130,7 +130,8 @@
 
     components: {
       InfiniteScroll,
-      Loading
+      Loading,
+      IconButton
     },
   };
 </script>
