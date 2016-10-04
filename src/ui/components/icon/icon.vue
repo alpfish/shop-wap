@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {getColor} from 'ui/style/_vars'
+import {getColor} from 'ui/styles/_vars'
 export default {
   props: {
     name: {

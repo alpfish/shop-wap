@@ -1,0 +1,86 @@
+@import "../../styles/weui/base/fn";
+
+.list {
+    position: relative;
+    background-color: @weuiCellBg;
+    line-height: @weuiCellLineHeight;
+    font-size: @weuiCellFontSize; //cell中间有效高度23px，跟客户端默认图标尺寸一致
+    overflow: hidden; //因为每个cell的border使用before元素left搞的，ie下伪元素的containing block估计跟标准不同，在cell上用oh不生效
+}
+.list-line {
+  position: relative;
+  height: 0px;
+  &:before {
+    .setBottomLine(@weuiCellBorderColor);
+  }
+}
+.list-title {
+    margin-top: 0.77em; // 15px - 行高
+    margin-bottom: 0.3em; // 8px - 行高
+    padding-left: @weuiCellGapH;
+    padding-right: @weuiCellGapH;
+    color: @globalTextColor;
+    font-size: @weuiCellTipsFontSize;
+    & + .list {
+        margin-top: 0;
+    }
+}
+.no-list-title {
+    margin-top: 15px;
+}
+
+.list-item {
+    min-height: @weuiCellHeight;  // 防止组件中item上下 padding 设置为 0 时丢失高度设置
+    // padding: @weuiCellGapV @weuiCellGapH;
+    padding: 0 @weuiCellGapH;  // 防止单行有 switch 等元素时超高
+    position: relative; //这个是为了兼容cells容器onepx方案被before挡住而做的
+    display: flex;
+    align-items: center;
+    color: @cell-body-label-color;
+
+    .body {
+        flex: auto; // 自动伸缩
+        display: flex;
+        align-items: center;
+    }
+    .left,
+    .right {
+        flex: none; // 根据内容固定宽度
+        display: flex;
+        align-items: center;
+        color: @globalTextColor;
+        max-width: 50%;
+    }
+}
+// item分隔线
+.item-line {
+    position: relative;
+    height: 0;
+    &:before {
+        // .setTopLine(@weuiCellBorderColor);
+        .setBottomLine(@weuiCellBorderColor);
+    }
+}
+// 箭头
+.arrow {
+    &:after {
+        content: " ";
+        .setArrow_Wap(right, 8px, #C8C8CD, 2px);
+        top: -1px;
+        margin-left: 0.3em;
+    }
+}
+.item-title, .subtitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: @weuiCellLineHeight;
+}
+.item-title {
+    font-size: @weuiCellFontSize; //cell中间有效高度23px，跟客户端默认图标尺寸一致
+    color: @cell-body-label-color;
+}
+.subtitle {
+    font-size: 14px;
+    color: #666;
+}

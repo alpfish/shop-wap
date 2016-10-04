@@ -1,5 +1,5 @@
 <style scoped lang="less">
-  @import "../ui/style/_vars.less";
+  @import "../ui/styles/_vars.less";
 
   .not-found .link {
       color: @black;

@@ -83,7 +83,7 @@
 </script>
 
 <style scoped lang="less">
-  @import "../../ui/style/_vars.less";
+  @import "../../ui/styles/_vars.less";
 
   .mui-icon {
     color: #000;
@@ -116,7 +116,7 @@
   }
   // 左侧激活类目颜色
   .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
-    border-left: 3px solid @brand-color;
+    border-left: 3px solid @brand;
     font-size: 16px;
     font-weight: 600;
   }

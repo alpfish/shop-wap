@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style lang="less">
-@import "../../style/base/fn.less";
+@import "../../styles/weui/base/fn.less";
 
 .weui_tabbar {
     display: flex;
@@ -35,7 +35,7 @@ export default {
     -webkit-tap-highlight-color: transparent;
 
     .active {
-        color: @brand-color;
+        color: @brand;
     }
 }
 

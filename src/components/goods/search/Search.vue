@@ -26,7 +26,7 @@
 </template>
 
 <style scoped lang="less">
-  @import "../../../ui/style/_vars.less";
+  @import "../../../ui/styles/_vars.less";
 
   .page {
       position: fixed;

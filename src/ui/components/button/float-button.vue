@@ -8,7 +8,7 @@
 <script>
 import icon from '../icon/icon'
 import ripple from '../ripple'
-import {getColor} from '../../style/_vars'
+import {getColor} from '../../styles/_vars'
 export default {
   props: {
     icon: {
@@ -44,8 +44,8 @@ export default {
 </script>
 
 <style lang="less">
-@import "../../style/_vars.less";
-@import "../../style/vue-carbon/_mixins.less";
+@import "../../styles/_vars.less";
+@import "../../styles/vue-carbon/_mixins.less";
 
 .float-button{
   position: relative;

@@ -14,7 +14,7 @@
 import Beat from './loader/beat'
 // import Clip from './loader/clip'
 // import Spinner from '../spinner'
-import { getColor } from '../../style/_vars'
+import { getColor } from '../../styles/_vars'
 
 export default {
   components: {
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import "../../style/_vars.less";
+@import "../../styles/_vars.less";
 
 .loading-inline {
   display: inline-block;

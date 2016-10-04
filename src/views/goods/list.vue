@@ -10,7 +10,7 @@
 <script>
   import {XHeader} from 'ui/components'
   import Sort from 'components/goods/list/top-sort'
-  import List from 'components/goods/list/style/list'
+  import List from 'components/goods/list/styles/list'
   import {setGoodsList, addToGoodsList} from 'actions/goods-list'
 
   export default {

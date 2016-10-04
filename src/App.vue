@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="less">
-@import './ui/style/_vars.less';
+@import './ui/styles/_vars.less';
 
 html, body {
   height: 100%;

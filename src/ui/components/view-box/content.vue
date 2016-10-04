@@ -5,7 +5,7 @@
 </template>
 
 <style lang="less">
-@import "../../style/vue-carbon//normalize.css";
+@import "../../styles/vue-carbon//normalize.css";
 *,
 *::before,
 *::after{

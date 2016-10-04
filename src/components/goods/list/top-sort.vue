@@ -22,7 +22,7 @@
 </template>
 
 <style scoped lang="less">
-  @import "../../../ui/style/_vars.less";
+  @import "../../../ui/styles/_vars.less";
 
   .mui-row {
     margin-bottom: 5px;
@@ -33,7 +33,7 @@
     box-shadow: 0 1px 6px #ccc;
   }
   .active {
-    color: @brand-color;
+    color: @brand;
   }
   .sort-arrow {
     display: inline-block;
@@ -54,10 +54,10 @@
     border-bottom-color: @gray;
   }
   .triangle-top.active{
-    border-top-color: @brand-color;
+    border-top-color: @brand;
   }
   .triangle-bottom.active{
-    border-bottom-color: @brand-color;
+    border-bottom-color: @brand;
   }
 </style>
 

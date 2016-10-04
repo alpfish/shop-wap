@@ -47,8 +47,8 @@ export default {
 </script>
 
 <style lang="less">
-@import "../../style/_vars.less";
-@import "../../style/vue-carbon/_mixins.less";
+@import "../../styles/_vars.less";
+@import "../../styles/vue-carbon/_mixins.less";
 
 .header-bar {
   display: flex;

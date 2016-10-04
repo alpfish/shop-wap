@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import {getColor} from 'ui/style/_vars'
+import {getColor} from 'ui/styles/_vars'
 
 export default {
   props: {
@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="less">
-@import '../../style/_vars.less';
+@import '../../styles/_vars.less';
 
 .vux-badge {
   display: inline-block;

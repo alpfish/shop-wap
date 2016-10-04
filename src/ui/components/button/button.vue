@@ -11,7 +11,7 @@ import Ripple from '../ripple'
 import Icon from '../icon/icon'
 import {
   getColor
-} from 'ui/style/_vars'
+} from 'ui/styles/_vars'
 
 export default {
   components: {
@@ -70,8 +70,8 @@ export default {
 }
 </script>
 
-<style lang="less">@import "../../style/_vars.less";
-@import "../../style/vue-carbon/_mixins.less";
+<style lang="less">@import "../../styles/_vars.less";
+@import "../../styles/vue-carbon/_mixins.less";
 .button {
     color: @semi;
     height: 44px;

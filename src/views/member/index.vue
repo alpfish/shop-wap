@@ -38,7 +38,7 @@ export default {
 }
 </script>
 <style lang="less">
-//@import '../../ui/style/index.less';
+//@import '../../ui/styles/index.less';
 .page {
   position:fixed;
   top: 0;
