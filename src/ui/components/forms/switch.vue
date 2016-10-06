@@ -24,9 +24,7 @@ export default {
       return this.$parent.labelId ? this.$parent.labelId : Math.random().toString(36).substring(3, 8)
     }
   },
-  ready() {
-    // console.log(this.labelId);
-  }
+
 }
 </script>
 

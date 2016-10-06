@@ -14,3 +14,13 @@
     white-space: normal!important;
     word-wrap: break-word;
 }
+// 多行
+.ellipsisLn(@line) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: @line;
+    white-space: normal!important;
+    word-wrap: break-word;
+}

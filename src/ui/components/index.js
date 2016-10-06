@@ -9,6 +9,9 @@ import Spinner from './spinner'
 import Toast from './toast'
 import ViewBox from './view-box'
 import XHeader from './x-header'
+import { XNumber } from './x-number'
+import { XInput } from './x-input'
+
 
 // Flex 布局
 import { Box, BoxItem } from './box'
@@ -53,6 +56,8 @@ const ui = {
   Toast,
   ViewBox,
   XHeader,
+  XNumber,
+  XInput,
 }
 
 module.exports = ui

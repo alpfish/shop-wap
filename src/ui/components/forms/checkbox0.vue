@@ -2,7 +2,7 @@
 <!-- 外层 div 防止多个 label 混乱 -->
 <div style="display: inline-flex;">
   <label class="checkbox" :for="labelId">
-    <input class="check" type="checkbox" v-model="value" :value="option" :disabled="disabled" :id="labelId">
+    <input class="check" type="checkbox" v-model="result" :value="value" :disabled="disabled" :id="labelId">
     <i class="weui_icon_checked"></i>
   </label>
   <slot>{{ value }}</slot>
@@ -12,15 +12,15 @@
 <script>
 export default {
   props: {
-    // 存放选取结果的数组变量，由各个 option 组成，自动双向绑定，可在外部指定已选项
-    value: {
+    // 结果存放数组，由各个 value 组成，自动双向绑定，可在外部指定已选项
+    result: {
       type: Array,
       required: true,
     },
-    // 单个选项值，其他选项值在外部循环组装（即绑定相同的value变量）
-    option: {
-      type: [String, Number],
-      required: true,
+    // 单个选项值，多个值在外部组装（即绑定相同的results变量）
+    value: {
+      type: String,
+      // required: 'true',
     },
     disabled: Boolean,
   },

@@ -6,7 +6,7 @@
       <slot name="left"></slot>
       <img v-if="img" :src="img" style="display: block; max-width: 18px; max-height: 18px; margin-right: 10px;">
       <icon v-if="icon" :name="icon" :size="18" :color="iconColor" style="margin-right: 10px"></icon>
-      <span v-if="title" class="item-title">{{title}}</span>
+      <span v-if="title" class="title">{{title}}</span>
     </div>
     <!-- slot 默认 -->
     <div class="body">

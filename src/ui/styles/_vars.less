@@ -1,15 +1,26 @@
-// 品牌 & 控件色
-@brand:     #04BBC2; // 品牌色
-@default: @semi;
-@primary: @blue;
-@warning: @red;
+// 品牌色
+@brand:      #04BBC2; // 品牌色
+@brand-light: lighten(@brand, 10%); // 品牌亮色
+@brand-dark:  darken(@brand, 10%); // 品牌深色
 
-// 黑、白、灰、浅灰
-@white:      #ffffff; // 白色（或奶白）
-@black:      #000000; // 黑色（深色）
+// 辅助色: 在不同的场景中使用（例如危险色表示危险的操作）。
+@primary: @blue;  // 主色调
+@success: @green;
+@warning: @yellow;
+@danger:  @red;
+
+// 中性色：用于文本、背景和边框颜色。通过运用不同的中性色，来表现层次结构。
+@black:      #1F2D3D; // 黑色（深色）
+@black-light:#324057; // 浅黑
+@black-light-extra:#475669; // 补充浅黑
 @semi:       #353535; // 半(导体)黑，适用于大段主要内容
-@gray:       #888888; // 灰色
+
+@white:      #ffffff; // 白色（或奶白）
+@dark-white: #F9FAFC; // 暗白色
+
+@gray:       #8492A6; // 灰色
 @gray-light: #B2B2B2; // 浅灰色
+@gray-light-extra: #C0CCDA; // 补充浅灰
 
 // 红、橙、黄、绿、青、蓝、紫
 @red:    #ff5252;
@@ -24,25 +35,29 @@
 @carbon: #7e848c; // 碳色
 @amber: #ffc107;  // 琥珀色
 
-// 文本
-@text-color-header: #333333;
+// 排版
+@title-color: @black;
+@subtitle-color: @gray;
+@content-color: @black-light-extra;
 
 // 背景
 @bg-body:   #FEFEFE;
 @bg-header: #FFFFFF;
 @bg-tabbar: #FFFFFF;
-//@bg-badge: #ff5252;
+
+// 表单
+@border-color: #ececec; // #ececec;
 
 // 高度
-@height-header: 48px;
 @height-bar: 48px;
+@height-list: 44px;
+@height-header: 48px;
 
 // z-index
 @zindex-header: 101;
 @zindex-tabbar: 101;
 
 @barcolor: #474a4f;
-@border-color: rgba(0, 0, 0, 0.12);
 // 触摸颜色
 @tap-color: rgba(0, 0, 0, .1);
 @color: #474a4f;

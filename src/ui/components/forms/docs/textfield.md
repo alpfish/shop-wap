@@ -46,7 +46,7 @@ export default {
 | label-float | 标签浮动 | Boolean |  | false |
 | icon | 图标 | String |  | 无 |
 | type | 输入框类型 | String | input 所有类型，外加文本域 textarea | text |
-| placeholder | 点位字符 | String |  | 无 |
+| placeholder | 占位字符 | String |  | 无 |
 | rows | 行数，类型为 textarea 时有效 | Number |  | 无 |
 | focus | 聚焦（激活状态） | Boolean |  | false |
 | rules | 数据验证规则 | String |  | 无 |

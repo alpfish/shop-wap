@@ -50,13 +50,15 @@ export default {
 @import "../../styles/_vars.less";
 @import "../../styles/vue-carbon/_mixins.less";
 
+@header-text-color: @semi;
+
 .header-bar {
   display: flex;
   align-self: flex-start;
   justify-content: flex-start;
   align-items: center;
   font-size: 14px;
-  color: @text-color-header;
+  color: @header-text-color;
   background-color: lighten(@bg-header, 1%);
   height: @height-header;
   line-height: @height-header;
@@ -90,10 +92,10 @@ export default {
     background: none;
     font-size: 14px;
     height: @height-header;
-    color: lighten(@text-color-header, 10%);
+    color: lighten(@header-text-color, 10%);
   }
   .iconfont {
-    color: lighten(@text-color-header, 10%);
+    color: lighten(@header-text-color, 10%);
     font-size: 18px;
   }
 }
