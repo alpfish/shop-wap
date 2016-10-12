@@ -4,24 +4,25 @@
   <label class="checkbox" :for="labelId">
     <input class="check" type="checkbox" v-model="value" :value="option" :disabled="disabled" :id="labelId">
     <i class="weui_icon_checked"></i>
+    <span class="text" v-if="label" v-text="label"></span>
   </label>
-  <slot>{{ value }}</slot>
 </div>
 </template>
 
 <script>
 export default {
   props: {
-    // 存放选取结果的数组变量，由各个 option 组成，自动双向绑定，可在外部指定已选项
+    // 存放选取结果的数组变量，由各个 option 组成，使用:value.sync双向绑定，可在外部指定已选项
     value: {
       type: Array,
       required: true,
     },
     // 单个选项值，其他选项值在外部循环组装（即绑定相同的value变量）
     option: {
-      type: [String, Number],
+      type: String,
       required: true,
     },
+    label: String,
     disabled: Boolean,
   },
   computed: {
@@ -30,7 +31,6 @@ export default {
       return this.$parent.labelId ? this.$parent.labelId : Math.random().toString(36).substring(3, 8)
     }
   },
-
 }
 </script>
 
@@ -41,7 +41,6 @@ export default {
     display: inline-flex;
     align-self: center;
     align-items: center;
-    margin-right: 5px;
     &:active {
         background-color: none;
     }
@@ -53,6 +52,12 @@ export default {
             font-size: 23px;
         }
     }
+   .text
+   {
+     margin-left: 5px;
+     color: @black;
+     font-size: 16px;
+   }
 }
 
 input[type="checkbox"] {

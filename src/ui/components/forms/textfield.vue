@@ -12,7 +12,7 @@
           :placeholder="placeholder">
       </textarea>
     </label>
-    <div class="clear"><icon name="shanchu3" :size="18"  v-if="!!value" @click="value = ''"></icon></div>
+    <div class="clear"><icon name="shanchu4" :size="18"  v-if="!!value" @click="value = ''"></icon></div>
     <!-- 父组件错误最好显示后自动消失 -->
     <div class="error" v-if="(error || perror) && !focus"><icon name="error" color="red" :size="12">{{ error ? error : perror}}</icon></div>
   </item-form>
@@ -46,11 +46,15 @@
  * @example
  * <icon :size="18" name="gouwuche">
  */
-import icon from '../icon/icon'
+import Icon from '../icon/icon.vue'
 import itemForm from './item-form'
 import Validator from '../../utils/validator'
 
 export default {
+  components: {
+    Icon,
+    itemForm,
+  },
   props: {
     label: {
       type: String,
@@ -171,10 +175,7 @@ export default {
       this.validate()
     }
   },
-  components: {
-    icon,
-    'item-form': itemForm
-  }
+
 }
 </script>
 

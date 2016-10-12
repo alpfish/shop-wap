@@ -64,7 +64,7 @@ export default {
   line-height: @height-header;
   z-index: @zindex-header;
   width: 100%;
-  box-shadow: 0 0px 8px lighten(@gray, 20%);
+  box-shadow: 0 1px 5px lighten(@gray, 20%);
   .flex-shrink(0);
   &.fixed {
     position: fixed;

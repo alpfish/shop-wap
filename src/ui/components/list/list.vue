@@ -3,7 +3,7 @@
 <div>
   <div class="list-title" v-if="title"  v-html="title"></div>
   <div class="list-line" v-show="line"></div>
-  <div class="list" :class="{'no-list-title':!title}" :style="styles">
+  <div class="list" :style="styles">
     <slot></slot>
   </div>
   <div class="list-line" v-show="line"></div>

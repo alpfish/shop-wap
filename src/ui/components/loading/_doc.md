@@ -7,7 +7,7 @@
 ## 用法
 
 ```html
-<loading page :show="show" color="gray" size="20px">载入中</loading>
+<loading place="page" :show="show" color="gray" size="20px">载入中</loading>
 ```
 
 ## Props

@@ -19,13 +19,15 @@ export const SET_GOODS_DETAIL_ITEM = 'SET_GOODS_DETAIL_ITEM'
 export const SET_AUTH = 'SET_AUTH'
 export const CANCEL_AUTH = 'CANCEL_AUTH'
 
-/**********
- * 购物车 *
- **********/
-// 添加，减少或删除购物车商品
+
+//购物车
+
+// 设置购物车列表
+export const SET_TO_CART = 'SET_TO_CART'
+// 添加购物车商品
 export const ADD_TO_CART = 'ADD_TO_CART'
-  // 更新购物车商品镜像
-export const UPDATE_CART_MIRROR = 'UPDATE_CART_MIRROR'
+// 设置列表获取状态
+export const SET_CART_LOADED = 'SET_CART_LOADED'
   // 结算请求
 export const CHECKOUT_REQUEST = 'CHECKOUT_REQUEST'
   // 结算成功

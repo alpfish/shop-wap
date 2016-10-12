@@ -11,7 +11,7 @@
 <script>
 export default {
   props: {
-    // 结果存放变量
+    // 结果存放变量, 使用:value.sync双向绑定
     value: {
       type: Boolean,
       required: 'true',

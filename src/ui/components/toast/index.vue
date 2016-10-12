@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import icon from 'ui/components/icon'
+import Icon from '../icon/icon.vue'
 export default {
   data () {
     return {
@@ -35,7 +35,7 @@ export default {
     }
   },
   components: {
-    icon,
+    Icon,
   }
 }
 </script>

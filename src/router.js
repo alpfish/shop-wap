@@ -97,9 +97,10 @@ router.map({
     name: 'goods-list',
     component: (resolve) => require(['views/goods/list.vue'], resolve)
   },
-  'cart/list': {
-    name: 'cart-list',
-    component: (resolve) => require(['views/cart/list.vue'], resolve)
+  '/cart': {
+    name: 'cart',
+    auth: true,
+    component: (resolve) => require(['views/cart/index.vue'], resolve)
   },
   '/member': {
     name: 'member',

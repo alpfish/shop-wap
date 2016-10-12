@@ -10,9 +10,9 @@
 
 ```html
 <checkbox
-v-for="item in options"
-:value="checked"
-:option="item"></checkbox>
+v-for="option in options"
+:value.sync="checked"
+:option="option"></checkbox>
 ```
 
 ```javascript

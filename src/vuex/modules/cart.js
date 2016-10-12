@@ -1,56 +1,51 @@
 import {
-  ADD_TO_CART,
-  UPDATE_CART_MIRROR}
-  from 'src/vuex/mutation-types'
+  SET_TO_CART,
+  SET_CART_LOADED,
+}
+from 'src/vuex/mutation-types'
 
 const state = {
-
-  // [已添加商品]
-  // 包含：{ id, quantity }
-  // 通过 getters.js 从 goodsMirror 中获取商品详情
-  added: [
-    {id:2, quantity:6},
-    {id:1, quantity:1},
-    {id:3, quantity:2},
-    {id:4, quantity:8},
-    {id:14, quantity:8},
-    {id:24, quantity:8},
-    {id:34, quantity:8},
-  ],
-
-  // [商品镜像]
-  // ADD_TO_CART 时自动添加；
-  // 获取时（判断/定时）从服务器更新；
-  goodsMirror:[],
-
+  // 购物车商品
+  added: [],
+  // 购物车状态
+  loaded: false,
+  adding: false,
+  updating: false,
+  deleting: false,
 }
 
 const mutations = {
-
-  // 添加，减少或删除 added 中的商品
-  ADD_TO_CART (state, iterm, quantity) {
-    quantity = Number(quantity) || 1
-    let record = state.added.find(k => k.id === iterm.id)
-    if (!record) {
-      state.added.push({
-       id: iterm.id,
-       quantity: quantity
-      })
-      if (!state.goodsMirror.find(k => k.id === iterm.id)) {
-        state.goodsMirror.push(Object(iterm))
-      }
-    }
-    else if (record.quantity + quantity > 0){
-      record.quantity += quantity
-    }
-    else {
-      state.added.$remove(record)
-    }
+  SET_TO_CART(state, items) {
+    state.added= items
   },
 
-  UPDATE_CART_MIRROR (state, goods) {
-    state.goodsMirror = goods
-  }
+  ADD_TO_CART() {
+
+  },
+
+  UPDATE_FROM_CART() {
+
+  },
+
+  DELETE_FROM_CART() {
+
+  },
+
+  SET_CART_LOADED(state, status) {
+    state.loaded = !!status
+  },
+
+  SET_CART_ADDING(state, status) {
+    state.adding = !!status
+  },
+
+  SET_CART_UPDATING(state, status) {
+    state.updating = !!status
+  },
+
+  SET_CART_DELETING(state, status) {
+    state.deleting = !!status
+  },
 
 }
 

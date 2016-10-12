@@ -25,17 +25,17 @@ export default {
 </script>
 
 <style lang="less">
-@import '../../styles/_vars.less';
+@import '../../styles/index.less';
 
 .vux-badge {
   display: inline-block;
   text-align: center;
   color: #fff;
-  font-size: 12px;
-  height: 16px;
-  line-height: 16px;
-  border-radius: 8px;
-  padding: 0 6px;
+  font-size: 24px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 16px;
+  padding: 0 12px;
   background-clip: padding-box;
 }
 .vux-badge-single {

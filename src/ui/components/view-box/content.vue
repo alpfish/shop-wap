@@ -59,6 +59,6 @@ a{
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   position: relative;
-  padding-bottom: 60px; //alp
+  padding-bottom: 20px; //alp
 }
 </style>

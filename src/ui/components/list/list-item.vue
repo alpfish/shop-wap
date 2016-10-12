@@ -10,6 +10,7 @@
     </div>
     <!-- slot 默认 -->
     <div class="body">
+      <slot name="body"></slot>
       <slot></slot>
     </div>
     <!-- slot right -->
@@ -64,7 +65,7 @@ export default {
       }
       // 由 List 组件设置高度 (在 ./style.less 中设置默认最小高度为 '44px')
       if (this.$parent.itemHeight) {
-        styles['height'] = typeof this.$parent.itemHeight === 'string' ? this.$parent.itemHeight : `${this.$parent.itemHeight}px`
+        styles['min-height'] = typeof this.$parent.itemHeight === 'string' ? this.$parent.itemHeight : `${this.$parent.itemHeight}px`
       }
       return styles
     },

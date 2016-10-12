@@ -2,6 +2,7 @@
 import Style from '../styles/index.vue' // eslint-disable-line
 
 import Badge from './badge'
+import Currency from './currency'
 import Divider from './divider'
 import Loading from './loading'
 import Ripple from './ripple'
@@ -39,6 +40,7 @@ const ui = {
   Checkbox,
   Checker,
   CheckerItem,
+  Currency,
   Divider,
   FloatButton,
   Icon,

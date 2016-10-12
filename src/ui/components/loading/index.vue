@@ -37,7 +37,7 @@ export default {
     },
     size: {
       type: String,
-      default: '12px'
+      default: '24px'
     },
   },
   computed: {

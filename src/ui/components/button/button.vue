@@ -1,7 +1,7 @@
 <template>
 <button class="button" :class="buttonClass" :style="style" :disabled="disabled" v-el:button>
   <icon v-if="icon" :name="icon" :size="18"></icon>
-  {{text}}<slot></slot>
+  <span class="text"><slot>{{text}}</slot></span>
   <ripple :trigger="$els.button" v-if="!disabled"></ripple>
 </button>
 </template>
@@ -80,7 +80,6 @@ export default {
     appearance: none;
     background: none;
     text-decoration: none;
-    text-align: center;
     margin: 0;
     padding: 0 3px;
     white-space: nowrap;
@@ -92,17 +91,21 @@ export default {
     border: none;
     transition-duration: 300ms;
     transform: translate3d(0, 0, 0);
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     &:active {
         background: @tap-color;
     }
+    .text {
+      // flex: auto;
+      // display: inline-flex;
+      // justify-content: center;
+    }
     .iconfont {
         .flex-shrink(0);
         pointer-events: none;
         margin: 0 4px;
-        font-weight: 100;
     }
     .ripple-ink { // 点击水波
         // color: rgba(255,255,255,0.4);

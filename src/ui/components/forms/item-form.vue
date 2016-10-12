@@ -28,7 +28,7 @@
  * <icon :size="18" name="gouwuche">
  */
 
-import { Icon } from '../icon'
+import Icon from '../icon/icon.vue'
 export default {
   props: {
     label: {

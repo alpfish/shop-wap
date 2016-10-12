@@ -9,7 +9,7 @@
       <icon slot="icon" name="fenlei1" :size="18"></icon>
       <span slot="label">商品分类</span>
     </tabbar-item>
-    <tabbar-item badge="2" v-link="{name: 'cart-list'}"  :active="route.name == 'cart-list'">
+    <tabbar-item badge="2" v-link="{name: 'cart'}"  :active="route.name == 'cart'">
       <icon slot="icon" name="gouwuche" :size="18"></icon>
       <span slot="label">购物车</span>
     </tabbar-item>

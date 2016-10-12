@@ -23,8 +23,8 @@
       :text="loading ? '登录中 ...' : '登录'"></button>
   </button-row>
   <button-row>
-  <button mini @click="register">注册会员</button>
-  <button mini>忘记密码</button>
+    <button mini @click="register">注册会员</button>
+    <button mini>忘记密码</button>
   </button-row>
 
   <toast center icon="success" text="登录成功" v-if="success"></toast>

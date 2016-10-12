@@ -1,5 +1,5 @@
 <template>
-  <div class="x-number border">
+  <div class="x-number" :class="{border: border}">
     <div @click="sub" class="selector sub":class="{'disabled':disabledMin}">-</div>
     <input v-model="value" :name="name" class="input" :style="{width: getWidth}" number :readonly="!fillable" type="tel" pattern="[0-9]*"/>
     <div @click="add" class="selector plus" :class="{'disabled':disabledMax}">+</div>
@@ -17,10 +17,14 @@ export default {
     value: {
       type: Number,
       required: true,
-      default: 0,
+      default: 0
     },
     name: String,
     fillable: Boolean,
+    border: {
+      type: Boolean,
+      default: true
+    },
     width: {
       type: [Number, String],
       default: 45

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading place="page" :show="loading" color="brand" size="14px"></loading>
+    <loading place="page" :show="loading" color="brand" size="24px"></loading>
     <!-- <router-view
     :transition="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')"
     ></router-view> -->
@@ -11,12 +11,11 @@
 
 <script>
 import store from './vuex/store'
-import { ViewBox, Loading} from './ui/components'
+import { Loading } from './ui/components'
 
 export default {
   store: store,
   components: {
-    ViewBox,
     Loading,
   },
   vuex: {
@@ -38,6 +37,28 @@ export default {
     isMember () {
       return /member/.test(this.route.path)
     },
+  },
+  ready() {
+  },
+  created() {
+    // 设置html字体大小固定为窗口宽度的0.1，便可使用 rem 单位设置自适应宽高
+    // head 添加以下设置适配高清屏，使用2倍设备像素宽度，所有网页元素单位均放大2倍
+    // <meta name="viewport" content="width=device-width*2, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no">
+    const setHtmlFontSize = function(){
+      // 网页可见区域宽(可变)
+      // console.log(document.body.clientWidth);
+      // 屏幕分辨率宽度(固定)
+      // console.log(window.screen.width);
+      let width = document.body.clientWidth
+      // 限制参照字体最大为108px
+      width = width > 1080 ? 1080 : width
+      let html = document.documentElement
+      html.style.setProperty('font-size', `${width*0.1}px`)
+    }
+    // 初始化
+    setHtmlFontSize()
+    // 监视窗口并实时调整参照字体大小
+    window.onresize = setHtmlFontSize
   }
 }
 </script>
