@@ -57,14 +57,14 @@ export default {
   align-self: flex-start;
   justify-content: flex-start;
   align-items: center;
-  font-size: 14px;
+  font-size: 14*2/75rem;
   color: @header-text-color;
   background-color: lighten(@bg-header, 1%);
   height: @height-header;
   line-height: @height-header;
   z-index: @zindex-header;
   width: 100%;
-  box-shadow: 0 1px 5px lighten(@gray, 20%);
+  box-shadow: 0 1px 5*2/75rem lighten(@gray, 20%);
   .flex-shrink(0);
   &.fixed {
     position: fixed;
@@ -77,11 +77,11 @@ export default {
     justify-content: center;
     align-items: center;
     color: rgba(255, 255, 255, .9);
-    min-width: 50px;
+    min-width: 50*2/75rem;
   }
   > .title {
     flex: 1;
-    font-size: 18px;
+    font-size: 18*2/75rem;
     font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -90,13 +90,13 @@ export default {
   }
   .button {
     background: none;
-    font-size: 14px;
+    font-size: 14*2/75rem;
     height: @height-header;
     color: lighten(@header-text-color, 10%);
   }
   .iconfont {
     color: lighten(@header-text-color, 10%);
-    font-size: 18px;
+    font-size: 18*2/75rem;
   }
 }
 </style>

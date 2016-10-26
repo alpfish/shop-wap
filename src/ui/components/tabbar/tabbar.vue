@@ -4,16 +4,8 @@
 </div>
 </template>
 
-<script>
-export default {
-  props: {
-    iconClass: String
-  }
-}
-</script>
-
 <style lang="less">
-@import "../../styles/weui/base/fn.less";
+@import "../../styles/index.less";
 
 .weui_tabbar {
     display: flex;
@@ -21,15 +13,20 @@ export default {
     z-index: @zindex-tabbar;
     bottom: 0;
     width: 100%;
+    height: 110/75rem;
+    max-height: 110/75rem;
     background-color: @bg-tabbar;
     &:before {
-        .setTopLine(@gray);
+        .setTopLine(@gray-light-extra);
     }
 }
 .weui_tabbar_item {
     display: block;
     flex: 1;
-    padding: 7px 0;
+    margin: 0;
+    padding: 0;
+    padding-top: 3*2/75rem;
+
     color: @gray; // alp
     text-align: center; // alp
     -webkit-tap-highlight-color: transparent;
@@ -42,22 +39,24 @@ export default {
 .weui_tabbar_icon {
     margin: 0 auto;
     padding: 0 auto;
-    max-width: 24px;
-    max-height: 24px;
+    max-width: 24*2/75rem;
+    max-height: 24*2/75rem;
     img {
         display: block;
         width: 100%;
         height: 100%;
     }
     & + .weui_tabbar_label {
-        margin-top: 2px;
-        margin-bottom: 0;
+        margin-top: 9*2/75rem;
+        margin-bottom:  5*2/75rem;
     }
 }
 
 .weui_tabbar_label {
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 14*2/75rem;
+    line-height: 14*2/75rem;
+    height: 14*2/75rem;
+    color: @gray; // alp
 }
 
 .weui_tabbar_icon {
@@ -65,7 +64,7 @@ export default {
 }
 .weui_tabbar_icon > sup {
     position: absolute;
-    top: -5px;
+    top: -3px;
     left: 100%;
     transform: translateX(-50%);
     z-index: @zindex-tabbar + 1;

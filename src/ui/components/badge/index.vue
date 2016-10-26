@@ -1,6 +1,6 @@
 <!-- Badge -->
 <template>
-  <span v-text="text" :class="['vux-badge', {'vux-badge-single': text.length === 1}]" :style="style"></span>
+  <span v-if="show" v-text="textFormat" :class="['vux-badge', {'vux-badge-single': text.length === 1}]" :style="style"></span>
 </template>
 
 <script>
@@ -20,6 +20,14 @@ export default {
         background: getColor(this.color)
       }
     }
+  },
+  computed: {
+    show() {
+      return parseInt(this.text) > 0
+    },
+    textFormat() {
+      return parseInt(this.text) < 1000 ? parseInt(this.text) : '1k+'
+    }
   }
 }
 </script>
@@ -31,15 +39,17 @@ export default {
   display: inline-block;
   text-align: center;
   color: #fff;
-  font-size: 24px;
-  height: 32px;
-  line-height: 32px;
-  border-radius: 16px;
-  padding: 0 12px;
+  font-size: 12*2/75rem;
+  text-align: center;
+  // height: 18*2/75rem;
+  line-height: 16*2/75rem;
+  border: 2px solid #fff;
+  border-radius: 9*2/75rem;
+  padding: 0 6*2/75rem;
   background-clip: padding-box;
 }
 .vux-badge-single {
   padding: 0;
-  width: 16px;
+  width: 18*2/75rem;
 }
 </style>

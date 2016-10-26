@@ -1,12 +1,10 @@
 <!-- 强大的列表组件, 适用于 link form media 等多种列表 -->
 <template>
 <div>
-  <div class="list-title" v-if="title"  v-html="title"></div>
-  <div class="list-line" v-show="line"></div>
-  <div class="list" :style="styles">
+  <div class="list-title" v-if="title" v-html="title"></div>
+  <div class="list" :class="{'list-line': line}" :style="styles">
     <slot></slot>
   </div>
-  <div class="list-line" v-show="line"></div>
 </div>
 </template>
 <script>
@@ -32,7 +30,7 @@ export default {
     // 子元素分隔线右边空白宽度
     itemLineSpace: {
       type: [Number, String],
-      default: '0 0 0 15px'
+      default: '0 0 0 30px'
     },
     // 统一设置子元素高度, (子元素中默认设置44px)
     itemHeight: [Number, String],
@@ -46,6 +44,9 @@ export default {
       let styles = {}
       if (this.bgcolor) {
         styles['backgroundColor'] = this.bgcolor
+      }
+      if (!this.title) {
+        styles['marginTop'] = `${30/75}rem`
       }
       return styles
     }

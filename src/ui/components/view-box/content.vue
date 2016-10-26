@@ -4,8 +4,31 @@
   </div>
 </template>
 
+<script>
+export default {
+
+  data() {
+    return {
+      data: ['红色', '黄色', '白色'],
+      checked: [],
+      turn: false,
+      num: 1,
+    }
+  },
+  methods: {
+    show () {
+      this.turn = true
+    }
+  },
+  ready() {
+  }
+}
+</script>
+
 <style lang="less">
 @import "../../styles/vue-carbon//normalize.css";
+@import "../../styles/index.less";
+
 *,
 *::before,
 *::after{
@@ -19,11 +42,11 @@ html{
 
 body{
   font-family: Roboto,-apple-system,BlinkMacSystemFont,Segoe UI,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
-  background-color: #EFF0F5;
+  background-color: #F4F4F4;
   width: 100%;
   user-select: none;
   -webkit-user-select: none;
-  font-size: 14px;
+  font-size: 14*2px;
   line-height: 1.5;
   -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
   color: #7e848c;
@@ -49,7 +72,7 @@ a{
   bottom: 0;
   display: flex;
   flex-direction: column;
-  background-color: #FFF;
+  background-color: @bg-page;
   justify-content: center;
   align-items: flex-start;
 }
@@ -59,6 +82,6 @@ a{
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   position: relative;
-  padding-bottom: 20px; //alp
+  padding-bottom: 20*2px; //alp
 }
 </style>

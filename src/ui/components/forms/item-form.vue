@@ -59,10 +59,10 @@ export default {
 @import "../../styles/vue-carbon/_mixins.less";
 .item-form{
   position: relative;
-  padding-left: 16px;
-  min-height: 48px;
+  padding-left: 16*2px;
+  min-height: 48*2px;
   color: @gray;
-  font-size: 14px;
+  font-size: 14*2px;
   display: flex;
   &.focus-state,
   &.not-empty-state {
@@ -77,21 +77,21 @@ export default {
   }
 }
 .item-form-icon{
-  width: 40px;
-  height: 36px;
+  width: 40*2px;
+  height: 36*2px;
   display: flex;
   align-items: center;
-  margin-top: 31px;
+  margin-top: 31*2px;
   .flex-shrink(0);
   + .item-form-content{
-    margin-left: 16px;
+    margin-left: 16*2px;
   }
 }
 .item-form-content{
   flex: 1;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 16px;
+  padding-top: 10*2px;
+  padding-bottom: 10*2px;
+  padding-right: 16*2px;
   width: 100%;
   .item-form{
     padding-left: 0;
@@ -113,12 +113,12 @@ export default {
 }
 .floating-label,
 .label {
-  font-size: 14px;
+  font-size: 14*2px;
   width: 100%;
 }
 .floating-label {
   transform-origin: left;
-  transform: scale(14/12) translateY(21px);
+  transform: scale(14/12) translateY(21*2px);
   color: @gray;
   width: auto;
   max-width: 75%;

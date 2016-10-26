@@ -9,11 +9,11 @@
 .buttons-row {
   align-self: center;
   display: flex;
-  margin: 1em 0;
-  padding-left: 15px;
-  padding-right: 15px;
+  margin: 30px 0;
+  padding-left: 15*2px;
+  padding-right: 15*2px;
   .button {
-    margin-left: 15px;
+    margin-left: 15*2px;
     width: 100%;
     flex: 1;
     font-weight: 600;

@@ -1,62 +1,143 @@
-/*
-目前购物系统是基于登录用户
-若开发支持未登录用户，可采用以下方案：
-基于登录购物车系统接口，前端只保存购物车ids, 其他所有操作和数据同步均与登录用户一致，
-登录后只需要将数据库相应购物车ids添加上对应的用户id即可。
-*/
 import * as types from 'src/vuex/mutation-types'
 import Api from 'libs/api'
+import LocalCart from 'libs/local-cart'
+import {auth} from 'src/vuex/getters'
+// 缓存
+import LS from 'libs/local-storage'
+import Cookie from 'libs/vendor/vue-cookie'
+import {TOKEN_KEY} from 'src/config'
 
-/*
-* 加载购物车数据, 每次进入购物车页面都从服务器加载，以最大程度确保库存同步
-*/
-export const loadCart = ({dispatch}) => {
+export const loadCart = ({dispatch, state}) => {
+  // TODO 进入购物车加载方式：1.进入加载 2.定期加载 3.加载一次 目前方式为3.
+  if (state.cart.loaded) return
+
   dispatch(types.SET_CART_LOADED, false)
+  // 读取缓存
+  let params = {}
+  if (!_.isEmpty(LocalCart.get()) && !auth()) {
+    params.buys = LocalCart.get()
+  }
+  // 截流， 使用 token 而不是 auth() 判断，避免认证与获取购物车同步，导致获取购物车失败
+  let token = LS.get(TOKEN_KEY) ? LS.get(TOKEN_KEY) : Cookie.get(TOKEN_KEY)
+  if (!token && _.isEmpty(params.buys)) {
+    dispatch(types.SET_CART_LOADED, true)
+    return
+  }
 
-  // TODO 获取未登录购物车ids
-
-  Api.request(
-    {
+  Api.request({
       url: 'cart/lists',
       method: 'GET',
-      params: {}
+      params: params
     },
     (response) => {
       dispatch(types.SET_CART_LOADED, true)
-      // let lists = response.data.lists
-      dispatch(types.SET_TO_CART, response.data.lists)
-
-      // for (let item in lists) {
-      //   dispatch(types.SET_TO_CART, lists[item])
-      // }
-      // console.log(response);
+      dispatch(types.CLEAR_CART) // 因为使用ADD_TO_CART，清空是为了防止重复添加历史条目
+      dispatch(types.ADD_TO_CART, response.data.lists)
     },
-    (response) => {
-      console.log(response);
-    }
+    (response) => {}
   )
 }
 
-// 添加,减少,删除 购物车商品
-// export const addToCart = ({dispatch}, iterm, quantity) => {
-//   dispatch(types.ADD_TO_CART, iterm, quantity)
-// }
+export const addToCart = ({dispatch, state}, sku_id, buy_nums) => {
+  // 存在则更新
+  let found = _.find(state.cart.added, (v) => v.sku_id == sku_id)
+  if (found) {
+    buy_nums += found.buy_nums
+    update({dispatch}, sku_id, buy_nums)
+    return
+  }
+  let buys = JSON.stringify([
+    {
+      sku_id,
+      buy_nums
+    }
+  ])
+  Api.request({
+      url: 'cart/add',
+      method: 'GET',
+      params: {
+        buys
+      },
+    },
+    (response) => {
+      let added = response.data.added
+      dispatch(types.ADD_TO_CART, added)
+      // 本地购物车添加
+      if (!auth()) {
+        LocalCart.add(added)
+      }
+      console.log("From Origin Added");
+    },
+    (response) => {}
+  )
+}
 
+// 同步本地购物车到数据库
+export const syncCart = ({dispatch}) => {
+  // 标记加载失败，使路由自动更新购物车
+  dispatch(types.SET_CART_LOADED, false)
+  if (_.isEmpty(LocalCart.get())) return
+  Api.request({
+      url: 'cart/add',
+      method: 'GET',
+      params: {
+        buys: JSON.stringify(LocalCart.get())
+      },
+    },
+    (response) => {
+      // 清空缓存
+      LocalCart.clear()
+    },
+    (response) => {}
+  )
+}
 
-/*
-加载购物车数据, 每次进入购物车页面都从服务器加载，以最大程度确保库存同步，
-已登录用户：直接从服务器获取用户购物车数据
-未登录用户：(暂不处理，即目前购物车的所有操作都需要登录)两种方案：1.客户端存储购物车ids， 2.客户端存储所有数据
-无论哪种方式，最后 store 中 added 的数据都是一致的
-loadCart
+export const update = ({dispatch}, sku_id, buy_nums, new_sku_id = null) => {
 
-添加商品
-addToCart
+  let params = {
+    sku_id,
+    buy_nums,
+  }
+  if (new_sku_id) {
+    params.new_sku_id = new_sku_id
+    dispatch(types.DELETE_FROM_CART, [new_sku_id])
+  }
+  Api.request({
+      url: 'cart/update',
+      method: 'GET',
+      params: params,
+    },
+    (response) => {
+      let newData = _.head(response.data.updated)
+      dispatch(types.UPDATE_TO_CART, sku_id, newData)
+      if (!auth()) {
+        LocalCart.update(sku_id, newData)
+      }
+      console.log("Updated.", newData.sku_id, newData.buy_nums);
+    },
+    (response) => {}
+  )
+}
 
-更新商品
-updateCart
+export const deleteCartSkus = ({dispatch}, sku_ids) => {
+  dispatch(types.DELETE_FROM_CART, sku_ids)
+  if (auth()) {
+    Api.request({
+        url: 'cart/delete',
+        method: 'GET',
+        params: {
+          sku_ids: _.isArray(sku_ids) ? JSON.stringify(sku_ids) : sku_ids
+        },
+      },
+      (response) => {},
+      (response) => {}
+    )
+  } else {
+    LocalCart.delete(sku_ids)
+  }
+}
 
-删除商品
-deleteCartSku
-
-*/
+export const clearCart = ({dispatch}) => {
+  dispatch(types.CLEAR_CART)
+  dispatch(types.SET_CART_LOADED, false)
+}

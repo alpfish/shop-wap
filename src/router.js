@@ -1,11 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Api from 'libs/api'
-
+import {auth} from 'src/vuex/getters'
+import {loadCart} from 'actions/cart'
+import {tokenLogin} from 'actions/member'
 
 Vue.use(VueRouter)
 const router = new VueRouter({
-  transitionOnLoad: false
+  // hashbang: true,
+  // history: true,
+  // saveScrollPosition: true,
+  // transitionOnLoad: true,
 })
 
 // sync router params
@@ -20,46 +25,55 @@ history.setItem('/', 0)
 // 页面加载及过渡效果
 const commit = store.commit || store.dispatch
 router.beforeEach(({ to, from, next }) => {
-  const toIndex = history.getItem(to.path)
-  const fromIndex = history.getItem(from.path)
-  if (toIndex) {
-    if (toIndex > fromIndex) {
-      commit('UPDATE_DIRECTION', 'forward')
-    } else {
-      commit('UPDATE_DIRECTION', 'reverse')
-    }
-  } else {
-    ++historyCount
-    history.setItem('count', historyCount)
-    to.path !== '/' && history.setItem(to.path, historyCount)
-    commit('UPDATE_DIRECTION', 'forward')
-  }
+  // const toIndex = history.getItem(to.path)
+  // const fromIndex = history.getItem(from.path)
+  // if (toIndex) {
+  //   if (toIndex > fromIndex) {
+  //     commit('UPDATE_DIRECTION', 'forward')
+  //   } else {
+  //     commit('UPDATE_DIRECTION', 'reverse')
+  //   }
+  // } else {
+  //   ++historyCount
+  //   history.setItem('count', historyCount)
+  //   to.path !== '/' && history.setItem(to.path, historyCount)
+  //   commit('UPDATE_DIRECTION', 'forward')
+  // }
   commit('UPDATE_LOADING', true)
-  setTimeout(next, 0)
+  setTimeout(next, 50)
 })
 router.afterEach(() => {
   commit('UPDATE_LOADING', false)
 })
 
-// 路由认证中间件
+// token自动登录
 router.beforeEach((transition) => {
-  if (transition.to.auth) {
-    // 身份认证
-    if (!store.state.member.auth) {
-      // token 验证&登录
-      return Api.tokenLogin(
-        (res) => {
-          store.dispatch('SET_AUTH', res.data.member)
-          transition.next()
-        },
-        (res) => {
-          let redirect = encodeURIComponent(transition.to.path);
-          transition.redirect('/member/login?redirect=' + redirect)
-        }
-      )
-    } else {
-      transition.next()
-    }
+  if (!auth()) {
+    tokenLogin(store)
+    transition.next()
+  } else {
+    transition.next()
+  }
+});
+
+// 认证路由中间件
+router.beforeEach((transition) => {
+  if (transition.to.auth && !auth()) {
+    // 手动登录
+    let redirect = encodeURIComponent(transition.to.path);
+    transition.redirect('/member/login?redirect=' + redirect)
+  } else {
+    transition.next()
+  }
+});
+
+// 加载购物车
+router.beforeEach((transition) => {
+  if (!store.state.cart.loaded) {
+    setTimeout(function () {
+      loadCart(store)
+    }, 0);
+    transition.next()
   } else {
     transition.next()
   }
@@ -99,7 +113,7 @@ router.map({
   },
   '/cart': {
     name: 'cart',
-    auth: true,
+    auth: false,
     component: (resolve) => require(['views/cart/index.vue'], resolve)
   },
   '/member': {

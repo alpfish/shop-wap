@@ -1,6 +1,6 @@
 <template>
 <button class="icon-button" :style="style" :disabled="disabled" v-el:button>
-  <icon v-if="icon" :name="icon" :size="18"></icon>
+  <icon v-if="icon" :name="icon" :size="36"></icon>
   <ripple :trigger="$els.button" v-if="!disabled"></ripple>
 </button>
 </template>

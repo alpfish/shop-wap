@@ -1,6 +1,6 @@
 <template>
 <a href="javascript:;" class="float-button" :class="classNames" :style="style" v-el:button>
-  <icon :name="icon" :size="20"></icon>
+  <icon :name="icon" :size="20*2"></icon>
   <ripple color="rgba(255, 255, 255, .3)" :trigger="$els.button"></ripple>
 </a>
 </template>
@@ -53,8 +53,8 @@ export default {
   align-items: center;
   justify-content: center;
   line-height: 1;
-  width: 45px;
-  height: 45px;
+  width: 45*2px;
+  height: 45*2px;
   border: none;
   appearance: none;
   text-decoration: none;
@@ -74,7 +74,7 @@ export default {
 
 .float-button-fixed{
   position: fixed;
-  right: 16px;
-  bottom: 16px;
+  right: 16*2px;
+  bottom: 16*2px;
 }
 </style>

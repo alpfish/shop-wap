@@ -53,7 +53,7 @@ export default {
 }
 .box .box-item {
   flex: 1;
-  min-width: 20px;
+  min-width: 20*2/75rem;
   width: 0%;
 }
 .box-item > .box {

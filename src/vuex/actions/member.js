@@ -5,6 +5,7 @@ import Cookie from 'libs/vendor/vue-cookie'
 import {
   TOKEN_KEY,
 } from 'src/config'
+import {syncCart, clearCart} from 'actions/cart'
 
 export const register = ({dispatch}, params, success, error) => {
   Api.request (
@@ -24,7 +25,6 @@ export const register = ({dispatch}, params, success, error) => {
   )
 }
 
-
 export const login = ({dispatch}, account, password, success, error) => {
   Api.request (
     {
@@ -38,6 +38,8 @@ export const login = ({dispatch}, account, password, success, error) => {
     (res) => {
       // token 缓存在 Api.request() 中
       dispatch(types.SET_AUTH, res.data.member)
+      // 同步购物车
+      syncCart({dispatch})
       success(res)
     },
     (res) => {
@@ -49,8 +51,30 @@ export const login = ({dispatch}, account, password, success, error) => {
   )
 }
 
+export const tokenLogin = ({dispatch}) => {
+  let token = LS.get(TOKEN_KEY) ? LS.get(TOKEN_KEY) : Cookie.get(TOKEN_KEY)
+  if (!_.isEmpty(token)) {
+    console.log('Token Login ...');
+    Api.request (
+      {
+        url: 'member/login/token',
+        method: 'GET'
+      },
+      (res) => {
+        dispatch(types.SET_AUTH, res.data.member)
+      },
+      (res) => {
+        dispatch(types.CANCEL_AUTH)
+        LS.delete(TOKEN_KEY)
+        Cookie.delete(TOKEN_KEY)
+      }
+    )
+  }
+}
+
 export const logout = ({dispatch}) => {
   dispatch(types.CANCEL_AUTH)
+  dispatch(types.CLEAR_CART)
   LS.delete(TOKEN_KEY)
   Cookie.delete(TOKEN_KEY)
 }

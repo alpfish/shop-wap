@@ -1,16 +1,21 @@
 <template>
 <div class="page center">
-  <button-area >
-    <p>Welcome! {{ username }}</p>
-    <button-row>
-      <button fill big raised color="red" text="退出" @click="exit"></button>
-    </button-row>
-  </button-area>
+  <view-box class="cart">
+    <x-header title="会员中心"></x-header>
+    <button-area >
+      <p>Welcome! {{ username }}</p>
+      <button-row>
+        <button fill big raised color="red" text="退出" @click="exit"></button>
+      </button-row>
+    </button-area>
+    <tabbar slot="bottom"></tabbar>
+  </view-box>
 </div>
 </template>
 
 <script>
-import { Button, ButtonRow, ButtonArea } from 'ui/components'
+import Tabbar from 'components/tabbar'
+import { Button, ButtonRow, ButtonArea, ViewBox, XHeader, } from 'ui/components'
 import {
   logout
 } from 'actions/member'
@@ -34,6 +39,9 @@ export default {
     Button,
     ButtonRow,
     ButtonArea,
+    ViewBox,
+    Tabbar,
+    XHeader,
   }
 }
 </script>

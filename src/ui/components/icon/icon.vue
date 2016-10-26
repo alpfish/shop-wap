@@ -11,8 +11,8 @@ export default {
       default: ''
     },
     size: {
-      type: Number,
-      default: 24
+      type: [String, Number],
+      default: 48
     },
     color: {
       type: String,
@@ -27,7 +27,7 @@ export default {
     },
     style () {
       return {
-        fontSize: `${this.size}px`,
+        fontSize: typeof this.size === "string" ? this.size : `${this.size}px`,
         color: getColor(this.color)
       }
     }
@@ -40,6 +40,5 @@ export default {
 
 .iconfont {
   position: relative;
-  font-weight: 100;
 }
 </style>

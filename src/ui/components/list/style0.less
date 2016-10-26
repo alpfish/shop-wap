@@ -1,0 +1,96 @@
+@import "../../styles/weui/base/fn";
+@import "../../styles/index.less";
+
+.list {
+    position: relative;
+    background-color: @weuiCellBg;
+    line-height: 42*2px;//@weuiCellLineHeight;
+    font-size: 17*2px;//@weuiCellFontSize; //cell中间有效高度23px，跟客户端默认图标尺寸一致
+    overflow: hidden; //因为每个cell的border使用before元素left搞的，ie下伪元素的containing block估计跟标准不同，在cell上用oh不生效
+}
+.list-line {
+  border-top: 1px solid @weuiCellBorderColor;
+  border-bottom: 1px solid @weuiCellBorderColor;
+}
+
+.list-title {
+    margin-top: 15*2px; // 15px - 行高
+    margin-bottom: 8*2px; // 8px - 行高
+    padding-left: @weuiCellGapH;
+    padding-right: @weuiCellGapH;
+    color: @globalTextColor;
+    font-size: 14*2px;//@weuiCellTipsFontSize;
+    & + .list {
+        margin-top: 0;
+    }
+}
+
+// 列表子元素
+.list-item {
+    min-height: 44*2px; //@weuiCellHeight;  // 防止组件中item上下 padding 设置为 0 时丢失高度设置
+    // padding: @weuiCellGapV @weuiCellGapH;
+    padding: 0 30px;//@weuiCellGapH;  // 防止单行有 switch 等元素时超高
+    position: relative; //这个是为了兼容cells容器onepx方案被before挡住而做的
+    display: flex;
+    align-items: center;
+    color: @content-color;
+
+    // 左-中-右 三栏布局
+    .left, .body, .right {
+      display: flex;
+      align-items: center;
+    }
+    .body {
+        flex: auto; // 自动伸缩
+        justify-content: center; // 中间内容水平居中
+    }
+    .left,
+    .right {
+        flex: none; // 内容确定宽度, 自动水平居左/居右对齐
+        max-width: 50%;
+    }
+
+    // 箭头
+    .arrow {
+        &:after {
+            content: " ";
+            .setArrow_Wap(right, 8*2px, #C8C8CD, 2*2px);
+            top: -1px;
+            margin-left: 0.3em;
+        }
+    }
+
+    // 主副标题
+    .title, .subtitle {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 42*2px;//@weuiCellLineHeight;
+    }
+    .title {
+        font-size: 17*2px; //@weuiCellFontSize; //cell中间有效高度23px，跟客户端默认图标尺寸一致
+        color: @title-color;
+    }
+    .subtitle {
+        font-size: 16*2px;
+        color: @subtitle-color;
+    }
+}
+// 分隔线
+.list-item-wrap {
+    position: relative;
+    // height: 1px;
+    // border-bottom: 1px solid #ddd;
+    // background-color: @weuiCellBorderColor;
+
+    // border-bottom: 1px solid @weuiCellBorderColor;
+    // &:before {
+    //     .setTopLine(@weuiCellBorderColor);
+    //     // .setBottomLine(@weuiCellBorderColor);
+    // }
+}
+
+.item-line {
+
+  border-bottom: 1px solid @weuiCellBorderColor;
+}

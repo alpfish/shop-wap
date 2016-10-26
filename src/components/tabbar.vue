@@ -1,41 +1,41 @@
 <template>
 <div>
   <tabbar slot="bottom">
-    <tabbar-item v-link="{name: 'home'}" :active="route.name == 'home'">
-      <icon slot="icon" name="shouye" :size="18" ></icon>
-      <span slot="label">首页</span>
-    </tabbar-item>
-    <tabbar-item v-link="{name: 'category'}" :active="route.name == 'category'">
-      <icon slot="icon" name="fenlei1" :size="18"></icon>
-      <span slot="label">商品分类</span>
-    </tabbar-item>
-    <tabbar-item badge="2" v-link="{name: 'cart'}"  :active="route.name == 'cart'">
-      <icon slot="icon" name="gouwuche" :size="18"></icon>
-      <span slot="label">购物车</span>
-    </tabbar-item>
-    <tabbar-item dot v-link="{name: 'member'}"  :active="isMember">
-      <icon slot="icon" name="wode" :size="18"></icon>
-      <span slot="label">我的</span>
-    </tabbar-item>
+    <tabbar-item label="首页" link="/" :active="isHome" :icon="isHome ? 'shouye2' : 'shouye'"></tabbar-item>
+    <tabbar-item label="商品" link="/category" :active="isCategory" :icon="isCategory ? 'fenlei2' : 'fenlei1'"></tabbar-item>
+    <tabbar-item label="购物车" link="/cart" :active="isCart" :icon="isCart ? 'cart-active' : 'cart'" :badge="cartCount"></tabbar-item>
+    <tabbar-item label="我的" link="/member" :active="isMember" :icon="isMember ? 'wode2' : 'wode'" dot></tabbar-item>
   </tabbar>
 </div>
 </template>
 
 <script>
-import { Icon, Tabbar, TabbarItem} from 'ui/components'
+import { Tabbar, TabbarItem} from 'ui/components'
 
 export default {
   components: {
-    Icon,
     Tabbar,
     TabbarItem,
   },
   vuex: {
     getters: {
+      added: ({cart}) => cart.added,
       route: (state) => state.route,
     }
   },
   computed: {
+    cartCount () {
+      return _.toString(_.sumBy(this.added, (item) => item.buy_nums))
+    },
+    isHome () {
+      return this.route.name == 'home'
+    },
+    isCategory () {
+      return this.route.name == 'category'
+    },
+    isCart () {
+      return this.route.name == 'cart'
+    },
     isMember () {
       return /member/.test(this.route.path)
     },

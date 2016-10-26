@@ -1,75 +1,117 @@
+<!-- Toast 代码采用于 vux -->
 <template>
-  <div class="toast" :style="{'z-index': zIndex}" :class="{'toast-center': center}" transition="toast">
-    <slot>
-      <icon v-if="icon" :name="icon" :size="36"></icon>
-      <circular v-if="loading && !icon" color="white"></circular>
-      <div class="toast-text">{{text}}</div>
-    </slot>
+  <div class="vux-toast">
+    <div class="weui_mask_transparent" v-show="show"></div>
+      <div class="weui_toast" :style="{width: width}" :class="toastClass" v-show="show" :transition="transition">
+        <i class="weui_icon_toast" v-show="type !== 'text'"></i>
+        <p class="weui_toast_content" v-if="text" v-html="text"></p>
+        <p class="weui_toast_content" v-else><slot></slot></p>
+      </div>
   </div>
 </template>
 
 <script>
-import Icon from '../icon/icon.vue'
 export default {
-  data () {
-    return {
-      zIndex: 101
-    }
-  },
   props: {
-    center: {
+    show: {
       type: Boolean,
-      default: false
+      default: true
     },
-    text: {
+    time: {
+      type: Number,
+      default: 2000
+    },
+    type: {
       type: String,
-      default: ''
+      default: 'success'
     },
-    icon: {
+    transition: {
       type: String,
-      default: ''
+      default: 'vux-fade'
     },
-    loading: {
-      type: Boolean,
-      default: false,
+    width: {
+      type: String,
+      default: 'auto'
+    },
+    text: String
+  },
+  computed: {
+    toastClass () {
+      return {
+        'weui_toast_forbidden': this.type === 'warn',
+        'weui_toast_cancel': this.type === 'cancel',
+        'weui_toast_success': this.type === 'success',
+        'weui_toast_text': this.type === 'text'
+      }
     }
   },
-  components: {
-    Icon,
+  watch: {
+    show (val) {
+      if (val) {
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() => {
+          this.show = false
+          this.$emit('on-hide')
+        }, this.time)
+      }
+    }
   }
 }
 </script>
 
 <style lang="less">
-.toast{
-  position: fixed;
+@import '../../styles/transition.less';
+@import '../../styles/weui/widget/weui_tips/weui_mask';
+@import '../../styles/weui/icon/weui_icon_font';
+@import '../../styles/weui/widget/weui_tips/weui_toast';
+
+.weui_toast {
+  transform: translateX(-50%);
+  margin-left: 0!important;
+  min-width: 240px;
+  min-height: 240px;
+  // max-height: 240px;
+  top: 35%;
   left: 50%;
-  bottom: 50px;
-  max-width: 80%;
-  border-radius: 5px;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-  z-index: 1000;
-  transform: translate3d(-50%, 0, 0);
-  .toast-text{
-    font-size: 16px;
-    display: block;
-    text-align: center;
-  }
-  &.toast-center {
-    top: 50%;
-    bottom: auto;
-    transform: translate3d(-50%, -50%, 0);
-  }
+  margin-left: -3.8em;
+  background: rgba(40, 40, 40, 0.75);
+  border-radius: 5*2px;
 }
-.toast-transition {
-  -webkit-transition: opacity .3s linear;
-  transition: opacity .3s linear;
-  &.toast-enter,
-  &.toast-leave {
-    opacity: 0;
-  }
+
+.weui_icon_toast {
+    margin: 22*2px 0 0;
+    &:before {
+        font-size: 55*2px;
+    }
+}
+
+.weui_toast_content {
+    color: #fff;
+    font-size: 32px;
+    margin: 0 0 22*2px;
+    padding: 0 22*2px;
+}
+
+.weui_toast_forbidden {
+  color: #F76260;
+}
+.weui_toast.weui_toast_text{
+  min-height: 0;
+}
+.weui_toast_text .weui_toast_content {
+  margin: 0;
+  padding-top: 5*2px;
+  padding-bottom: 5*2px;
+  border-radius: 15*2px;
+}
+.weui_toast_success .weui_icon_toast:before {
+  content: "\EA08";
+}
+.weui_toast_cancel .weui_icon_toast:before {
+  content: "\EA0D";
+}
+.weui_toast_forbidden .weui_icon_toast:before {
+  content: "\EA0B";
+  color: #F76260;
 }
 </style>

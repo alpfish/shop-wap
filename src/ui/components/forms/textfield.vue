@@ -12,9 +12,9 @@
           :placeholder="placeholder">
       </textarea>
     </label>
-    <div class="clear"><icon name="shanchu4" :size="18"  v-if="!!value" @click="value = ''"></icon></div>
+    <div class="clear"><icon name="shanchu4" :size="36"  v-if="!!value" @click="value = ''"></icon></div>
     <!-- 父组件错误最好显示后自动消失 -->
-    <div class="error" v-if="(error || perror) && !focus"><icon name="error" color="red" :size="12">{{ error ? error : perror}}</icon></div>
+    <div class="error" v-if="(error || perror) && !focus"><icon name="error" color="red" :size="24">{{ error ? error : perror}}</icon></div>
   </item-form>
 </template>
 
@@ -229,9 +229,9 @@ textarea {
   padding: 0;
   margin: 0;
   width: 100%;
-  height: 36px;
+  height: 36*2px;
   color: @semi;
-  font-size: 16px;
+  font-size: 16*2px;
   font-family: inherit;
   &::-webkit-input-placeholder {
     color: @gray;
@@ -240,12 +240,12 @@ textarea {
 .clear {
   color: @semi;
   position: absolute;
-  right: 25px;
-  bottom: 15px;
+  right: 25*2px;
+  bottom: 15*2px;
 }
 .error {
   position: absolute;
-  left: 75px;
-  bottom: -12px;
+  left: 75*2px;
+  bottom: -12*2px;
 }
 </style>

@@ -1,6 +1,8 @@
 <!-- Currency 货币组件 -->
 <template>
-  <span class="currency"><span v-text="head" :style="headStyle"></span><span v-text="foot" :style="footStyle"></span></span>
+  <span class="currency">
+    <span v-text="currency" :style="smallStyle"></span><span v-text="head" :style="bigStyle"></span><span v-text="foot" :style="smallStyle"></span>
+  </span>
 </template>
 
 <script>
@@ -25,35 +27,35 @@ export default {
     },
     size: {
       type: [String, Number],
-      default: `${13/64}rem`
+      default: `${30/75}rem`
     },
     floatSize: {
       type: [String, Number],
-      default: `${11/64}rem`
+      default: `${24/75}rem`
     }
   },
   computed: {
     head () {
       let stringified = this.format(this.value, this.currency, this.decimals)
       return this.decimals
-        ? stringified.slice(0, -1 - this.decimals)
+        ? stringified.slice(1, -this.decimals) // 货币符号单独设置格式
         : stringified
     },
     foot () {
       let stringified = this.format(this.value, this.currency, this.decimals)
       return this.decimals
-        ? stringified.slice(-1 - this.decimals)
+        ? stringified.slice(-this.decimals)
         : ''
     },
-    headStyle () {
+    bigStyle () {
       return {
-        'font-size': typeof this.size === 'string' ? this.size : `${this.size}px`,
+        'font-size': typeof this.size === 'string' ? this.size : `${this.size/75}rem`,
         'color': getColor(this.color),
       }
     },
-    footStyle () {
+    smallStyle () {
       return {
-        'font-size': typeof this.floatSize === 'string' ? this.floatSize : `${this.floatSize}px`,
+        'font-size': typeof this.floatSize === 'string' ? this.floatSize : `${this.floatSize/75}rem`,
         'color': getColor(this.color)
       }
     },
@@ -87,6 +89,6 @@ export default {
 <style lang="less">
 .currency {
   display: inline-block;
-  font-weight: 600;
+  font-weight: 400;
 }
 </style>

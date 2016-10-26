@@ -12,5 +12,3 @@ export function auth() {
 // 购物车
 export const cartLoaded = () => store.state.cart.loaded
 export const cartAdded = () => store.state.cart.added
-export const cartCount = 0
-export const cartTotal = 0

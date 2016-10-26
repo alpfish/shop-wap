@@ -23,9 +23,11 @@ export const CANCEL_AUTH = 'CANCEL_AUTH'
 //购物车
 
 // 设置购物车列表
-export const SET_TO_CART = 'SET_TO_CART'
-// 添加购物车商品
 export const ADD_TO_CART = 'ADD_TO_CART'
+export const UPDATE_TO_CART = 'UPDATE_TO_CART'
+export const DELETE_FROM_CART = 'DELETE_FROM_CART'
+export const CLEAR_CART = 'CLEAR_CART'
+
 // 设置列表获取状态
 export const SET_CART_LOADED = 'SET_CART_LOADED'
   // 结算请求

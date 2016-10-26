@@ -10,7 +10,7 @@
           <div>
             <span class="item-price">¥{{ item.price }}</span>
             <span class="item-sales"><del>{{ item.orig != '0.00' ? '¥'+item.orig : '¥'+item.price }}</del></span>
-            <div class="proBuy"><icon-button icon="gouwuche" fill color="red"></icon-button></div>
+            <div class="proBuy"><icon-button @click="add(item)" icon="gouwuche" fill color="red"></icon-button></div>
           </div>
         </div>
       </a>
@@ -97,6 +97,7 @@
 
   import { IMG_ROOT } from 'src/config'
   import { Loading, IconButton } from 'ui/components'
+  import { addToCart } from 'actions/cart'
 
   export default {
     props: {
@@ -120,12 +121,23 @@
       }
     },
 
+    vuex: {
+      actions: {
+        addToCart,
+      }
+    },
+
     methods: {
       loadMore() {
         if (!this.allLoaded) {
           this.$dispatch('load-more')
         }
-      }
+      },
+      add(item) {
+        if (item.only_sku) {
+          this.addToCart(item.only_sku_id, 1)
+        }
+      },
     },
 
     components: {

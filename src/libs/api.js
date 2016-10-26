@@ -94,29 +94,6 @@ class Api {
       })
   }
 
-  // 路由中间件使用 token 自动登录
-  tokenLogin(success, error) {
-    let token = LS.get(TOKEN_KEY) ? LS.get(TOKEN_KEY) : Cookie.get(TOKEN_KEY)
-    if (token) {
-      this.request (
-        {
-          url: 'member/login/token',
-          method: 'GET'
-        },
-        (res) => {
-          success(res)
-        },
-        (res) => {
-          LS.delete(TOKEN_KEY)
-          Cookie.delete(TOKEN_KEY)
-          error(res)
-        }
-      )
-    } else {
-      error()
-    }
-  }
-
   /**
    * 商品搜索
    */

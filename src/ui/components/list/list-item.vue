@@ -1,27 +1,30 @@
 <template>
-<div :style="{ backgroundColor: bgcolor }">
-  <div class="list-item" :style="styles" @click="onClick" :class="{'vux-tap-active': arrow || !!link}">
-    <!-- slot left -->
-    <div class="left">
-      <slot name="left"></slot>
-      <img v-if="img" :src="img" style="display: block; max-width: 18px; max-height: 18px; margin-right: 10px;">
-      <icon v-if="icon" :name="icon" :size="18" :color="iconColor" style="margin-right: 10px"></icon>
-      <span v-if="title" class="title">{{title}}</span>
-    </div>
-    <!-- slot 默认 -->
-    <div class="body">
-      <slot name="body"></slot>
-      <slot></slot>
-    </div>
-    <!-- slot right -->
-    <div class="right">
-      <span class="subtitle" v-if="subtitle" v-html="subtitle"></span>
-      <slot name="right"></slot>
-      <span class="arrow" v-show="arrow || !!link"></span>
-    </div>
+<div class="list-item" :style="wrapStyles" @click="onClick">
+  <!-- slot -->
+  <div :style="itemStyles"><slot name="top"></slot></div>
+  <div class="item-middle " :style="itemStyles" :class="{'vux-tap-active': arrow || !!link}">
+      <div class="left">
+        <!-- slot -->
+        <slot name="left"></slot>
+        <img v-if="img" :src="img" style="display: block; max-width: 36px; max-height: 36px; margin-right: 20px;">
+        <icon v-if="icon" :name="icon" :size="36" :color="iconColor" style="margin-right: 20px"></icon>
+        <span v-if="title" class="title">{{title}}</span>
+      </div>
+      <div class="body">
+        <!-- slot -->
+        <slot name="body"></slot><slot></slot>
+      </div>
+      <div class="right">
+        <!-- slot -->
+        <slot name="right"></slot>
+        <span class="subtitle" v-if="subtitle" v-html="subtitle"></span>
+        <span class="arrow" v-show="arrow || !!link"></span>
+      </div>
   </div>
-  <!-- 分隔线 -->
-  <div class="item-line" :style="lineStyles" v-show="line"></div>
+  <!-- slot -->
+  <div :style="itemStyles"><slot name="bottom"></slot></div>
+  <!-- line -->
+  <div class="item-line" :style="lineStyles" v-if="line"></div>
 </div>
 </template>
 
@@ -53,20 +56,23 @@ export default {
   },
   computed: {
     // 间距
-    styles() {
+    wrapStyles() {
       let styles = {}
+      styles['background-color'] = this.bgcolor
       // 多个 item 之间的间距
       if (this.$parent.gutter) {
         styles['marginTop'] = typeof this.$parent.gutter === 'string' ? this.$parent.gutter : `${this.$parent.gutter}px`
       }
-      // 由 List 组件设置 padding， (在 ./style.less 中设置的默认值为 '0 15px')
-      if (this.$parent.itemPadding) {
-        styles['padding'] = this.$parent.itemPadding
-      }
-      // 由 List 组件设置高度 (在 ./style.less 中设置默认最小高度为 '44px')
+      // 由 List 组件设置高度 (在 ./style.less 中设置默认最小高度为 '44*2px')
       if (this.$parent.itemHeight) {
         styles['min-height'] = typeof this.$parent.itemHeight === 'string' ? this.$parent.itemHeight : `${this.$parent.itemHeight}px`
       }
+      return styles
+    },
+    itemStyles() {
+      let styles = {}
+      // 由 List 组件设置 padding， (在 ./style.less 中设置的默认值为 '0 30px')
+      styles['padding'] = this.$parent.itemPadding ? this.$parent.itemPadding : '0 30px'
       return styles
     },
     // 分隔线
@@ -76,7 +82,7 @@ export default {
     // 分隔线左右空白
     lineStyles() {
       return {
-        margin: this.$parent.itemLineSpace ? this.$parent.itemLineSpace : '0 0 0 15px',
+        margin: this.$parent.itemLineSpace ? this.$parent.itemLineSpace : '0 0 0 30px',
         marginTop: 0,
         marginBottom: 0,
       }

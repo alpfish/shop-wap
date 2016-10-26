@@ -1,6 +1,6 @@
 <template>
 <button class="button" :class="buttonClass" :style="style" :disabled="disabled" v-el:button>
-  <icon v-if="icon" :name="icon" :size="18"></icon>
+  <icon v-if="icon" :name="icon" :size="18*2"></icon>
   <span class="text"><slot>{{text}}</slot></span>
   <ripple :trigger="$els.button" v-if="!disabled"></ripple>
 </button>
@@ -70,18 +70,19 @@ export default {
 }
 </script>
 
-<style lang="less">@import "../../styles/_vars.less";
+<style lang="less">
+@import "../../styles/_vars.less";
 @import "../../styles/vue-carbon/_mixins.less";
 .button {
     color: @semi;
-    height: 44px;
-    font-size: 18px;
-    border-radius: 2px;
+    height: 44*2px;
+    font-size: 18*2px;
+    border-radius: 2*2px;
     appearance: none;
     background: none;
     text-decoration: none;
     margin: 0;
-    padding: 0 3px;
+    padding: 0 3*2px;
     white-space: nowrap;
     text-overflow: ellipsis;
     text-transform: uppercase;
@@ -105,7 +106,7 @@ export default {
     .iconfont {
         .flex-shrink(0);
         pointer-events: none;
-        margin: 0 4px;
+        margin: 0 4*2px;
     }
     .ripple-ink { // 点击水波
         // color: rgba(255,255,255,0.4);
@@ -122,8 +123,8 @@ export default {
 .button-mini {
     width: auto;
     height: auto;
-    font-size: 14px;
-    padding: 4px 0.75em;
+    font-size: 14*2px;
+    padding: 4*2px 0.75em;
     display: inline-block;
 }
 </style>

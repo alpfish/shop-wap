@@ -13,7 +13,7 @@
   overflow: hidden;
   line-height: 1;
   text-align: center;
-  padding: 10px 0;
+  padding: 20px 0;
   color: #666;
 }
 

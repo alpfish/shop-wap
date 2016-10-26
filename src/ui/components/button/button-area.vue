@@ -7,11 +7,11 @@
 
 <style lang="less">
 .button-area {
-  margin-top: 16px;
-  margin-bottom: 32px;
-  padding: 0 16px;
+  margin-top: 16*2px;
+  margin-bottom: 32*2px;
+  padding: 0 16*2px;
   > .button + .button{
-    margin-top: 16px;
+    margin-top: 16*2px;
   }
   width: 100%;
 }

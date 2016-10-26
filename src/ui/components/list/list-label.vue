@@ -1,6 +1,6 @@
 <template>
 <!-- 外层 div 防止多个 label 混乱 -->
-<div>
+<div class="list-item">
   <label :for="labelId" style="display: block;">
     <slot></slot>
   </label>

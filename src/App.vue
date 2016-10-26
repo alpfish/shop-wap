@@ -41,24 +41,31 @@ export default {
   ready() {
   },
   created() {
-    // 设置html字体大小固定为窗口宽度的0.1，便可使用 rem 单位设置自适应宽高
-    // head 添加以下设置适配高清屏，使用2倍设备像素宽度，所有网页元素单位均放大2倍
+    // 设置rem 单位参照字号
     // <meta name="viewport" content="width=device-width*2, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no">
     const setHtmlFontSize = function(){
       // 网页可见区域宽(可变)
       // console.log(document.body.clientWidth);
       // 屏幕分辨率宽度(固定)
       // console.log(window.screen.width);
+      // let width = window.screen.width * 2
+      // let height = window.screen.height * 2
       let width = document.body.clientWidth
+      let height = document.body.clientHeight
+      // 横竖屏统一宽度
+      width = width < height ? width : height
+      // 限制 rem 参照字号最小为64px, 开发时取消，以自适应桌面浏览器
+      // width = width < 640 ? 640 : width
       // 限制参照字体最大为108px
       width = width > 1080 ? 1080 : width
       let html = document.documentElement
-      html.style.setProperty('font-size', `${width*0.1}px`)
+      let fontsize = `${width*0.1}px`
+      html.style.setProperty('font-size', fontsize)
     }
     // 初始化
     setHtmlFontSize()
-    // 监视窗口并实时调整参照字体大小
-    window.onresize = setHtmlFontSize
+    // 监视窗口变化时调整参照字号
+    // window.onresize = setHtmlFontSize
   }
 }
 </script>
@@ -72,7 +79,7 @@ html, body {
   overflow-x: hidden;
 }
 body {
-  background-color: @bg-body;
+  background-color: @bg-page;
 }
 /* v-r-transition, default is {forward: 'forward', back: 'back'}*/
 .forward-enter, .forward-leave {

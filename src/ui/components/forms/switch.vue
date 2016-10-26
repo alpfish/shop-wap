@@ -1,6 +1,6 @@
 <template>
 <!-- 外层 div 防止多个 label 混乱 -->
-<div style="display: inline-flex;">
+<div class="switchbox">
   <label class="weui_cell_ft" :for="labelId">
     <input class="weui_switch" type="checkbox" v-model="value" :disabled="disabled" :id="labelId">
     <slot>{{ value }}</slot>
@@ -28,17 +28,23 @@ export default {
 }
 </script>
 
-<style lang="less">@import "../../styles/weui/base/fn.less";
-@weuiSwitchHeight: 32px;
-
+<style lang="less">
+@import "../../styles/weui/base/fn.less";
+@weuiSwitchHeight: 32*2px;
+.switchbox {
+  display: inline-flex;
+  height: @weuiSwitchHeight+2;
+  margin: 0;
+  padding: 0;
+}
 .weui_switch {
     appearance: none;
     position: relative;
-    width: 52px;
+    width: 52*2px;
     height: @weuiSwitchHeight;
     border: 1px solid #DFDFDF;
     outline: 0;
-    border-radius: 16px;
+    border-radius: 32px;
     box-sizing: border-box;
     background: #DFDFDF;
     &:before {
@@ -46,23 +52,23 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
-        width: 50px;
-        height: @weuiSwitchHeight - 2;
-        border-radius: 15px;
+        width: 50*2px;
+        height: @weuiSwitchHeight - 2*2;
+        border-radius: 15*2px;
         background-color: #FDFDFD;
-        transition: transform 0.3s;
+        transition: transform 0.1s;
     }
     &:after {
         content: " ";
         position: absolute;
         top: 0;
         left: 0;
-        width: @weuiSwitchHeight - 2;
-        height: @weuiSwitchHeight - 2;
-        border-radius: 15px;
+        width: @weuiSwitchHeight - 2*2;
+        height: @weuiSwitchHeight - 2*2;
+        border-radius: 15*2px;
         background-color: #FFFFFF;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-        transition: transform 0.3s;
+        box-shadow: 0 2px 3*2px rgba(0, 0, 0, 0.4);
+        transition: transform 0.1s;
     }
     &:checked {
         border-color: @switch-checked-border-color;
@@ -71,7 +77,7 @@ export default {
             transform: scale(0);
         }
         &:after {
-            transform: translateX(20px);
+          transform: translateX(20*2px);
         }
     }
 }
