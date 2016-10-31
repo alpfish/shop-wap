@@ -1,15 +1,15 @@
 <!-- Home -->
 <template>
 <view-box>
-  <list title="我的帐户" line>
+  <list>
     <list-item title="帐户" subtitle="子标题" icon="wode" icon-color="red"></list-item>
     <list-item title="购物车" icon="gouwuche" icon-color="brand" v-link="{path: 'cart'}" arrow></list-item>
-    <list-item title="购物车" icon="gouwuche" icon-color="brand" v-link="{path: 'cart'}"><span slot="right">sdf</span></list-item>
-  </list>
-
-  <list>
     <list-label><list-item title="开具发票" icon="chongzhi" ><switch slot="right" :value.sync="turn"></switch></list-item></list-label>
   </list>
+
+
+
+
 
   <!-- <alert :show.sync="turn" title="恭喜" button-text="确认">付款成功</alert> -->
   <!-- <toast :show.sync="turn" :time="500">操作成功</toast> -->
@@ -23,7 +23,7 @@
   height="300px"
   src="http://192.168.0.108/shop-wap/./uploadfile/goods/a5/23/3e/c4/57affd1d62e08.jpg">
   </x-img> -->
-  <br v-for="i in 50">
+  <br v-for="i in 10">
 </view-box>
 </template>
 
@@ -88,11 +88,6 @@ export default {
   }
 }
 </script>
-<style scoped lang="less">@import '../../ui/styles/_vars.less';
-@import '../../ui/styles/center.less';
-
-body {
-    background-color: #eee;
-}
-
+<style scoped lang="less">
+@import '../../ui/styles/_vars.less';
 </style>

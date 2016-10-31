@@ -2,7 +2,12 @@
   <item-form :focus="focus" :no-empty="!!value" :icon="icon">
     <label class="text-field">
       <div :class="{'label': !labelFloat, 'floating-label': labelFloat}" v-if="label">{{label}}</div>
-      <input :type="type" v-model="value"  @focus="onfocus" @blur="onblur"
+      <input
+        :id="id"
+        :type="type == 'password' ? isShowPassword ? 'text' : 'password' : 'text'"
+        v-model="value"
+        @focus="onfocus"
+        @blur="onblur"
         v-if="type !== 'textarea'"  autocomplete="off" :placeholder="placeholder" />
       <textarea v-model="value" @focus="onfocus" @blur="onblur"
           :style="{'height': height + 'px'}" v-el:textarea
@@ -11,10 +16,18 @@
           @blur="this.focus = false"  v-model="value"
           :placeholder="placeholder">
       </textarea>
+
+      <div class="text-field-icon">
+        <!-- 相对固定显示的排后面 -->
+        <icon name="shibai" :size="30" v-if="!focus && (error || perror)" color="red"></icon>
+        <icon name="shanchu4" :size="30" v-show="!!value" @click="clear"></icon>
+        <icon name="xianshi" :size="30" v-show="type == 'password' && !isShowPassword" @click="showPassword"></icon>
+        <icon name="yincang" :size="30" v-show="type == 'password' && isShowPassword" @click="hidePassword"></icon>
+      </div>
+
+      <!-- 父组件错误最好显示后自动消失 -->
+      <div class="error" v-if="(error || perror) && !focus">{{ error ? error : perror}}</div>
     </label>
-    <div class="clear"><icon name="shanchu4" :size="36"  v-if="!!value" @click="value = ''"></icon></div>
-    <!-- 父组件错误最好显示后自动消失 -->
-    <div class="error" v-if="(error || perror) && !focus"><icon name="error" color="red" :size="24">{{ error ? error : perror}}</icon></div>
   </item-form>
 </template>
 
@@ -107,7 +120,9 @@ export default {
   },
   data () {
     return {
+      id: Math.random().toString(36).substring(3,8),
       height: 0,
+      isShowPassword: false,
       error: ''
     }
   },
@@ -116,16 +131,39 @@ export default {
   },
   methods: {
     validate () {
-      if (this.rules !== '') {
-        let v = (new Validator).validate({
-          value: this.value,
-          rules: this.rules,
-          errors: this.errors
-        })
-        this.error = v.error
-        this.passed = v.passed
-        this.passed = this.perror ? false : this.passed
-      }
+        if (this.rules !== '') {
+          let v = (new Validator).validate({
+            value: this.value,
+            rules: this.rules,
+            errors: this.errors
+          })
+          this.error = v.error
+          this.passed = v.passed
+          this.passed = this.perror ? false : this.passed
+        }
+    },
+
+    clear() {
+      this.value = ''
+      this.getFocus()
+    },
+
+    showPassword() {
+      this.isShowPassword = true
+      this.getFocus()
+    },
+
+    hidePassword() {
+      this.isShowPassword = false
+      this.getFocus()
+    },
+
+    getFocus() {
+      // 延时，但在 validate 之前，防止点击获取焦点后信显示错误
+      setTimeout( () => {
+        document.getElementById(this.id).focus()
+        this.focus = true
+      }, 0)
     },
 
     // 以下为 vue-carbon/blob 原有方法，不要轻易修改
@@ -150,14 +188,23 @@ export default {
       let num = value.indexOf('\n')
       return this.getLineNum(value.substring(num + 1), line)
     },
+
     onfocus () {
       this.focus = true
     },
+
     onblur () {
-      // 验证
-      this.validate()
-      // 失焦最后改变状态，避免 QQ 浏览器执行其他操作无效，如清除输入
-      setTimeout(() => this.focus = false, 0);
+      setTimeout(() => {
+        // 失焦延迟改变状态，避免 QQ 浏览器执行其他操作无效，如清除输入
+        this.focus = false
+      },0);
+
+      setTimeout(() => {
+        // 延迟验证，防止消除后立即验证
+        if(!this.focus)  {
+          this.validate()
+        }
+      }, 300);
     }
   },
   ready () {
@@ -168,7 +215,6 @@ export default {
       this.resizeTextarea()
       this.$emit('input-change', this.value)
       this.perror = ''
-      this.validate()
     },
     perror () {
       // 有 perror 时，让 passed 为假
@@ -195,11 +241,22 @@ export default {
     .translate3d();
     transition-duration: 200ms;
   }
+  // &.focus-state:after,
+  // &.not-empty-state:after,
+  // .focus-state &:after,
+  // .not-empty-state &:after {
+  //   background: @semi;
+  //   transform: scaleY(1) !important;
+  // }
+  // 以上一起设置聚集和不为空同样式，以下分开设置
   &.focus-state:after,
-  &.not-empty-state:after,
-  .focus-state &:after,
-  .not-empty-state &:after {
+  .focus-state &:after {
     background: @semi;
+    transform: scaleY(1) !important;
+  }
+  &.not-empty-state:after,
+  .not-empty-state &:after {
+    // background: @gray-light-extra;
     transform: scaleY(1) !important;
   }
 }
@@ -232,20 +289,31 @@ textarea {
   height: 36*2px;
   color: @semi;
   font-size: 16*2px;
+  line-height: 16*2px;
+  font-weight: 400;
+  text-indent: 2px; // 输入文本边距
   font-family: inherit;
   &::-webkit-input-placeholder {
     color: @gray;
   }
+
 }
-.clear {
-  color: @semi;
+
+.text-field-icon {
+  color: @gray-light;
   position: absolute;
-  right: 25*2px;
-  bottom: 15*2px;
+  right: 5*2px;
+  bottom: 5*2px;
+  i {
+    margin-left: 10px;
+  }
 }
 .error {
   position: absolute;
-  left: 75*2px;
-  bottom: -12*2px;
+  right: 0;
+  // left: 70*2px;
+  bottom: -20*2px;
+  color: @gray;
+  font-size: 22px;
 }
 </style>

@@ -99,7 +99,7 @@ export default {
   margin-left: -3.8em;
   background: rgba(40, 40, 40, 0.75);
   border-radius: 5*2px;
-  z-index: @zindex-toast;
+  z-index: @zindex-toast@zindex-mask!important;;
 }
 
 .weui_icon_toast {

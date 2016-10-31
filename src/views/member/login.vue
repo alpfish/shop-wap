@@ -1,7 +1,6 @@
 <template>
-<div>
+<view-box style="background-color: #fff;">
   <x-header back title="会员登录">
-    <button slot="right" text="注册" @click="register"></button>
   </x-header>
   <textfield type='text' icon="zhanghao" label="手机号/会员名" label-float
     :value.sync="account.value"
@@ -23,7 +22,7 @@
       :text="loading ? '登录中 ...' : '登录'"></button>
   </button-row>
   <button-row>
-    <button mini @click="register">注册会员</button>
+    <button mini @click="register">注册新会员</button>
     <button mini>忘记密码</button>
   </button-row>
 
@@ -31,12 +30,12 @@
   <toast center icon="fail" text="登录失败" v-if="fail"></toast>
   <toast center text="请正确填写表单" v-if="canNotClick"></toast>
   <p>&nbsp;</p>
-</div>
+</view-box>
 
 </template>
 
 <script>
-import {XHeader, Button, ButtonRow, ButtonArea, Textfield, Toast} from 'ui/components'
+import {ViewBox, XHeader, Button, ButtonRow, ButtonArea, Textfield, Toast} from 'ui/components'
 import {login} from 'actions/member'
 
 export default {
@@ -126,6 +125,7 @@ export default {
     }
   },
   components: {
+    ViewBox,
     XHeader,
     Textfield,
     Button,

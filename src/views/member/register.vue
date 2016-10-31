@@ -1,21 +1,21 @@
 <template>
-<div>
+<view-box style="background-color: #fff;">
   <x-header back title="会员注册">
-    <button slot="right" text="登录" @click="login"></button>
   </x-header>
-  <textfield type='tel' icon="zhanghao" label="手机" placeholder="输入手机号"
+
+  <textfield type='tel' placeholder="输入手机号码"
     :value.sync="mobile.value"
     :rules="mobile.rules"
     :errors="mobile.errors"
     :perror.sync="mobile.perror"
     :passed.sync="mobile.passed"></textfield>
-  <textfield type='password' icon="mima" label="密码" placeholder="输入密码"
+  <textfield type='password' placeholder="输入密码"
     :value.sync="password.value"
     :rules="password.rules"
     :errors="password.errors"
     :perror.sync="password.perror"
     :passed.sync="password.passed"></textfield>
-  <textfield type='password' icon="mima" label="确认密码" placeholder="再次输入密码"
+  <textfield type='password' placeholder="再次输入密码"
     :value.sync="repassword.value"
     :rules="repassword.rules"
     :errors="repassword.errors"
@@ -31,12 +31,11 @@
   <toast center icon="success" text="注册成功" v-if="success"></toast>
   <toast center icon="fail" text="注册失败" v-if="fail"></toast>
   <toast center text="请正确填写表单" v-if="canNotClick"></toast>
-  <p>&nbsp;</p>
-</div>
+</view-box>
 </template>
 
 <script>
-import {XHeader, Button, ButtonRow, ButtonArea, Textfield, Toast} from 'ui/components'
+import { ViewBox, XHeader, Button, ButtonRow, ButtonArea, Textfield, Toast} from 'ui/components'
 import {register} from 'actions/member'
 
 export default {
@@ -45,21 +44,21 @@ export default {
       mobile: {
         value: '',
         rules: 'required|mobile',
-        errors: '请输入手机号码。|手机号码格式不正确。',
+        errors: '手机号码不能为空。|手机号码格式不正确。',
         perror: '',
         passed: false,
       },
       password: {
         value: '',
         rules: 'required|min_length(6)|max_length(20)',
-        errors: '请输入密码。|密码最小需要6位。|密码最大不能超过20位',
+        errors: '请输入密码。|密码最小6位。|密码最多20位。',
         perror: '',
         passed: false,
       },
       repassword: {
         value: '',
         rules: '', // 见 watch
-        errors: '请输入确认密码。|密码最小需要6位。|密码最大不能超过20位|两次输入密码不一致',
+        errors: '请再次输入密码。|密码最小6位。|密码最多20位。|两次密码不一致。',
         perror: '',
         passed: false,
       },
@@ -133,6 +132,7 @@ export default {
     },
   },
   components: {
+    ViewBox,
     XHeader,
     Textfield,
     Button,

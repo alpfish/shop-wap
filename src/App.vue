@@ -5,7 +5,8 @@
     :transition="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')"
     ></router-view> -->
     <!-- kepp-alive 将使组件中的各生命周期钩子只在首次加载时有效, 可将个别必要相关逻辑移至路由切换钩子中 -->
-    <router-view keep-alive></router-view>
+    <!-- <router-view keep-alive></router-view> -->
+    <router-view></router-view>
     <tabbar></tabbar>
   </div>
 </template>
@@ -72,7 +73,7 @@ export default {
     setHtmlFontSize()
     // 监视窗口调整, 不能在应用中的其他地方设置 window.onresize， 否则之前设置的失效
     window.onresize = () => {
-      setHtmlFontSize()
+      // setHtmlFontSize() // 开发时
       let nWidth = document.body.clientWidth
       let nHeight = document.body.clientHeight
       let inputing = nHeight < height && nWidth === width ? true : false

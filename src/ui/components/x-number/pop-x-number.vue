@@ -5,7 +5,7 @@
     <input @focus="onFocus" class="input" :class="inputClass" v-model="value" :readonly="disabled"/>
     <div @click="add" class="selector plus" :class="addClass">+</div>
   </div>
-  <confirm @on-confirm="onConfirm" @on-cancel="onCancel" :show.sync="confirming" title="" cancel-text="取消" confirm-text="确认" dialog-transition="">
+  <confirm @on-confirm="onConfirm" @on-cancel="onCancel" :show.sync="confirming" title="" cancel-text="取消" confirm-text="确认">
     <div class="confirm-center">
       <div class="x-number">
         <div @click="sub" class="selector sub" :class="subClass">-</div>

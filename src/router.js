@@ -126,6 +126,10 @@ router.map({
     name: 'login',
     component: (resolve) => require(['views/member/login.vue'], resolve)
   },
+  '/member/address/add': {
+    name: 'add-address',
+    component: (resolve) => require(['views/member/add-address.vue'], resolve)
+  },
 })
 
 export default router

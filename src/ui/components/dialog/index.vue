@@ -65,7 +65,7 @@ export default {
 @import '../../styles/weui/widget/weui_tips/weui_dialog';
 
 .weui_mask {
-    z-index: @zindex-mask;
+    z-index: @zindex-mask!important;
 }
 
 .weui_dialog {
@@ -73,7 +73,7 @@ export default {
     top: 50%;
     left: 50%;
     border-radius: 3*2px;
-    z-index: @zindex-dialog;
+    z-index: @zindex-mask!important;
 }
 
 .weui_dialog_title {

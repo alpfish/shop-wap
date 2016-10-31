@@ -50,7 +50,7 @@ export default {
   },
   components: {
     Icon
-  }
+  },
 }
 </script>
 
@@ -59,39 +59,50 @@ export default {
 @import "../../styles/vue-carbon/_mixins.less";
 .item-form{
   position: relative;
-  padding-left: 16*2px;
+  padding-left: 30/75rem;
   min-height: 48*2px;
   color: @gray;
   font-size: 14*2px;
   display: flex;
-  &.focus-state,
+  // &.focus-state,
+  // &.not-empty-state {
+  //   .floating-label {
+  //     transform: scale(1) translateY(0);
+  //   }
+  // }
+  // &.focus-state {
+  //   .floating-label {
+  //     color: @brand;
+  //   }
+  // }
+  // 以上一起设置聚集和不为空同样式，以下分开设置
+  &.focus-state {
+    .floating-label {
+      color: @brand;
+      transform: scale(1) translateY(0);
+    }
+  }
   &.not-empty-state {
     .floating-label {
       transform: scale(1) translateY(0);
     }
   }
-  &.focus-state {
-    .floating-label {
-      color: @brand;
-    }
-  }
 }
 .item-form-icon{
   width: 40*2px;
-  height: 36*2px;
   display: flex;
-  align-items: center;
-  margin-top: 31*2px;
+  align-items: flex-end;
+  margin-bottom: 20px;
   .flex-shrink(0);
   + .item-form-content{
-    margin-left: 16*2px;
+    margin-left: 20/75rem;
   }
 }
 .item-form-content{
   flex: 1;
-  padding-top: 10*2px;
-  padding-bottom: 10*2px;
-  padding-right: 16*2px;
+  padding-top: 10*2/75rem;
+  padding-bottom: 10*2/75rem;
+  padding-right: 30/75rem;
   width: 100%;
   .item-form{
     padding-left: 0;
