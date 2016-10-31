@@ -4,68 +4,82 @@
     <!-- <router-view
     :transition="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')"
     ></router-view> -->
-    <!-- 无过滤效果 -->
-    <router-view></router-view>
+    <!-- kepp-alive 将使组件中的各生命周期钩子只在首次加载时有效, 可将个别必要相关逻辑移至路由切换钩子中 -->
+    <router-view keep-alive></router-view>
+    <tabbar></tabbar>
   </div>
 </template>
 
 <script>
 import store from './vuex/store'
+import * as types from 'src/vuex/mutation-types'
+
+import Tabbar from 'components/tabbar'
 import { Loading } from './ui/components'
 
 export default {
   store: store,
   components: {
     Loading,
+    Tabbar,
   },
   vuex: {
     getters: {
       route: (state) => state.route,
       loading: (state) => state.app.loading,
-      direction: (state) => state.app.direction
+      // direction: (state) => state.app.direction
     }
   },
-  // data () {
-  //   return {
-  //     routerTransition: {
-  //       forward: 'slideRL',
-  //       back: 'slideLR'
-  //     }
-  //   }
-  // },
+  data () {
+    return {
+      // routerTransition: {
+      //   forward: 'slideRL',
+      //   back: 'slideLR'
+      // },
+    }
+  },
   computed: {
-    isMember () {
-      return /member/.test(this.route.path)
-    },
+    // isMember () {
+    //   return /member/.test(this.route.path)
+    // },
   },
   ready() {
   },
   created() {
-    // 设置rem 单位参照字号
-    // <meta name="viewport" content="width=device-width*2, initial-scale=0.5, maximum-scale=0.5, minimum-scale=0.5, user-scalable=no">
+    // 定义常量
+    const width = document.body.clientWidth
+    const height = document.body.clientHeight
+    // 初始设置横竖屏
+    let isLandscape = width > height ? true : false
+    store.dispatch(types.UPDATE_LANDSCAPE, isLandscape)
+
+    // 设置页面 rem 单位参照字号，屏幕的2倍宽高
     const setHtmlFontSize = function(){
-      // 网页可见区域宽(可变)
-      // console.log(document.body.clientWidth);
-      // 屏幕分辨率宽度(固定)
-      // console.log(window.screen.width);
-      // let width = window.screen.width * 2
-      // let height = window.screen.height * 2
+
+      // 页面宽(可变)用 document.body.clientWidth
+      // 设备宽(固定)用 window.screen.width * 2
       let width = document.body.clientWidth
       let height = document.body.clientHeight
       // 横竖屏统一宽度
       width = width < height ? width : height
-      // 限制 rem 参照字号最小为64px, 开发时取消，以自适应桌面浏览器
-      // width = width < 640 ? 640 : width
-      // 限制参照字体最大为108px
+      // 限制 rem 参照字号为 64px - 108px，设计参照为iPhone6 75px
+      width = width < 640 ? 640 : width
       width = width > 1080 ? 1080 : width
       let html = document.documentElement
-      let fontsize = `${width*0.1}px`
-      html.style.setProperty('font-size', fontsize)
+      // 须设置 body,html {height: 100%; width: 100%} 才有效
+      html.style.setProperty('font-size', `${width*0.1}px`)
     }
-    // 初始化
     setHtmlFontSize()
-    // 监视窗口变化时调整参照字号
-    // window.onresize = setHtmlFontSize
+    // 监视窗口调整, 不能在应用中的其他地方设置 window.onresize， 否则之前设置的失效
+    window.onresize = () => {
+      setHtmlFontSize()
+      let nWidth = document.body.clientWidth
+      let nHeight = document.body.clientHeight
+      let inputing = nHeight < height && nWidth === width ? true : false
+      let isLandscape = nWidth > width ? true : false
+      store.dispatch(types.UPDATE_INPUTING, inputing)
+      store.dispatch(types.UPDATE_LANDSCAPE, isLandscape)
+    }
   }
 }
 </script>
@@ -73,11 +87,13 @@ export default {
 <style lang="less">
 @import './ui/styles/_vars.less';
 
-html, body {
-  height: 100%;
+body,html{
   width: 100%;
-  overflow-x: hidden;
+  height: 100%;
+  overflow-x:hidden;
+  overflow-y: auto;
 }
+
 body {
   background-color: @bg-page;
 }

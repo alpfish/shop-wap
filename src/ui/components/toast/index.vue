@@ -1,6 +1,6 @@
 <!-- Toast 代码采用于 vux -->
 <template>
-  <div class="vux-toast">
+  <div v-to-body class="vux-toast">
     <div class="weui_mask_transparent" v-show="show"></div>
       <div class="weui_toast" :style="{width: width}" :class="toastClass" v-show="show" :transition="transition">
         <i class="weui_icon_toast" v-show="type !== 'text'"></i>
@@ -35,6 +35,7 @@ export default {
     },
     text: String
   },
+
   computed: {
     toastClass () {
       return {
@@ -45,6 +46,7 @@ export default {
       }
     }
   },
+
   watch: {
     show (val) {
       if (val) {
@@ -55,15 +57,36 @@ export default {
         }, this.time)
       }
     }
+  },
+
+  directives: {
+    // 准确定位与防止被遮盖，在ready()中添加，指令解绑中移除方才有效！
+    // * 在 template 中添加 v-to-body
+    toBody: {
+      // 2. 移除添加到 body 中的 el，防止(v-if/v-show)重复添加导致内存崩溃
+      unbind: function () {
+        this.el.remove() //注意指令中使用 el 或 this.vm.$el 而不是直接使用 this.$el
+      }
+    }
+  },
+  ready() {
+    // 准确定位与防止被遮盖，在ready()中添加，指令解绑中移除方才有效！
+    // 1. 整个 Dialog 移至 body ，防止(scroll/pullup/pulldown)或在子组件中被覆盖出现的BUG
+    document.body.appendChild(this.$el)
   }
 }
 </script>
 
 <style lang="less">
+@import '../../styles/_vars.less';
 @import '../../styles/transition.less';
 @import '../../styles/weui/widget/weui_tips/weui_mask';
 @import '../../styles/weui/icon/weui_icon_font';
 @import '../../styles/weui/widget/weui_tips/weui_toast';
+
+.weui_mask_transparent {
+    z-index: @zindex-mask;
+}
 
 .weui_toast {
   transform: translateX(-50%);
@@ -76,6 +99,7 @@ export default {
   margin-left: -3.8em;
   background: rgba(40, 40, 40, 0.75);
   border-radius: 5*2px;
+  z-index: @zindex-toast;
 }
 
 .weui_icon_toast {

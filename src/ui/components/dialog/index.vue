@@ -1,6 +1,6 @@
 <!-- Dialog 代码采用于 vux -->
 <template>
-  <div class="weui_dialog_alert" @touchmove="!this.scroll && $event.preventDefault()">
+  <div v-to-body class="weui_dialog_alert" @touchmove="!this.scroll && $event.preventDefault()">
     <div class="weui_mask" @click="hideOnBlur && (show = false)" v-show="show" :transition="maskTransition"></div>
     <div class="weui_dialog" v-show="show" :transition="dialogTransition">
       <slot></slot>
@@ -10,6 +10,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      uuid: null
+    }
+  },
   props: {
     show: {
       type: Boolean,
@@ -33,6 +38,22 @@ export default {
     show (val) {
       this.$emit(val ? 'on-show' : 'on-hide')
     }
+  },
+
+  directives: {
+    // 准确定位与防止被遮盖，在ready()中添加，指令解绑中移除方才有效！
+    // * 在 template 中添加 v-to-body
+    toBody: {
+      // 2. 移除添加到 body 中的 el，防止(v-if/v-show)重复添加导致内存崩溃
+      unbind: function () {
+        this.el.remove()
+      }
+    }
+  },
+  ready() {
+    // 准确定位与防止被遮盖，在ready()中添加，指令解绑中移除方才有效！
+    // 1. 整个 Dialog 移至 body ，防止(scroll/pullup/pulldown)或在子组件中被覆盖出现的BUG
+    document.body.appendChild(this.$el)
   }
 }
 </script>
@@ -43,11 +64,16 @@ export default {
 @import '../../styles/weui/widget/weui_tips/weui_mask';
 @import '../../styles/weui/widget/weui_tips/weui_dialog';
 
+.weui_mask {
+    z-index: @zindex-mask;
+}
+
 .weui_dialog {
     width: 80%;
     top: 50%;
     left: 50%;
     border-radius: 3*2px;
+    z-index: @zindex-dialog;
 }
 
 .weui_dialog_title {

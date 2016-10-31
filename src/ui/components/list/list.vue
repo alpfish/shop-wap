@@ -2,40 +2,18 @@
 <template>
 <div>
   <div class="list-title" v-if="title" v-html="title"></div>
-  <div class="list" :class="{'list-line': line}" :style="styles">
+  <ul class="list" :class="{'list-line': line}" :style="styles">
     <slot></slot>
-  </div>
+  </ul>
 </div>
 </template>
 <script>
 export default {
 
   props: {
-    // 标题
     title: String,
-    // 标题颜色
-    titleColor: String,
-    // 背景色
+    line: Boolean,
     bgcolor: String,
-    // 显示首尾分隔线
-    line: {
-      type: Boolean,
-      default: true
-    },
-    // 显示子元素分隔线
-    itemLine: {
-      type: Boolean,
-      default: true
-    },
-    // 子元素分隔线右边空白宽度
-    itemLineSpace: {
-      type: [Number, String],
-      default: '0 0 0 30px'
-    },
-    // 统一设置子元素高度, (子元素中默认设置44px)
-    itemHeight: [Number, String],
-    // 子元素 padding, (子元素中默认设置为 '0 15px')
-    itemPadding: String,
     // 设置各个子元素间的间距(槽距)
     gutter: [Number, String],
   },
@@ -44,9 +22,6 @@ export default {
       let styles = {}
       if (this.bgcolor) {
         styles['backgroundColor'] = this.bgcolor
-      }
-      if (!this.title) {
-        styles['marginTop'] = `${30/75}rem`
       }
       return styles
     }

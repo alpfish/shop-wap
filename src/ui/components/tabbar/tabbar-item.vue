@@ -1,11 +1,11 @@
 <template>
   <a href="javascript:;" class="weui_tabbar_item" @click="onItemClick">
     <div class="weui_tabbar_icon" :class="{'vux-reddot': dot, 'active': active}">
-      <slot name="icon"><icon v-if="icon" :name="icon" :size="(44/75)+'rem'"></icon></slot>
+      <slot name="icon"><icon v-show="icon" :name="icon" :size="(44/75)+'rem'"></icon></slot>
       <sup><badge v-if="badge" :text="badge"></badge></sup>
     </div>
     <p class="weui_tabbar_label" :class="{'active': active}">
-      <slot name="label" ><span v-if="label" v-text="label"></span></slot>
+      <slot name="label" ><span v-show="label" v-text="label"></span></slot>
     </p>
   </a>
 </template>
@@ -37,6 +37,9 @@ export default {
   methods: {
     onItemClick() {
       go(this.link, this.$router)
+
+      // icon 和 label 同时高亮
+      this.active = true
     }
   },
 }

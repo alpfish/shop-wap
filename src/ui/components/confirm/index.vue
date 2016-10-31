@@ -1,4 +1,4 @@
-<!-- Confirm 代码采用于 vux -->
+<!-- Confirm 修改于 vux -->
 <template>
   <div>
     <dialog class="weui_dialog_confirm"
@@ -59,9 +59,3 @@ export default {
   }
 }
 </script>
-<!--
-<style lang="less">
-@import '../../styles/transition.less';
-@import '../../styles/weui/widget/weui_tips/weui_mask';
-@import '../../styles/weui/widget/weui_tips/weui_dialog';
-</style> -->

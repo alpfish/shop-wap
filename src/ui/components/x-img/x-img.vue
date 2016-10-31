@@ -83,7 +83,7 @@ export default {
   }
 }
 .border {
-  border: 1px solid darken(@border-color, 10%);
+  border: 1px solid lighten(@border-color, 5%);
 }
 
 </style>

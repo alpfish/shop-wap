@@ -2,7 +2,7 @@
 <template>
 <div class="header-bar" :class="{ 'fixed': fixed }">
   <div class="left">
-    <icon-button icon="back" @click="back" v-if="back || backtext"></icon-button><span @click="back" v-if="backtext">返回</span>
+    <icon-button icon="back" @click="onBack" v-if="back"></icon-button><span @click="back" v-if="backtext">返回</span>
     <slot name="left"></slot>
   </div>
   <div class="title"  v-text="title"><slot></slot></div>
@@ -21,25 +21,13 @@ export default {
     IconButton,
   },
   props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    fixed: {
-      type: Boolean,
-      default: false,
-    },
-    back: {
-      type: Boolean,
-      default: false,
-    },
-    backtext: {
-      type: Boolean,
-      default: false,
-    }
+    title: String,
+    fixed: Boolean,
+    back: Boolean,
+    backtext: Boolean,
   },
   methods: {
-    back() {
+    onBack() {
       window.history.back()
     }
   }
@@ -50,21 +38,22 @@ export default {
 @import "../../styles/_vars.less";
 @import "../../styles/vue-carbon/_mixins.less";
 
-@header-text-color: @semi;
+@header-text-color: @black;
 
 .header-bar {
   display: flex;
   align-self: flex-start;
   justify-content: flex-start;
   align-items: center;
-  font-size: 14*2/75rem;
+  font-size: 15*2/75rem;
   color: @header-text-color;
-  background-color: lighten(@bg-header, 1%);
+  background-color: @bg-header; //#FAFAFA
   height: @height-header;
   line-height: @height-header;
   z-index: @zindex-header;
   width: 100%;
-  box-shadow: 0 1px 5*2/75rem lighten(@gray, 20%);
+  border-bottom: 1px solid @border-color;
+  // box-shadow: 0 1px 5*2/75rem lighten(@gray, 20%);
   .flex-shrink(0);
   &.fixed {
     position: fixed;
@@ -76,7 +65,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: rgba(255, 255, 255, .9);
     min-width: 50*2/75rem;
   }
   > .title {
@@ -88,12 +76,12 @@ export default {
     white-space: nowrap;
     text-align: center;
   }
-  .button {
-    background: none;
-    font-size: 14*2/75rem;
-    height: @height-header;
-    color: lighten(@header-text-color, 10%);
-  }
+  // .button {
+  //   background: none;
+  //   font-size: 14*2/75rem;
+  //   height: @height-header;
+  //   color: lighten(@header-text-color, 10%);
+  // }
   .iconfont {
     color: lighten(@header-text-color, 10%);
     font-size: 18*2/75rem;

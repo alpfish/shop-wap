@@ -1,6 +1,8 @@
 // 应用
 export const UPDATE_LOADING = 'UPDATE_LOADING'
 export const UPDATE_DIRECTION = 'UPDATE_DIRECTION'
+export const UPDATE_INPUTING = 'UPDATE_INPUTING'
+export const UPDATE_LANDSCAPE = 'UPDATE_LANDSCAPE'
 
 /********
  * 商品 *

@@ -5,7 +5,7 @@
 </template>
 
 <style lang="less">
-@import "../../styles/index.less";
+@import "../../styles/_vars.less";
 
 .weui_tabbar {
     display: flex;
@@ -16,9 +16,7 @@
     height: 110/75rem;
     max-height: 110/75rem;
     background-color: @bg-tabbar;
-    &:before {
-        .setTopLine(@gray-light-extra);
-    }
+    border-top: 1px solid @border-color;
 }
 .weui_tabbar_item {
     display: block;

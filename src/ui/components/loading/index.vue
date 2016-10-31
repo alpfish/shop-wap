@@ -1,11 +1,11 @@
 <!-- Loading -->
 <template>
-<div v-show="show" :style="pageMasker">
-  <div :class="{'loading-inline': place == 'inline', 'loading-row': place == 'row', 'loading-page': place == 'page'}">
+<div v-show="show" :style="style">
+  <div :class="{'loading-page': place == 'page'}">
     <beat :color="loadingColor" :size="size"></beat>
-    <!-- <clip :color="getColor" size="35px"></clip> -->
+    <!-- <clip :color="loadingColor" size="35px"></clip> -->
     <!-- <spinner type="ripple"></spinner> -->
-    <p class="loading-text" v-show="place !='inline'"><slot></slot></p>
+    <span class="loading-text" v-show="place !='inline'"><slot></slot></span>
   </div>
 </div>
 </template>
@@ -39,21 +39,36 @@ export default {
       type: String,
       default: '24px'
     },
+    margin: {
+      type: String,
+      default: '40px auto'
+    },
   },
   computed: {
     loadingColor() {
-      return getColor(this.color, 0.9)
+      return getColor(this.color)
     },
-    pageMasker () {
+    style () {
+      if (this.place == 'inline') {
+        return {
+          display: 'inline-block'
+        }
+      }
+      if (this.place == 'row') {
+        return {
+          margin: this.margin
+        }
+      }
       if (this.place == 'page') {
         return {
+          // 遮罩层
           position: 'absolute',
           top: 0,
           left: 0,
           bottom: 0,
           right: 0,
           zIndex: 999,
-          backgroundColor: 'rgba(255,255,255,0.5)',
+          // backgroundColor: 'rgba(255,255,255,0.5)',
           // backgroundColor: 'rgba(0,0,0,0.1)',
         }
       }
@@ -62,19 +77,8 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-@import "../../styles/_vars.less";
+<style lang="less">
 
-.loading-inline {
-  display: inline-block;
-  padding: 2px;
-  text-align: center;
-}
-.loading-row {
-  padding-top: 30px;
-  padding-bottom: 50px;
-  text-align: center;
-}
 .loading-page {
   position: fixed;
   left: 50%;
@@ -85,9 +89,8 @@ export default {
 }
 .loading-text{
   display: block;
-  font-size: 10px;
-  color: @gray;
-  margin-top: 10px;
+  font-size: 20px;
+  margin-top: 20px;
   text-align: center;
 }
 </style>

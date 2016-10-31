@@ -17,6 +17,8 @@ const router = new VueRouter({
 import { sync } from 'vuex-router-sync'
 import store from 'src/vuex/store'
 
+var start = 0
+
 let history = window.sessionStorage
 history.clear()
 let historyCount = history.getItem('count') * 1 || 0
@@ -39,22 +41,12 @@ router.beforeEach(({ to, from, next }) => {
   //   to.path !== '/' && history.setItem(to.path, historyCount)
   //   commit('UPDATE_DIRECTION', 'forward')
   // }
-  commit('UPDATE_LOADING', true)
-  setTimeout(next, 50)
-})
-router.afterEach(() => {
-  commit('UPDATE_LOADING', false)
-})
 
-// token自动登录
-router.beforeEach((transition) => {
-  if (!auth()) {
-    tokenLogin(store)
-    transition.next()
-  } else {
-    transition.next()
-  }
-});
+  start = window.performance.now()
+
+  commit('UPDATE_LOADING', true)
+  setTimeout(next, 10)
+})
 
 // 认证路由中间件
 router.beforeEach((transition) => {
@@ -67,17 +59,22 @@ router.beforeEach((transition) => {
   }
 });
 
-// 加载购物车
-router.beforeEach((transition) => {
-  if (!store.state.cart.loaded) {
-    setTimeout(function () {
-      loadCart(store)
-    }, 0);
-    transition.next()
-  } else {
-    transition.next()
+router.afterEach(({ to, from }) => {
+  // token自动登录
+  if (!auth()) {
+    tokenLogin(store)
   }
-});
+
+  // 加载购物车（未加载或进入购物车页面时）
+  if (!store.state.cart.loaded || to.name == 'cart') {
+    loadCart(store)
+  }
+
+  // 页面状态
+  commit('UPDATE_LOADING', false)
+
+  // console.log('Router Time:', window.performance.now() - start);
+})
 
 // 同步路由状态
 sync(store, router)

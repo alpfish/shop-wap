@@ -5,7 +5,7 @@ import VueResource from 'vue-resource'
 import FastClick from 'fastclick'
 import App from './App'
 
-// import ToastPlugin from 'ui/plugins/toast'
+import ToastPlugin from 'ui/plugins/toast'
 // import Device from 'ui/plugins/device'
 Vue.config.debug = true
 
@@ -13,7 +13,7 @@ FastClick.attach(document.body)
 
 // $device
 // Vue.use(Device)
-// Vue.use(ToastPlugin)
+Vue.use(ToastPlugin)
 
 import * as filters from './filters'
 Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]))

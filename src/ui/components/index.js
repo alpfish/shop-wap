@@ -1,5 +1,5 @@
 /* only for building vux.css */
-import Style from '../styles/index.vue' // eslint-disable-line
+// import Style from '../styles/index.vue' // eslint-disable-line
 
 import Alert from './alert'
 import Badge from './badge'
@@ -9,13 +9,17 @@ import Dialog from './dialog'
 import Divider from './divider'
 import Loading from './loading'
 import Ripple from './ripple'
-import Spinner from './spinner'
+// 暂时未用
+// import Spinner from './spinner'
 import Toast from './toast'
 import ViewBox from './view-box'
 import XHeader from './x-header'
 import { XImg } from './x-img'
 import { XInput } from './x-input'
 import { XNumber } from './x-number'
+
+// 滚动相关
+import { Loadmore } from './loadmore'
 
 // Flex 布局
 import { Box, BoxItem } from './box'
@@ -30,6 +34,11 @@ import { Checker, CheckerItem } from './checker'
 import { Icon, IconButton } from './icon'
 // 底部导航
 import { Tabbar, TabbarItem } from './tabbar'
+
+// 以下直接从 vue 采用 package.json 中安装 "vux": "^0.1.3"
+// scroller 占用空间大(约67kb)，兼容性不太好
+// import Scroller from 'vux/src/components/scroller'
+
 
 const ui = {
   Alert,
@@ -53,8 +62,9 @@ const ui = {
   ListItem,
   ListLabel,
   Loading,
+  Loadmore,
   Ripple,
-  Spinner,
+  // Spinner,
   Switch,
   Textfield,
   Tabbar,
@@ -65,6 +75,9 @@ const ui = {
   XImg,
   XInput,
   XNumber,
+
+  // vux 原装
+  // Scroller,
 }
 
 module.exports = ui

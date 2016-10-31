@@ -162,7 +162,7 @@ export default {
   color: @black-light-extra;
 
   .selector, .input {
-    border:1px solid @black-light-extra;//@border-color;
+    border:1px solid darken(@border-color, 30%); // @black-light-extra;//@border-color;
     height:25*2/75rem;
     line-height: 25*2/75rem; // 提升减号
     text-align:center;
@@ -180,18 +180,18 @@ export default {
   }
   .sub {
     border-right:none;
-    border-radius:6px 0 0 6px;
+    border-radius:10px 0 0 10px;
     font-size: 25*2/75rem;
     line-height: 23*2/75rem; // 提升减号
   }
   .plus {
     border-left:none;
-    border-radius:0 6px 6px 0;
+    border-radius:0 10px 10px 0;
     font-size: 18*2/75rem;
   }
   .disabled {
     color: @gray-light;
-    border-color: @gray-light;
+    border-color: @border-color;
   }
 }
 

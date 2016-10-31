@@ -8,10 +8,6 @@ import Cookie from 'libs/vendor/vue-cookie'
 import {TOKEN_KEY} from 'src/config'
 
 export const loadCart = ({dispatch, state}) => {
-  // TODO 进入购物车加载方式：1.进入加载 2.定期加载 3.加载一次 目前方式为3.
-  if (state.cart.loaded) return
-
-  dispatch(types.SET_CART_LOADED, false)
   // 读取缓存
   let params = {}
   if (!_.isEmpty(LocalCart.get()) && !auth()) {
@@ -24,6 +20,7 @@ export const loadCart = ({dispatch, state}) => {
     return
   }
 
+  dispatch(types.SET_CART_LOADED, false)
   Api.request({
       url: 'cart/lists',
       method: 'GET',

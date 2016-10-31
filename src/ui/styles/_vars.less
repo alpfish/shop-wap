@@ -37,26 +37,31 @@
 @amber: #ffc107;  // 琥珀色
 
 // 排版
-@title-color: @black;
+@title-color: @black-light;
 @subtitle-color: @gray;
 @content-color: @black-light-extra;
 
 // 背景
 @bg-page:   #F4F4F4;
-@bg-header: #FFFFFF;
-@bg-tabbar: #f7f7fa;
+@bg-header: #FAFAFA;
+@bg-tabbar: #FAFAFA;//#f7f7fa;
 
-// 表单
-@border-color: #ececec; // #ececec;
+// 边框
+@border-color: #D9D9D9; // #ececec;
 
 // 高度
 @height-bar: 48*2px;
 @height-list: 44*2px;
 @height-header: 48*2px;
 
-// z-index
-@zindex-header: 101;
-@zindex-tabbar: 101;
+// Toast > Dialog > Popup > Mask > Tabbar
+@zindex-toast: 500;
+@zindex-dialog: 400;
+@zindex-popup: 300;
+@zindex-mask: 200;
+@zindex-tabbar: 100;
+@zindex-header: @zindex-tabbar;
+
 
 @barcolor: #474a4f;
 // 触摸颜色

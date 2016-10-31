@@ -8,13 +8,11 @@
         <button fill big raised color="red" text="退出" @click="exit"></button>
       </button-row>
     </button-area>
-    <tabbar slot="bottom"></tabbar>
   </view-box>
 </div>
 </template>
 
 <script>
-import Tabbar from 'components/tabbar'
 import { Button, ButtonRow, ButtonArea, ViewBox, XHeader, } from 'ui/components'
 import {
   logout
@@ -40,7 +38,6 @@ export default {
     ButtonRow,
     ButtonArea,
     ViewBox,
-    Tabbar,
     XHeader,
   }
 }

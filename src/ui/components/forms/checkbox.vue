@@ -14,14 +14,15 @@
 <script>
 export default {
   props: {
-    // 存放选取结果的数组变量，由各个 option 组成，使用:value.sync双向绑定，可在外部指定已选项
+    // 存放选取结果的变量，复选则为数组，由各个 option 组成；单选则为布尔型
+    // 双向绑定，可在父组件指定已选项
     value: {
-      type: Array,
+      type: [Array, Boolean],
       required: true,
     },
     // 单个选项值，其他选项值在外部循环组装（即绑定相同的value变量）
     option: {
-      type: [String, Number],
+      type: [String, Number, Boolean],
       required: true,
     },
     label: String,
@@ -76,7 +77,7 @@ export default {
   border-style: solid;
   border-color: @gray;
   background: transparent;
-  transition-duration: 100ms;
+  // transition-duration: 100ms;
   &:after {
     left: 50%;
     top: 50%;
@@ -86,8 +87,8 @@ export default {
     height: 22/75rem;
     transform: rotate(45deg);
     opacity: 0;
-    transition: opacity .1s ease;
-    transition-delay: .1s;
+    // transition: opacity .1s ease;
+    // transition-delay: .1s;
     border-right: 2px solid #fff;
     border-bottom: 2px solid #fff;
     box-sizing: border-box;
