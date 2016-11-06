@@ -4,11 +4,11 @@
       <div :class="{'label': !labelFloat, 'floating-label': labelFloat}" v-if="label">{{label}}</div>
       <input
         :id="id"
-        :type="type == 'password' ? isShowPassword ? 'text' : 'password' : 'text'"
+        :type="type == 'password' ? isShowPassword ? 'text' : 'password' : type"
         v-model="value"
         @focus="onfocus"
         @blur="onblur"
-        v-if="type !== 'textarea'"  autocomplete="off" :placeholder="placeholder" />
+        v-if="type !== 'textarea'"  autocomplete="off" :placeholder="placeholder" :readonly="readonly" />
       <textarea v-model="value" @focus="onfocus" @blur="onblur"
           :style="{'height': height + 'px'}" v-el:textarea
           class="resizable"
@@ -17,16 +17,16 @@
           :placeholder="placeholder">
       </textarea>
 
-      <div class="text-field-icon">
-        <!-- 相对固定显示的排后面 -->
-        <icon name="shibai" :size="30" v-if="!focus && (error || perror)" color="red"></icon>
-        <icon name="shanchu4" :size="30" v-show="!!value" @click="clear"></icon>
-        <icon name="xianshi" :size="30" v-show="type == 'password' && !isShowPassword" @click="showPassword"></icon>
-        <icon name="yincang" :size="30" v-show="type == 'password' && isShowPassword" @click="hidePassword"></icon>
+      <div class="right-icon">
+        <!-- span 标签增加点击区域, 相对固定显示的排后面 -->
+        <span v-if="isShowError && !passed"><icon name="shibai" :size="30" color="red"></icon></span>
+        <span @click="onClear" v-show="!!value && clear"><icon name="shanchu4" :size="30"></icon></span>
+        <span @click="showPassword"  v-show="type == 'password' && !isShowPassword"><icon name="xianshi" :size="30"></icon></span>
+        <span @click="hidePassword" v-show="type == 'password' && isShowPassword"><icon name="yincang" :size="30"></icon></span>
       </div>
 
       <!-- 父组件错误最好显示后自动消失 -->
-      <div class="error" v-if="(error || perror) && !focus">{{ error ? error : perror}}</div>
+      <div class="error" v-if="isShowError && !passed" v-html="error"></div>
     </label>
   </item-form>
 </template>
@@ -48,13 +48,12 @@
  * @param {number} [rows=1] - 文本域行数，只有类型为 textarea 时才有效
  * @param {boolean} [focus=false] - 聚焦（活动状态）
  * @param {boolean} [label-float=false] - label 浮动
- * 数据验证
- * 验证时机：失焦 与 值改变时
+ * 数据验证: 适用于复杂验证
+ * 验证时机：失焦
  * 显示时机：失焦
  * @param {string} [rules=''] - 验证规则字串，使用 '|' 分隔，调用参数与使用函数一样。如：'required|max_length(12)|min_length(2)'
  * @param {string} [errors=''] - 规则相对应的错误显示信息，如：'请输入XXX|长度不能大于12|长度不能小于2'
- * @param {string} [perror=''] - :perror.sync 父组件错误信息，要达到 value 一改变 perror 就消除的目的，须用双向同步
- * @param {boolean} [passed=false] - :passed.sync 是否通过验证（并且 !perror），须用双向同步父组件才可获取验证结果
+ * @param {boolean} [passed=false] - :passed.sync 是否通过验证，双向同步可控制失败图标显示
  *
  * @example
  * <icon :size="18" name="gouwuche">
@@ -93,6 +92,14 @@ export default {
       type: String,
       default: ''
     },
+    readonly: {
+      type: Boolean,
+      default: false
+    },
+    clear: {
+      type: Boolean,
+      default: true
+    },
     rows: {
       type: Number,
       default: 1
@@ -109,21 +116,19 @@ export default {
       type: String,
       default: ''
     },
-    perror: {
-      type: String,
-      default: ''
-    },
     passed: {
       type: Boolean,
-      default: false
-    }
+      default: true // 无验证时不显示失败图标
+    },
   },
   data () {
     return {
       id: Math.random().toString(36).substring(3,8),
       height: 0,
       isShowPassword: false,
-      error: ''
+      error: '',
+      // 控制错误显示时机
+      isShowError: false,
     }
   },
   attached () {
@@ -139,11 +144,10 @@ export default {
           })
           this.error = v.error
           this.passed = v.passed
-          this.passed = this.perror ? false : this.passed
         }
     },
 
-    clear() {
+    onClear() {
       this.value = ''
       this.getFocus()
     },
@@ -191,6 +195,8 @@ export default {
 
     onfocus () {
       this.focus = true
+      this.isShowError = false
+      this.$emit('on-focus', this.value)
     },
 
     onblur () {
@@ -203,8 +209,11 @@ export default {
         // 延迟验证，防止消除后立即验证
         if(!this.focus)  {
           this.validate()
+          this.isShowError = true
         }
-      }, 300);
+      }, 100);
+
+      this.$emit('on-blur', this.value)
     }
   },
   ready () {
@@ -214,12 +223,8 @@ export default {
     value () {
       this.resizeTextarea()
       this.$emit('input-change', this.value)
-      this.perror = ''
+      this.validate() // 只验证不显示错误信息（失焦时才显示）
     },
-    perror () {
-      // 有 perror 时，让 passed 为假
-      this.validate()
-    }
   },
 
 }
@@ -299,13 +304,18 @@ textarea {
 
 }
 
-.text-field-icon {
-  color: @gray-light;
+.right-icon {
+  display: flex;
+  align-items: center;
   position: absolute;
   right: 5*2px;
-  bottom: 5*2px;
-  i {
-    margin-left: 10px;
+  bottom: 0px;
+  color: @gray-light;
+  height: 72px;
+  // span 增加点击区域
+  span {
+    width: 45px;
+    text-align: center;
   }
 }
 .error {

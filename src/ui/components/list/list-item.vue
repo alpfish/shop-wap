@@ -1,5 +1,5 @@
 <template>
-<li class="list-item-wrap" :style="wrapStyles" @click="onClick">
+<li class="list-item-wrap" :style="{backgroundColor: bgcolor}" @click="onClick">
   <div class="list-item" :style="itemStyles" :class="{'vux-tap-active': arrow || !!link}">
       <div class="left">
         <slot name="left"></slot>
@@ -64,20 +64,14 @@ export default {
     },
   },
   computed: {
-    // 间距
-    wrapStyles() {
+    itemStyles() {
       let styles = {}
-      styles['background-color'] = this.bgcolor
+      styles['padding'] = this.padding
       // 多个 item 之间的间距
       if (this.$parent.gutter) {
         styles['marginTop'] = typeof this.$parent.gutter === 'string' ? this.$parent.gutter : `${this.$parent.gutter/75}rem`
       }
       styles['min-height'] = typeof this.height === 'string' ? this.height : `${this.height/75}rem`
-      return styles
-    },
-    itemStyles() {
-      let styles = {}
-      styles['padding'] = this.padding
       return styles
     },
     // 分隔线左右空白

@@ -1,13 +1,11 @@
 import Vue from 'vue'
-import LS from 'libs/local-storage'
-import Cookie from 'libs/vendor/vue-cookie'
+import VueResource from 'vue-resource'
+import Cache from 'libs/cache'
 import {
   API_ROOT,
   TOKEN_KEY,
 } from 'src/config'
-import VueResource from 'vue-resource'
 
-Vue.use(Cookie)
 Vue.use(VueResource)
 
 // 内存缓存
@@ -20,9 +18,7 @@ Vue.http.interceptors.push((request, next) => {
     // 服务器端必须返回 'Access-Control-Expose-Headers:Authorization' 响应头，浏览器才能获取 Authorization 头。
     // https://github.com/vuejs/vue-resource/issues/215
     if ('Authorization' in response.headers) {
-      // 双缓存, 避免浏览器或微信等环境失败
-      LS.set(TOKEN_KEY, response.headers['Authorization'], { exp: 60 * 60 * 24 * 7 })
-      Cookie.set(TOKEN_KEY, response.headers['Authorization'], 7)
+      Cache.set(TOKEN_KEY, response.headers['Authorization'], 7)
     }
 
     // BUG：https://github.com/vuejs/vue-resource/issues/317  新版本修复后去掉
@@ -64,11 +60,8 @@ class Api {
 
     // 返回认证 token
     // 使用 Authorization 头传送 token 会产生两次请求，故采用参数传送
-    let token = LS.get(TOKEN_KEY) ? LS.get(TOKEN_KEY) : Cookie.get(TOKEN_KEY)
-    if (token) {
-      Object.assign(params, {
-        'token': token
-      })
+    if (Cache.get(TOKEN_KEY)) {
+      Object.assign(params, { 'token': Cache.get(TOKEN_KEY) })
     }
 
     Vue.http({
@@ -133,7 +126,7 @@ class Api {
       params: {}
     }
     let key = 'goods_category_tree'
-    let value = LS.get(key)
+    let value = Cache.get(key)
     if (null !== value) {
       setTimeout(() => success(value), 0)
     } else {
@@ -141,9 +134,7 @@ class Api {
         options,
         (res) => {
           setTimeout(() => success(res.data), 0)
-          setTimeout(() => LS.set(key, res.data, {
-            exp: 24 * 60 * 60
-          }), 0)
+          setTimeout(() => Cache.set(key, res.data, {storage:true}), 0)
           console.log('===> 获取类目树')
         },
         (res) => {

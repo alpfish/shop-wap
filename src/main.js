@@ -5,18 +5,39 @@ import VueResource from 'vue-resource'
 import FastClick from 'fastclick'
 import App from './App'
 
+// 自定义插件
+import Cache from 'libs/cache'
 import ToastPlugin from 'ui/plugins/toast'
 // import Device from 'ui/plugins/device'
-Vue.config.debug = true
+
+import * as filters from './filters'
+import router from 'src/router'
 
 FastClick.attach(document.body)
 
-// $device
-// Vue.use(Device)
-Vue.use(ToastPlugin)
+Vue.config.debug = true
 
-import * as filters from './filters'
+Vue.use(Cache) // $cache
+Vue.use(ToastPlugin) // $vux.toast
+// Vue.use(Device) // $device
+
+
+Vue.prototype.$shop = {
+  
+  header : {
+    show: false,
+    back: false,
+    colse: false,
+    title: '',
+  }
+}
+
+// 过滤器
 Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]))
 
-import router from 'src/router'
 router.start(App, '#app')
+
+// 全局
+window.router = router
+window.Vue = Vue
+window.Cache = Cache

@@ -1,5 +1,4 @@
-import LS from 'libs/local-storage'
-import Cookie from 'libs/vendor/vue-cookie'
+import Cache from 'libs/cache'
 import {
   CART_KEY,
 } from 'src/config'
@@ -7,7 +6,7 @@ import {
 class LocalCart {
 
   get() {
-    let data = LS.get(CART_KEY) ? LS.get(CART_KEY) : Cookie.get(CART_KEY)
+    let data = Cache.get(CART_KEY)
     return data ? JSON.parse(data) : []
   }
 
@@ -53,14 +52,12 @@ class LocalCart {
   }
 
   clear() {
-    LS.delete(CART_KEY)
-    Cookie.delete(CART_KEY)
+    Cache.delete(CART_KEY)
   }
 
   _set(items) {
     let data = Array.isArray(items) ? JSON.stringify(items) : items
-    LS.set(CART_KEY, data)
-    Cookie.set(CART_KEY, data, 365)
+    Cache.set(CART_KEY, data)
   }
 
 }

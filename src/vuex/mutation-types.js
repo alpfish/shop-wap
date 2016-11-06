@@ -20,7 +20,8 @@ export const SET_GOODS_DETAIL_ITEM = 'SET_GOODS_DETAIL_ITEM'
 // 认证
 export const SET_AUTH = 'SET_AUTH'
 export const CANCEL_AUTH = 'CANCEL_AUTH'
-
+export const SET_ADDRESSES = 'SET_ADDRESSES'
+export const SELECT_ADDRESS = 'SELECT_ADDRESS'
 
 //购物车
 

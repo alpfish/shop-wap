@@ -6,68 +6,69 @@
     :value.sync="account.value"
     :rules="account.rules"
     :errors="account.errors"
-    :perror.sync="account.perror"
     :passed.sync="account.passed"></textfield>
   <textfield type='password' icon="mima" label="密码" label-float
     :value.sync="password.value"
     :rules="password.rules"
     :errors="password.errors"
-    :perror.sync="password.perror"
     :passed.sync="password.passed"></textfield>
-  <button-row>
-    <button fill raised
+
+  <div style="margin: 30px;">
+    <x-button fill raised
       @click="login"
-      :color="buttonColor"
-      :disabled="(loading)"
-      :text="loading ? '登录中 ...' : '登录'"></button>
-  </button-row>
-  <button-row>
+      color="brand"
+      :disabled="loading || !canLogin"
+      :text="loading ? '登录中 ...' : '登录'">
+    </x-button>
+  </div>
+
+  <!-- <button-row>
     <button mini @click="register">注册新会员</button>
     <button mini>忘记密码</button>
-  </button-row>
+  </button-row> -->
 
-  <toast center icon="success" text="登录成功" v-if="success"></toast>
-  <toast center icon="fail" text="登录失败" v-if="fail"></toast>
-  <toast center text="请正确填写表单" v-if="canNotClick"></toast>
-  <p>&nbsp;</p>
+  <toast :show.sync="success" type="success" text="登录成功"></toast>
+  <toast :show.sync="fail" type="text" :text="failMsg"></toast>
 </view-box>
 
 </template>
 
 <script>
-import {ViewBox, XHeader, Button, ButtonRow, ButtonArea, Textfield, Toast} from 'ui/components'
+import {ViewBox, XHeader, XButton, Textfield, Toast} from 'ui/components'
 import {login} from 'actions/member'
 
 export default {
+  components: {
+    ViewBox,
+    XHeader,
+    Textfield,
+    XButton,
+    Toast,
+  },
   data() {
     return {
       account: {
         value: '',
         rules: 'required',
-        errors: '请输入帐号',
-        perror: '',
+        errors: '请输入帐号。',
         passed: false,
       },
       password: {
         value: '',
         rules: 'required|min_length(6)|max_length(20)',
         errors: '请输入密码。|密码长度最少6位。|密码长度不能超过20位。',
-        perror: '',
         passed: false,
       },
       loading: false,
       success: false,
       fail: false,
-      canNotClick: false,
+      failMsg: '',
     }
   },
   computed: {
     canLogin() {
       return this.account.passed && this.password.passed && !this.loading ? true : false
     },
-    buttonColor() {
-      return this.canLogin || this.loading ? 'blue' : 'red'
-    }
   },
   vuex: {
     getters: {
@@ -88,28 +89,29 @@ export default {
             this.loading = false
             this.success = true
             setTimeout(() => {
-              this.success = false
               let redirect = decodeURIComponent(this.$route.query.redirect || '/');
               this.$route.router.go(redirect);
-            }, 2000);
+            }, 1000);
           },
           (res) => { // 登录失败
             this.loading = false
-            this.fail = true
-            setTimeout(() => this.fail = false, 2000)
             if (res.errors) {
-              if (res.errors.username) this.account.perror = res.errors.username[0]
-              if (res.errors.mobile) this.account.perror = res.errors.mobile[0]
-              if (res.errors.email) this.account.perror = res.errors.email[0]
-              if (res.errors.password) this.password.perror = res.errors.password[0]
+              if (res.errors.password) {
+                this.failMsg = res.errors.password[0]
+                this.password.passed = false
+              } else {
+                if (res.errors.username) this.failMsg = res.errors.username[0]
+                if (res.errors.mobile) this.failMsg = res.errors.mobile[0]
+                if (res.errors.email) this.failMsg = res.errors.email[0]
+                this.account.passed = false
+              }
             } else {
-              this.account.perror = '连接超时，请稍后再试。'
+              this.failMsg = '连接超时，请稍后再试。'
             }
+            // 显示失败
+            this.fail = true
           }
         )
-      } else {
-        this.canNotClick = true
-        setTimeout(() => this.canNotClick = false, 1500)
       }
     },
     register() {
@@ -121,18 +123,8 @@ export default {
       setTimeout(() => {
         let redirect = decodeURIComponent(this.$route.query.redirect || '/');
         this.$route.router.go(redirect);
-      }, 2000);
+      }, 0);
     }
   },
-  components: {
-    ViewBox,
-    XHeader,
-    Textfield,
-    Button,
-    ButtonRow,
-    ButtonArea,
-    Toast,
-  },
-
 }
 </script>

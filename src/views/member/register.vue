@@ -7,35 +7,31 @@
     :value.sync="mobile.value"
     :rules="mobile.rules"
     :errors="mobile.errors"
-    :perror.sync="mobile.perror"
     :passed.sync="mobile.passed"></textfield>
   <textfield type='password' placeholder="输入密码"
     :value.sync="password.value"
     :rules="password.rules"
     :errors="password.errors"
-    :perror.sync="password.perror"
     :passed.sync="password.passed"></textfield>
   <textfield type='password' placeholder="再次输入密码"
     :value.sync="repassword.value"
     :rules="repassword.rules"
     :errors="repassword.errors"
-    :perror.sync="repassword.perror"
     :passed.sync="repassword.passed"></textfield>
-  <button-row>
-    <button fill raised
+  <div style="margin: 30px;">
+    <x-button fill raised
+      color="red"
       @click="register"
-      :color="buttonColor"
-      :disabled="(loading)"
-      :text="loading ? '注册中 ...' : '注册'"></button>
-  </button-row>
-  <toast center icon="success" text="注册成功" v-if="success"></toast>
-  <toast center icon="fail" text="注册失败" v-if="fail"></toast>
-  <toast center text="请正确填写表单" v-if="canNotClick"></toast>
+      :disabled="loading || !canReg"
+      :text="loading ? '注册中 ...' : '注册'"></x-button></div>
+
+  <toast :show.sync="success" type="success" text="注册成功"></toast>
+  <toast :show.sync="fail" type="text" :text="failMsg"></toast>
 </view-box>
 </template>
 
 <script>
-import { ViewBox, XHeader, Button, ButtonRow, ButtonArea, Textfield, Toast} from 'ui/components'
+import { ViewBox, XHeader, XButton, Textfield, Toast} from 'ui/components'
 import {register} from 'actions/member'
 
 export default {
@@ -44,28 +40,25 @@ export default {
       mobile: {
         value: '',
         rules: 'required|mobile',
-        errors: '手机号码不能为空。|手机号码格式不正确。',
-        perror: '',
+        errors: '手机号码不能为空。|格式不正确。',
         passed: false,
       },
       password: {
         value: '',
         rules: 'required|min_length(6)|max_length(20)',
         errors: '请输入密码。|密码最小6位。|密码最多20位。',
-        perror: '',
         passed: false,
       },
       repassword: {
         value: '',
-        rules: '', // 见 watch
-        errors: '请再次输入密码。|密码最小6位。|密码最多20位。|两次密码不一致。',
-        perror: '',
+        rules: 'required|min_length(6)|max_length(20)', // 见 watch
+        errors: '请再次输入密码。|密码最小6位。|密码最多20位。',
         passed: false,
       },
       loading: false,
       success: false,
       fail: false,
-      canNotClick: false,
+      failMsg: '',
     }
   },
   vuex: {
@@ -81,13 +74,15 @@ export default {
           && !this.loading
           ? true : false
     },
-    buttonColor() {
-      return this.canReg || this.loading ? 'blue' : 'red'
-    },
   },
   methods: {
     register() {
-      if (this.canReg) {
+      if (this.password.value !== this.repassword.value) {
+        this.failMsg = "前后密码不一致。"
+        this.fail = true
+        this.repassword.passed = false
+      }
+      else if (this.canReg) {
         this.loading = true
         this.ajaxReg(
           {
@@ -100,44 +95,43 @@ export default {
             this.loading = false
             this.success = true
             setTimeout(() => {
-              this.success = false
               this.back()
             }, 2000);
           },
           (res) => {
             this.loading = false
-            this.fail = true
+
             setTimeout(() => this.fail = false, 2000)
             if (res.errors) {
-              if (res.errors.mobile) this.mobile.perror = res.errors.mobile[0]
-              if (res.errors.password) this.password.perror = res.errors.password[0]
-              if (res.errors.password_confirmation) this.password_confirmation.perror = res.errors.password_confirmation[0]
+              if (res.errors.mobile) {
+                this.failMsg = res.errors.mobile[0]
+                this.mobile.passed = false
+              }
+              if (res.errors.password) {
+                this.failMsg = res.errors.password[0]
+                this.password.passed = false
+              }
+              if (res.errors.password_confirmation) {
+                this.failMsg = res.errors.password_confirmation[0]
+                this.repassword.passed = false
+              }
             } else {
-              this.mobile.perror = '连接超时，请稍后再试。'
+              this.failMsg = '连接超时，请稍后再试。'
             }
+            this.fail = true
           }
         )
-      } else {
-        this.canNotClick = true
-        setTimeout(() => this.canNotClick = false, 1500)
       }
     },
     login() {
       this.$route.router.go('/member/login');
     },
   },
-  watch: {
-    "password.value": function(val) {
-      this.repassword.rules = `required|min_length(6)|max_length(20)|confirm(${val})`
-    },
-  },
   components: {
     ViewBox,
     XHeader,
     Textfield,
-    Button,
-    ButtonRow,
-    ButtonArea,
+    XButton,
     Toast,
   }
 }

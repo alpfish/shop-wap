@@ -1,7 +1,5 @@
 import * as types from 'src/vuex/mutation-types'
 import Api from 'libs/api'
-import LS from 'libs/local-storage'
-import Cookie from 'libs/vendor/vue-cookie'
 import {
   TOKEN_KEY,
 } from 'src/config'
@@ -36,7 +34,7 @@ export const login = ({dispatch}, account, password, success, error) => {
       }
     },
     (res) => {
-      // token 缓存在 Api.request() 中
+      // TOKEN 已在 Api.request() 中被截取并缓存
       dispatch(types.SET_AUTH, res.data.member)
       // 同步购物车
       syncCart({dispatch})
@@ -45,36 +43,43 @@ export const login = ({dispatch}, account, password, success, error) => {
     (res) => {
       error(res.data)
       dispatch(types.CANCEL_AUTH)
-      LS.delete(TOKEN_KEY)
-      Cookie.delete(TOKEN_KEY)
     }
   )
 }
 
-export const tokenLogin = ({dispatch}) => {
-  let token = LS.get(TOKEN_KEY) ? LS.get(TOKEN_KEY) : Cookie.get(TOKEN_KEY)
-  if (!_.isEmpty(token)) {
-    console.log('Token Login ...');
+export const tokenLogin = ({dispatch}, success, error) => {
+  if (Cache.get(TOKEN_KEY)) {
     Api.request (
-      {
-        url: 'member/login/token',
-        method: 'GET'
-      },
+      {url: 'member/login/token'},
       (res) => {
         dispatch(types.SET_AUTH, res.data.member)
+        if (success) success(res)
+        console.log('TOKEN LOGIN OK');
       },
       (res) => {
         dispatch(types.CANCEL_AUTH)
-        LS.delete(TOKEN_KEY)
-        Cookie.delete(TOKEN_KEY)
+        Cache.delete(TOKEN_KEY)
+        if (error) error(res)
+        console.log('TOKEN LOGIN FAILS');
       }
     )
-  }
+  } else if (error) { error() }
 }
 
 export const logout = ({dispatch}) => {
   dispatch(types.CANCEL_AUTH)
   dispatch(types.CLEAR_CART)
-  LS.delete(TOKEN_KEY)
-  Cookie.delete(TOKEN_KEY)
+  Cache.delete(TOKEN_KEY)
 }
+
+export const fetchAddresses = ({dispatch}) => {
+  Api.request (
+    {url: 'member/address/list'},
+    (res) => dispatch(types.SET_ADDRESSES, res.data.addresses),
+    (res) => {}
+  )
+}
+
+export const setAddress = ({dispatch}, data) => dispatch(types.SET_ADDRESSES, data)
+
+export const selectAddress = ({dispatch}, id) => dispatch(types.SELECT_ADDRESS, id)

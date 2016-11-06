@@ -1,25 +1,21 @@
 <template>
 <view-box>
-  <x-header title="会员中心"></x-header>
+  <x-header title="会员中心" back more></x-header>
   <list :title="username">
-    <list-item title="添加收货地址" :link="{name: 'add-address'}"></list-item>
+    <list-item title="地址管理" :link="{name: 'address'}"></list-item>
     <list-item title="会员注册" :link="{name: 'register'}"></list-item>
   </list>
 
 
-  <button-area slot="bottom" class="member-bottom">
-    <button-row>
-      <button fill big raised color="red" text="退出" @click="exit"></button>
-    </button-row>
-  </button-area>
+
+  <x-button slot="bottom" @click="exit" text="退出登录" color="semi" style="width: 90%; margin-bottom: 1.9rem;"></x-button>
+
 </view-box>
 </template>
 
 <script>
 import {
-  Button,
-  ButtonRow,
-  ButtonArea,
+  XButton,
   List,
   ListItem,
   ViewBox,
@@ -31,9 +27,7 @@ import {
 
 export default {
   components: {
-    Button,
-    ButtonRow,
-    ButtonArea,
+    XButton,
     List,
     ListItem,
     ViewBox,

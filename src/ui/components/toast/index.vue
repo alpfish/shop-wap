@@ -29,10 +29,6 @@ export default {
       type: String,
       default: 'vux-fade'
     },
-    width: {
-      type: String,
-      default: 'auto'
-    },
     text: String
   },
 
@@ -44,6 +40,14 @@ export default {
         'weui_toast_success': this.type === 'success',
         'weui_toast_text': this.type === 'text'
       }
+    },
+    width () {
+      let width = 'auto'
+      if (this.type == 'text') {
+        width = this.text.length <= 16 ? this.text.length : 16
+        width = `${(width + 4) * 32}px`
+      }
+      return width
     }
   },
 
@@ -85,21 +89,20 @@ export default {
 @import '../../styles/weui/widget/weui_tips/weui_toast';
 
 .weui_mask_transparent {
-    z-index: @zindex-mask;
+    z-index: @zindex-mask!important;
 }
 
 .weui_toast {
-  transform: translateX(-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   margin-left: 0!important;
   min-width: 240px;
   min-height: 240px;
-  // max-height: 240px;
-  top: 35%;
-  left: 50%;
   margin-left: -3.8em;
   background: rgba(40, 40, 40, 0.75);
   border-radius: 5*2px;
-  z-index: @zindex-toast@zindex-mask!important;;
+  z-index: @zindex-toast@zindex-mask!important;
 }
 
 .weui_icon_toast {
@@ -124,8 +127,8 @@ export default {
 }
 .weui_toast_text .weui_toast_content {
   margin: 0;
-  padding-top: 5*2px;
-  padding-bottom: 5*2px;
+  padding-top: 10*2px;
+  padding-bottom: 10*2px;
   border-radius: 15*2px;
 }
 .weui_toast_success .weui_icon_toast:before {

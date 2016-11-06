@@ -1,35 +1,70 @@
 <!-- XHeader -->
 <template>
-<div class="header-bar" :class="{ 'fixed': fixed }">
+<div class="header-bar" :class="{ 'fixed': fixed }" :style="styles">
   <div class="left">
-    <icon-button icon="back" @click="onBack" v-if="back"></icon-button><span @click="back" v-if="backtext">返回</span>
+    <icon name="back" @click="onBack" v-if="back" :size="38" :color="textColor"></icon>
+    <icon name="close" @click="$emit('on-close')" v-if="close" :size="38" :color="textColor"></icon>
     <slot name="left"></slot>
   </div>
   <div class="title"  v-text="title"><slot></slot></div>
   <div class="right">
+    <icon name="more-v" @click="$emit('on-more')" v-if="more" :size="38" :color="textColor"></icon>
     <slot name="right"></slot>
   </div>
 </div>
 </template>
 
 <script>
-import { Icon, IconButton } from '../icon'
+import { getColor } from 'ui/styles/_vars'
+import { Icon } from '../icon'
 
 export default {
   components: {
     Icon,
-    IconButton,
   },
   props: {
     title: String,
-    fixed: Boolean,
     back: Boolean,
-    backtext: Boolean,
+    more: Boolean,
+    close: Boolean,
+    fixed: Boolean,
+    color: {
+      type: String,
+      default: 'semi'
+    },
+    bgColor: {
+      type: String,
+      default: '#FAFAFA' //#FAFAFA
+    },
+    bgAlpha: {
+      type: Number,
+      default: 1
+    },
   },
+
+  computed: {
+
+    textColor () {
+      return getColor(this.color)
+    },
+
+    styles () {
+      let styles = {}
+      styles['color'] = this.textColor
+      styles['background-color'] = getColor(this.bgColor, this.bgAlpha)
+      if (this.bgColor) {
+        styles['border'] = 'none'
+      }
+
+      return styles
+    },
+
+  },
+
   methods: {
     onBack() {
       window.history.back()
-    }
+    },
   }
 };
 </script>
@@ -38,16 +73,14 @@ export default {
 @import "../../styles/_vars.less";
 @import "../../styles/vue-carbon/_mixins.less";
 
-@header-text-color: @black;
-
 .header-bar {
   display: flex;
   align-self: flex-start;
   justify-content: flex-start;
   align-items: center;
   font-size: 15*2/75rem;
-  color: @header-text-color;
-  background-color: @bg-header; //#FAFAFA
+  // color: @header-text-color;
+  // background-color: @bg-header; //#FAFAFA
   height: @height-header;
   line-height: @height-header;
   z-index: @zindex-header;
@@ -75,16 +108,6 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: center;
-  }
-  // .button {
-  //   background: none;
-  //   font-size: 14*2/75rem;
-  //   height: @height-header;
-  //   color: lighten(@header-text-color, 10%);
-  // }
-  .iconfont {
-    color: lighten(@header-text-color, 10%);
-    font-size: 18*2/75rem;
   }
 }
 </style>

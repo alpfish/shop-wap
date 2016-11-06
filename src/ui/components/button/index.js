@@ -1,11 +1,7 @@
-import Button from './button'
-import ButtonRow from './button-row'
-import ButtonArea from './Button-area'
+import XButton from './x-button'
 import FloatButton from './float-button'
 
 export {
-  Button,
-  ButtonRow,
-  ButtonArea,
+  XButton,
   FloatButton,
 }

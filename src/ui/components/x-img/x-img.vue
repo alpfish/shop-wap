@@ -44,7 +44,7 @@ export default {
     },
     tagStyle() {
       let style = {}
-      style['backgroundColor'] = getColor(this.tagColor, 0.8)
+      style['backgroundColor'] = getColor(this.tagColor, 0.6)
       return style
     },
   },
@@ -75,9 +75,9 @@ export default {
     left: 0;
     width: 100%;
     // height: 50/75rem;
-    line-height: 46/75rem;
-    font-size: 26/75rem;
-    color: #fff;
+    line-height: 40/75rem;
+    font-size: 24/75rem;
+    color: rgba(255,255,255,.9);
     text-align: center;
     background-color: rgba(51,51,51,.5);
   }

@@ -8,6 +8,7 @@ import Currency from './currency'
 import Dialog from './dialog'
 import Divider from './divider'
 import Loading from './loading'
+import Popup from './popup'
 import Ripple from './ripple'
 // 暂时未用
 // import Spinner from './spinner'
@@ -15,7 +16,6 @@ import Toast from './toast'
 import ViewBox from './view-box'
 import XHeader from './x-header'
 import { XImg } from './x-img'
-import { XInput } from './x-input'
 import { XNumber } from './x-number'
 
 // 滚动相关
@@ -26,12 +26,14 @@ import { Box, BoxItem } from './box'
 // 列表
 import { List, ListItem, ListLabel} from './list'
 // 按钮
-import { Button, ButtonRow, ButtonArea, FloatButton } from './button'
+import { XButton, FloatButton } from './button'
 // 表单
 import { Checkbox, Switch, Textfield, } from './forms'
 import { Checker, CheckerItem } from './checker'
 // 图标
 import { Icon, IconButton } from './icon'
+// 选项卡
+import { Tab, TabItem } from './tab'
 // 底部导航
 import { Tabbar, TabbarItem } from './tabbar'
 
@@ -43,9 +45,7 @@ import { Tabbar, TabbarItem } from './tabbar'
 const ui = {
   Alert,
   Badge,
-  Button,
-  ButtonRow,
-  ButtonArea,
+  XButton,
   Box,
   BoxItem,
   Checkbox,
@@ -63,17 +63,19 @@ const ui = {
   ListLabel,
   Loading,
   Loadmore,
+  Popup,
   Ripple,
   // Spinner,
   Switch,
   Textfield,
+  Tab,
+  TabItem,
   Tabbar,
   TabbarItem,
   Toast,
   ViewBox,
   XHeader,
   XImg,
-  XInput,
   XNumber,
 
   // vux 原装

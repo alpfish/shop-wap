@@ -2,7 +2,7 @@
 <template>
 <view-box>
   <x-header slot="header" title="购物车">
-    <div slot="right" @click="edit" v-text="editing ? '完成' : '编辑'" ></div>
+    <div slot="right" @click="edit" v-text="editing ? '完成' : '编辑'" style="margin-right: 0.4rem"></div>
   </x-header>
 
   <!-- 列表 -->
@@ -74,7 +74,6 @@ import {
   IMG_ROOT
 } from 'src/config'
 import {
-  loadCart,
   update,
   deleteCartSkus,
 } from 'actions/cart'
@@ -114,7 +113,6 @@ export default {
       inputing: ({app}) => app.inputing,
     },
     actions: {
-      loadCart,
       update,
       deleteCartSkus,
     }

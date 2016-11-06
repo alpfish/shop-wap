@@ -27,7 +27,7 @@ export default {
     },
     style () {
       return {
-        fontSize: typeof this.size === "string" ? this.size : `${this.size}px`,
+        fontSize: typeof this.size === "string" ? this.size : `${this.size/75}rem`,
         color: getColor(this.color)
       }
     }

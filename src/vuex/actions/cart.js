@@ -1,11 +1,8 @@
 import * as types from 'src/vuex/mutation-types'
 import Api from 'libs/api'
 import LocalCart from 'libs/local-cart'
-import {auth} from 'src/vuex/getters'
-// 缓存
-import LS from 'libs/local-storage'
-import Cookie from 'libs/vendor/vue-cookie'
-import {TOKEN_KEY} from 'src/config'
+import { auth } from 'src/vuex/getters'
+import { TOKEN_KEY } from 'src/config'
 
 export const loadCart = ({dispatch, state}) => {
   // 读取缓存
@@ -14,8 +11,7 @@ export const loadCart = ({dispatch, state}) => {
     params.buys = LocalCart.get()
   }
   // 截流， 使用 token 而不是 auth() 判断，避免认证与获取购物车同步，导致获取购物车失败
-  let token = LS.get(TOKEN_KEY) ? LS.get(TOKEN_KEY) : Cookie.get(TOKEN_KEY)
-  if (!token && _.isEmpty(params.buys)) {
+  if (!Cache.get(TOKEN_KEY) && _.isEmpty(params.buys)) {
     dispatch(types.SET_CART_LOADED, true)
     return
   }

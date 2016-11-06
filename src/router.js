@@ -51,16 +51,25 @@ router.beforeEach(({ to, from, next }) => {
 // 认证路由中间件
 router.beforeEach((transition) => {
   if (transition.to.auth && !auth()) {
-    // 手动登录
-    let redirect = encodeURIComponent(transition.to.path);
-    transition.redirect('/member/login?redirect=' + redirect)
+    // 先token再手动登录
+    tokenLogin(
+      store,
+      (res) => {
+        transition.next()
+      },
+      (res) => {
+        // 手动登录
+        let redirect = encodeURIComponent(transition.to.path);
+        transition.redirect('/member/login?redirect=' + redirect)
+      }
+    )
   } else {
     transition.next()
   }
 });
 
 router.afterEach(({ to, from }) => {
-  // token自动登录
+  // (首次)进入页面后token自动登录
   if (!auth()) {
     tokenLogin(store)
   }
@@ -126,9 +135,15 @@ router.map({
     name: 'login',
     component: (resolve) => require(['views/member/login.vue'], resolve)
   },
+  '/member/address': {
+    name: 'address',
+    auth: true,
+    component: (resolve) => require(['views/member/address.vue'], resolve)
+  },
   '/member/address/add': {
-    name: 'add-address',
-    component: (resolve) => require(['views/member/add-address.vue'], resolve)
+    name: 'address-add',
+    auth: true,
+    component: (resolve) => require(['views/member/address-add.vue'], resolve)
   },
 })
 

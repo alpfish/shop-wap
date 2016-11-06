@@ -1,6 +1,8 @@
 <!-- Home -->
 <template>
 <view-box>
+  <!-- <x-header more back title="商品详情"></x-header> -->
+  <x-header close title="商品详情" @on-close="onClose"></x-header>
   <list>
     <list-item title="帐户" subtitle="子标题" icon="wode" icon-color="red"></list-item>
     <list-item title="购物车" icon="gouwuche" icon-color="brand" v-link="{path: 'cart'}" arrow></list-item>
@@ -47,6 +49,7 @@ import {
   Toast,
   XImg,
   XNumber,
+  XHeader,
 } from 'ui/components'
 
 export default {
@@ -69,6 +72,7 @@ export default {
     Textfield,
     XImg,
     XNumber,
+    XHeader,
   },
   data() {
     return {
@@ -81,10 +85,17 @@ export default {
   methods: {
     show () {
       this.turn = true
+    },
+    onClose() {
+      alert()
     }
   },
   ready() {
-
+    this.$cache.set('test', 'Hello world!');
+    console.log(Cache.get('test'));
+    this.$shop.header.show = true
+    this.$shop.header.title = '购物车'
+    console.log(this.$shop);
   }
 }
 </script>
