@@ -21,17 +21,6 @@ Vue.use(Cache) // $cache
 Vue.use(ToastPlugin) // $vux.toast
 // Vue.use(Device) // $device
 
-
-Vue.prototype.$shop = {
-  
-  header : {
-    show: false,
-    back: false,
-    colse: false,
-    title: '',
-  }
-}
-
 // 过滤器
 Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]))
 
