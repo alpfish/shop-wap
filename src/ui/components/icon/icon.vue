@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {getColor} from 'ui/styles/_vars'
+import { getColor } from '../../styles/_vars'
 export default {
   props: {
     name: {
@@ -12,7 +12,7 @@ export default {
     },
     size: {
       type: [String, Number],
-      default: 48
+      default: 18
     },
     color: {
       type: String,
@@ -27,7 +27,7 @@ export default {
     },
     style () {
       return {
-        fontSize: typeof this.size === "string" ? this.size : `${this.size/75}rem`,
+        fontSize: typeof this.size === "string" ? this.size : `${this.size/37.5}rem`,
         color: getColor(this.color)
       }
     }

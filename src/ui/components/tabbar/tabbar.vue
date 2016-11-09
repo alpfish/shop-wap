@@ -1,70 +1,38 @@
 <template>
-<div class="weui_tabbar">
-  <slot></slot>
-</div>
+  <div class="weui-tabbar">
+    <slot></slot>
+  </div>
 </template>
 
 <style lang="less">
-@import "../../styles/_vars.less";
+@import "../../styles/_fn.less";
+@import "../../styles/weui/widget/weui-tab/tabbar.less";
 
-.weui_tabbar {
-    display: flex;
-    position: absolute;
-    z-index: @zindex-tabbar;
-    bottom: 0;
-    width: 100%;
-    height: 110/75rem;
-    max-height: 110/75rem;
-    background-color: @bg-tabbar;
-    border-top: 1px solid @border-color;
+.weui-tabbar {
+  // 兼容UC
+  display: -webkit-box;
 }
-.weui_tabbar_item {
-    display: block;
-    flex: 1;
-    margin: 0;
-    padding: 0;
-    padding-top: 3*2/75rem;
-
-    color: @gray; // alp
-    text-align: center; // alp
-    -webkit-tap-highlight-color: transparent;
-
-    .active {
-        color: @brand;
-    }
+.weui-tabbar__item {
+  // 兼容UC
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -ms-flex: 1;
+  &.weui-bar__item_on {
+      .weui-tabbar__icon, .weui-tabbar__icon > i, .weui-tabbar__label {
+          color: @brand;
+      }
+  }
 }
 
-.weui_tabbar_icon {
-    margin: 0 auto;
-    padding: 0 auto;
-    max-width: 24*2/75rem;
-    max-height: 24*2/75rem;
-    img {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-    & + .weui_tabbar_label {
-        margin-top: 9*2/75rem;
-        margin-bottom:  5*2/75rem;
-    }
+.weui-tabbar__icon {
+  position: relative;
 }
 
-.weui_tabbar_label {
-    font-size: 14*2/75rem;
-    line-height: 14*2/75rem;
-    height: 14*2/75rem;
-    color: @gray; // alp
-}
-
-.weui_tabbar_icon {
-    position: relative;
-}
-.weui_tabbar_icon > sup {
-    position: absolute;
-    top: -3px;
-    left: 100%;
-    transform: translateX(-50%);
-    z-index: @zindex-tabbar + 1;
+.weui-tabbar__icon > sup {
+  position: absolute;
+  top: -4px;
+  left: 100%;
+  transform: translateX(-50%);
+  z-index: 101;
 }
 </style>

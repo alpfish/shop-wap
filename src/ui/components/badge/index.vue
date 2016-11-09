@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import {getColor} from 'ui/styles/_vars'
+import { getColor } from '../../styles/_vars'
 
 export default {
   props: {
@@ -33,23 +33,22 @@ export default {
 </script>
 
 <style lang="less">
-@import '../../styles/index.less';
 
 .vux-badge {
   display: inline-block;
   text-align: center;
   color: #fff;
-  font-size: 12*2/75rem;
+  font-size: 12px;
   text-align: center;
-  // height: 18*2/75rem;
-  line-height: 16*2/75rem;
-  border: 2px solid #fff;
-  border-radius: 9*2/75rem;
-  padding: 0 6*2/75rem;
+  height: 16px;
+  line-height: 16px;
+  // border: 2px solid #fff;
+  border-radius: 10px;
+  padding: 0 6px;
   background-clip: padding-box;
 }
 .vux-badge-single {
   padding: 0;
-  width: 18*2/75rem;
+  width: 16px;
 }
 </style>

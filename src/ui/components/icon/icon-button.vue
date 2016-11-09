@@ -1,12 +1,12 @@
 <template>
 <button class="icon-button" :style="style" :disabled="disabled" v-el:button>
   <icon v-if="icon" :name="icon" :size="36"></icon>
-  <ripple :trigger="$els.button" v-if="!disabled"></ripple>
+  <!-- <ripple :trigger="$els.button" v-if="!disabled"></ripple> -->
 </button>
 </template>
 
 <script>
-import Ripple from '../ripple'
+// import Ripple from '../ripple'
 import Icon from '../icon/icon'
 import {
   getColor
@@ -15,7 +15,7 @@ import {
 export default {
   components: {
     Icon,
-    Ripple
+    // Ripple
   },
   props: {
     icon: String,
@@ -49,7 +49,7 @@ export default {
 
 <style lang="less">
 @import "../../styles/_vars.less";
-@import "../../styles/vue-carbon/_mixins.less";
+// @import "../../styles/vue-carbon/_mixins.less";
 .icon-button {
     color: @semi;
     position: relative;
@@ -70,7 +70,7 @@ export default {
     transition-duration: 300ms;
     transform: translate3d(0, 0, 0);
     border-radius: 100%;
-    .flex-shrink(0);
+    // .flex-shrink(0);
     &:active {
         background-color: rgba(0, 0, 0, 0.2);
     }

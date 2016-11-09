@@ -1,18 +1,16 @@
 <template>
-  <a href="javascript:;" class="weui_tabbar_item" @click="onItemClick">
-    <div class="weui_tabbar_icon" :class="{'vux-reddot': dot, 'active': active}">
-      <slot name="icon"><icon v-show="icon" :name="icon" :size="(44/75)+'rem'"></icon></slot>
+  <a  @click="onItemClick" href="javascript:;" class="weui-tabbar__item" :class="{'weui-bar__item_on': active}">
+    <div class="weui-tabbar__icon" :class="{'vux-reddot': dot}">
+      <slot name="icon"><icon v-show="icon" :name="icon" size="20px"></icon></slot>
       <sup><badge v-if="badge" :text="badge"></badge></sup>
     </div>
-    <p class="weui_tabbar_label" :class="{'active': active}">
-      <slot name="label" ><span v-show="label" v-text="label"></span></slot>
-    </p>
+    <p class="weui-tabbar__label"><slot name="label" >{{label}}</slot></p>
   </a>
 </template>
 
 <script>
 import Badge from '../badge'
-import {Icon} from '../icon'
+import { Icon } from '../icon'
 import { go } from '../../libs/router'
 
 export default {
@@ -21,25 +19,16 @@ export default {
     Icon,
   },
   props: {
-    active: {
-      type: Boolean,
-      default: false
-    },
+    active: Boolean,
     link: [String, Object],
     icon: String,
-    label:String,
+    label: String,
     badge: [String, Number],
-    dot: {
-      type: Boolean,
-      default: false
-    },
+    dot: Boolean,
   },
   methods: {
     onItemClick() {
       go(this.link, this.$router)
-
-      // icon 和 label 同时高亮
-      this.active = true
     }
   },
 }

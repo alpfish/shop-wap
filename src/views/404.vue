@@ -1,48 +1,45 @@
-<style scoped lang="less">
-  @import "../ui/styles/_vars.less";
+<template>
+    <div class="notfound">
+        <icon name="404" color="gray" size="2rem"></icon>
+        <p>非常抱歉，您所访问的网页找不到了！</p>
+        <router-link to="/"><h3 class="link">返回首页</h3></router-link>
+    </div>
+</template>
 
-  .not-found .link {
-      color: @black;
-  }
-  .not-found .text {
-      margin-top: 50px;
-      text-align: center;
-      font-size: 16px;
-      line-height: 20px;
-      color: #fff;
-  }
-  .not-found img {
-      display: block;
-      width: 60%;
-      margin: 0 auto;
-  }
-  .not-found {
-      padding: 150px 0 160px;
-      height: 100%;
-      background-color: @blue;
-      overflow: hidden;
-  }
-  #main {
+<script>
+import {Icon} from 'ui/components/icon'
+
+export default {
+  name: 'app',
+
+  components: {
+    Icon,
+  },
+
+}
+</script>
+
+<style scoped lang="less">
+  @import "../ui/styles/_fn.less";
+
+  .notfound {
     position: fixed;
-    top:0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+
+    i {
+      flex: 1;
+    }
+    p {
+      color: @gray;
+    }
+    h3 {
+      margin-top: 20px;
+      color: @brand;
+    }
   }
 
 
 </style>
-
-<template>
-
-    <div id="main">
-        <div class="not-found">
-            <img src="http://echarts.baidu.com/images/404.png" alt="404">
-            <div class="text">非常抱歉，您所访问的网页找不到了！
-              <p></p>
-              <p><a href="javascript:;" class="link" v-link="{name:'home'}">返回首页</a></p>
-            </div>
-        </div>
-    </div>
-
-</template>

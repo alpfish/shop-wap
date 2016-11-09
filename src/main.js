@@ -1,32 +1,25 @@
-import _ from 'lodash'
+// import _ from 'lodash'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
-import FastClick from 'fastclick'
 import App from './App'
+import routes from './routes'
+import loading from 'ui/plugins/loading'
+import toast from 'ui/plugins/toast'
 
-// 自定义插件
-import Cache from 'libs/cache'
-import ToastPlugin from 'ui/plugins/toast'
-// import Device from 'ui/plugins/device'
+Vue.use(VueRouter)
+Vue.use(VueResource)
+Vue.use(loading)
+Vue.use(toast)
 
-import * as filters from './filters'
-import router from 'src/router'
+const router = new VueRouter({
+  routes
+})
 
-FastClick.attach(document.body)
+new Vue({
+  router,
+  el: '#app',
+  render: h => h(App)
+})
 
-Vue.config.debug = true
-
-Vue.use(Cache) // $cache
-Vue.use(ToastPlugin) // $vux.toast
-// Vue.use(Device) // $device
-
-// 过滤器
-Object.keys(filters).forEach((k) => Vue.filter(k, filters[k]))
-
-router.start(App, '#app')
-
-// 全局
-window.router = router
 window.Vue = Vue
-window.Cache = Cache

@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1478355068727'); /* IE9*/
-  src: url('iconfont.eot?t=1478355068727#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1478355068727') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1478355068727') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1478355068727#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1478514299726'); /* IE9*/
+  src: url('iconfont.eot?t=1478514299726#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1478514299726') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1478514299726') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1478514299726#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -156,5 +156,7 @@
 
 .icon-shibai:before { content: "\e642"; }
 
-.icon-404:before { content: "\e638"; }
+.icon-404:before { content: "\e643"; }
+
+.icon-4041:before { content: "\e638"; }
 
