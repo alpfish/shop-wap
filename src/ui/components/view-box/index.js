@@ -1,3 +1,5 @@
-import ViewBox from './src/view-box.vue';
+import ViewBox from './src/view-box.vue'
 
-module.exports = ViewBox;
+export {
+  ViewBox
+}

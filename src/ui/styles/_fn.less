@@ -1,5 +1,11 @@
+// _fn.less 文件原则：
+// 只引入 .less 变量及函数， 不引入具体 css 样式
+
 // WeUI 基本样式
 @import './weui/base/reset';
 
 // 自定义变量
 @import '_vars.less';
+
+// 浏览器兼容及常用样式函数
+@import 'mixins.less';

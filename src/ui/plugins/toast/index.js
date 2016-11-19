@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Toast from '../../components/toast/index.js';
+import { Toast } from '../../components/toast/index.js';
 
 export default {
   install (Vue, options) {

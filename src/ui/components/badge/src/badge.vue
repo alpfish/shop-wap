@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { getColor } from '../../styles/_vars'
+import { getColor } from '../../../styles/_vars'
 
 export default {
   props: {

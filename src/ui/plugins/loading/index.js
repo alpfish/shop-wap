@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-const LoadingComponent = Vue.extend(require('../../components/loading/index.js'));
+const LoadingComponent = Vue.extend(require('../../components/loading/src/loading'));
 
 let $vm
 

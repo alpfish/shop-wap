@@ -1,2 +1,5 @@
-import Loading from './src/loading.vue';
-module.exports = Loading;
+import Loading from './src/loading.vue'
+
+export {
+  Loading
+}

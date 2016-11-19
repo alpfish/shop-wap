@@ -1,3 +1,5 @@
-import Toast from './src/toast.js';
+import Toast from './src/toast.js'
 
-module.exports = Toast;
+export {
+  Toast
+}

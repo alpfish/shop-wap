@@ -1,0 +1,199 @@
+
+// css 浏览器兼容及常用样式解决方案
+
+// 个人整理，勿删！ alpfish
+
+// 兼容
+.transition(@d) {
+  -webkit-transition-duration: @d;
+  transition-duration: @d;
+}
+.delay(@d) {
+  -webkit-transition-delay: @d;
+  transition-delay: @d;
+}
+.transform(@t) {
+  -webkit-transform: @t;
+  transform: @t;
+}
+.transform-origin(@to) {
+  -webkit-transform-origin: @to;
+  transform-origin: @to;
+}
+.translate3d(@x:0, @y:0, @z:0) {
+  -webkit-transform: translate3d(@x,@y,@z);
+  transform: translate3d(@x,@y,@z);
+}
+.animation (@a) {
+  -webkit-animation: @a;
+  animation: @a;
+}
+.scrollable() {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.flex-shrink(@fs) {
+  -webkit-box-flex: @fs;
+  -webkit-flex-shrink: @fs;
+  -ms-flex: 0 @fs auto;
+  flex-shrink: @fs;
+}
+
+.clearfix() {
+  &:after,
+  &:before {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// 1px 解决方案 {{ 已完成 }}
+// 参考 weui(.weui-btn) 与 vue-carbon(_mixins.less中的.hairline)
+// 父容器需是相对定位： position: relative;
+// 以 onePxBorder 为基础， 可在上面移除各边，或指定保留一边
+// 可指定@color 和 @radius
+// 可在外部通过 :before 伪类修改特定样式， 如：
+// .box {
+//    position: relative;
+//    height: 5rem;
+//    width: 5rem;
+//   .onePxBorder(@semi, 10px);
+//   .onePxBorderRemove(right);
+//   &:before {
+//     border-style: dashed;
+//     border-radius: 10px 0 0 10px;
+//     border-top-color: @red;
+//   }
+// }
+.onePxBorder(@color:#C7C7C7, @radius:0) {
+  &:before {
+    content: " ";
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid @color;
+    transform: scale(.5);
+    transform-origin: 0 0;
+    box-sizing: border-box;
+    border-radius: @radius;
+  }
+}
+.onePxBorderRemove(@position) when (@position = top) {
+  &:before {
+    border-top-width: 0;
+  }
+}
+.onePxBorderRemove(@position) when (@position = bottom) {
+  &:before {
+    border-bottom-width: 0;
+  }
+}
+.onePxBorderRemove(@position) when (@position = left) {
+  &:before {
+    border-left-width: 0;
+  }
+}
+.onePxBorderRemove(@position) when (@position = right) {
+  &:before {
+    border-right-width: 0;
+  }
+}
+.onePxBorderOnly(@position, @color:#C7C7C7, @radius:0) when (@position = top) {
+  .onePxBorder(@color, @radius);
+  .onePxBorderRemove(bottom);
+  .onePxBorderRemove(left);
+  .onePxBorderRemove(right);
+}
+.onePxBorderOnly(@position, @color:#C7C7C7, @radius:0) when (@position = bottom) {
+  .onePxBorder(@color, @radius);
+  .onePxBorderRemove(top);
+  .onePxBorderRemove(left);
+  .onePxBorderRemove(right);
+}
+.onePxBorderOnly(@position, @color:#C7C7C7, @radius:0) when (@position = left) {
+  .onePxBorder(@color, @radius);
+  .onePxBorderRemove(top);
+  .onePxBorderRemove(bottom);
+  .onePxBorderRemove(right);
+}
+.onePxBorderOnly(@position, @color:#C7C7C7, @radius:0) when (@position = right) {
+  .onePxBorder(@color, @radius);
+  .onePxBorderRemove(top);
+  .onePxBorderRemove(bottom);
+  .onePxBorderRemove(left);
+}
+
+// Encoded SVG Background
+.encoded-svg-background(@svg) {
+  @url: `encodeURIComponent(@{svg})`;
+  background-image: url("data:image/svg+xml;charset=utf-8,@{url}");
+}
+// Preserve3D
+.preserve3d() {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+// Shadow
+.depth(@level:1) {
+  & when (@level = 1) {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
+  & when (@level = 2) {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+  & when (@level = 3) {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+  & when (@level = 4) {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+  & when (@level = 5) {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  }
+}
+// Highlighted Links
+.active-highlight(@color:rgba(255, 255, 255, 0.15)){
+  &:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: @color;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    opacity: 0;
+    pointer-events: none;
+    .transition(600ms);
+  }
+  &.active-state:before,
+  html:not(.watch-active-state) &:active:before {
+    opacity: 1;
+    .transition(150ms);
+  }
+}
+.active-highlight-color(@color) {
+  &:before {
+    background-image: -webkit-radial-gradient(center, circle cover, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+    background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+  }
+}
+// No Scrollbar
+.no-scrollbar() {
+  &::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    -webkit-appearance: none;
+    opacity: 0 !important;
+  }
+}

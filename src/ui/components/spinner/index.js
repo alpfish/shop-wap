@@ -1,2 +1,5 @@
-import Spinner from './src/spinner.vue';
-module.exports = Spinner;
+import Spinner from './src/spinner.vue'
+
+export {
+  Spinner
+}

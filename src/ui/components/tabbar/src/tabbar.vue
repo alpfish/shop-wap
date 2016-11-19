@@ -5,8 +5,8 @@
 </template>
 
 <style lang="less">
-@import "../../styles/_fn.less";
-@import "../../styles/weui/widget/weui-tab/tabbar.less";
+@import "../../../styles/_fn.less";
+@import "../../../styles/weui/widget/weui-tab/tabbar.less";
 
 .weui-tabbar {
   // 兼容UC

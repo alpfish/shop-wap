@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import Badge from '../badge'
-import { Icon } from '../icon'
-import { go } from '../../libs/router'
+import { Badge } from '../../badge/index.js'
+import { Icon } from '../../icon/index.js'
+import { go } from '../../../libs/router'
 
 export default {
   components: {

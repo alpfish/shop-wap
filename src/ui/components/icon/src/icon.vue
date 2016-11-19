@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { getColor } from '../../styles/_vars'
+import { getColor } from '../../../styles/_vars'
 export default {
   props: {
     name: {
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="css">
-@import "../../../assets/iconfont/iconfont.css";
+@import "../../../../assets/iconfont/iconfont.css";
 
 .iconfont {
   position: relative;

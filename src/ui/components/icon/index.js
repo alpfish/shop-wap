@@ -1,7 +1,5 @@
-import Icon from './icon'
-import IconButton from './icon-button'
+import Icon from './src/icon.vue'
 
 export {
   Icon,
-  IconButton,
 }

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Spinner from '../../spinner/index.js'
+import { Spinner } from '../../spinner/index.js'
 import { getColor } from '../../../styles/_vars'
 
 export default {

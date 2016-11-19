@@ -1,4 +1,4 @@
-// import _ from 'lodash'
+import _ from 'lodash' // 67kb左右，生产环境可分离
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
