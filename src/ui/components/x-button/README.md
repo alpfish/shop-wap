@@ -11,10 +11,15 @@
 ```html
 <div style="margin: 15px">
   <x-button fill color="primary" icon="gouwuche">加入购物车</x-button>
+  <x-button fill color="primary" icon="gouwuche" disabled>加入购物车</x-button>
   <x-button fill color="warning">warning</x-button>
+  <x-button fill color="warning" disabled>warning</x-button>
   <x-button color='default'>default</x-button>
+  <x-button color='default' disabled>default</x-button>
   <x-button fill color='blue'>blue</x-button>
   <x-button fill color='blue' disabled>blue</x-button>
+  <x-button color='blue'>blue</x-button>
+  <x-button color='blue' disabled>blue</x-button>
   <x-button mini color="purple" >迷你</x-button>
   <x-button mini color="purple" disabled>禁用</x-button>
   <x-button mini>文字</x-button>

@@ -2,8 +2,8 @@
 <template>
 <div class="header-bar" :class="{ 'fixed': fixed }" :style="styles">
   <div class="left">
-    <icon name="back" @click="onBack" v-if="back" :size="18" :color="textColor"></icon>
-    <icon name="close" @click="$emit('on-close')" v-if="close" :size="18" :color="textColor"></icon>
+    <icon name="back" @click.native="onBack" v-if="back" :size="18" :color="textColor"></icon>
+    <icon name="close" @click.native="$emit('on-close')" v-if="close" :size="18" :color="textColor"></icon>
     <slot name="left"></slot>
   </div>
   <div class="title"><slot>{{title}}</slot></div>

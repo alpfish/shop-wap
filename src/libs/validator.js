@@ -9,9 +9,8 @@
  *
  * import Validator from '../utils/validator'
  *
- * let v = new Validator
- * v.validate({
- *    value: 'XXXXXX'
+ * let v = Validator.validate({
+ *    value: 'XXXXXX',
  *    rules: 'required|min_length(6)|max_length(20)',
  *    errors: '请输入密码。|密码长度最少6位。|密码长度不能超过20位。',
  * })
@@ -130,14 +129,11 @@ const _testHook = {
 
 class Validator {
 
-  constructor() {
-    this.passed = true
-    this.faild = false
-    this.error = ''
-  }
-
   validate(field) {
 
+    let error = null
+    let faild = false
+    let passed = true
     let rules = field.rules.split('|'),
       isEmpty = (!field.value || field.value === '' || field.value === undefined)
 
@@ -152,26 +148,30 @@ class Validator {
 
       if (typeof _testHook[method] === 'function') {
         if (!_testHook[method].apply(this, [field, param])) {
-          this.faild = true
+          faild = true
         }
       }
       if (regexs[method] && /^regexp\_/.test(method)) {
         if (!regexs[method].test(field.value)) {
-          this.faild = true
+          faild = true
         }
       }
-      if (this.faild) {
-        this.error = (function() {
+      if (faild) {
+        error = (function() {
           return field.errors.split('|')[i]
         })()
         break;
       }
     }
+    passed = !faild
 
-    this.passed = !this.faild
-
-    return this
+    return {
+      passed,
+      faild,
+      error
+    }
   }
+
 }
 
-export default Validator
+export default new Validator

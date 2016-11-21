@@ -7,7 +7,7 @@
       v-model.lazy="currentValue"
       @change="input"
       @focus="focus"
-      :readonly="disabled" />
+      :readonly="readonly" />
     <div @click="add" class="selector plus" :class="addClass">+</div>
     <!-- 输入时滚动至可见区域，单独设置参照元素控制滚动距离，否则输入框直接滚动到顶部 -->
     <span class="focus-scroll-position" :id="id"></span>
@@ -23,7 +23,7 @@ export default {
     min: Number,
     max: Number,
     value: Number, // 以 v-model.number="nums" 形式调用
-    disabled: Boolean,
+    readonly: Boolean,
     step: {
       type: Number,
       default: 1
@@ -46,17 +46,17 @@ export default {
     },
     subClass() {
       return {
-        disabled: this.disabled || this.disabledMin
+        disabled: this.readonly || this.disabledMin
       }
     },
     addClass() {
       return {
-        disabled: this.disabled || this.disabledMax
+        disabled: this.readonly || this.disabledMax
       }
     },
     inputClass() {
       return {
-        disabled: this.disabled || (this.disabledMin && this.disabledMax)
+        disabled: this.readonly || (this.disabledMin && this.disabledMax)
       }
     }
   },
@@ -68,20 +68,20 @@ export default {
     },
 
     add () {
-      if (this.disabledMax && !this.disabled) {
+      if (this.disabledMax && !this.readonly) {
         Toast('已经够多了哦')
       }
-      if (!this.disabledMax && !this.disabled) {
+      if (!this.disabledMax && !this.readonly) {
         this.currentValue += this.step
         this.change()
       }
     },
 
     sub () {
-      if (this.disabledMin && !this.disabled) {
+      if (this.disabledMin && !this.readonly) {
         Toast('不能再少了哦')
       }
-      if (!this.disabledMin && !this.disabled) {
+      if (!this.disabledMin && !this.readonly) {
         this.currentValue -= this.step
         this.change()
       }
@@ -120,14 +120,14 @@ export default {
       // }, 0);
 
       // 弹框输入
-      if (!this.disabled) {
+      if (!this.readonly) {
         MessageBox.prompt('数量', '', {
           inputValue: this.currentValue,
           inputType: 'number',
           inputPlaceholder: `${this.min} - ${this.max} 之间`,
         })
         .then(({value, action}) => {
-          this.currentValue = value
+          this.currentValue = value || this.currentValue
           this.change()
           return;
         })
