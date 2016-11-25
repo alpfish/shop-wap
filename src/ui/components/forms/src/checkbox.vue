@@ -93,7 +93,7 @@ export default {
   border-style: solid;
   border-color: @gray;
   background: transparent;
-  transition-duration: 100ms;
+  // transition-duration: 100ms;
   &:after {
     left: 50%;
     top: 50%;
@@ -104,7 +104,7 @@ export default {
     transform: rotate(45deg);
     opacity: 0;
     transition: opacity .1s ease;
-    transition-delay: .1s;
+    // transition-delay: .1s;
     border-right: 1px solid #fff;
     border-bottom: 1px solid #fff;
     box-sizing: border-box;

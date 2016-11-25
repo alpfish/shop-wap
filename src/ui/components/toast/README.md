@@ -23,6 +23,22 @@ Toast({
   icon: 'success', // 默认无
   iconColor: 'green', // 默认白色
   duration: 5000, // 持续时长
-});  
+});
 
+```
+
+### 手动控制及加载图标
+
+```Javascript
+// icon 为 'loading' 时显示加载动画图标
+handleToast() {
+  let toast = this.$toast({message:'处理中', icon:'loading', autoHide: false})
+  setTimeout(() => {
+    toast.icon = 'success'
+    toast.message = "操作成功"
+  }, 2000);
+  setTimeout(() => {
+    toast.show = false
+  }, 3500);
+}
 ```

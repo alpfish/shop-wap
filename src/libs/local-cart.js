@@ -1,4 +1,4 @@
-import Cache from 'libs/cache'
+import Cache from 'src/libs/cache'
 import {
   CART_KEY,
 } from 'src/config'
@@ -7,7 +7,7 @@ class LocalCart {
 
   get() {
     let data = Cache.get(CART_KEY)
-    return data ? JSON.parse(data) : []
+    return data ? JSON.parse(data) : null
   }
 
   add(buys) {

@@ -7,11 +7,21 @@
 
 <script>
 import Tabbar from 'components/tabbar'
+import {
+  mapMutations
+} from 'vuex'
 
 export default {
   name: 'app',
   components: {
     Tabbar,
+  },
+
+  methods: {
+    ...mapMutations([
+      'SET_INPUTING',
+      'SET_LANDSCAPE'
+    ]),
   },
 
   created() {
@@ -40,7 +50,7 @@ export default {
     const height = document.body.clientHeight
     // 初始设置横竖屏
     let isLandscape = width > height ? true : false
-    // store.dispatch(types.UPDATE_LANDSCAPE, isLandscape) // TODO
+    this.SET_LANDSCAPE(isLandscape)
 
     // 监视窗口调整, 不能在应用中的其他地方设置 window.onresize， 否则之前设置的失效
     window.onresize = () => {
@@ -49,9 +59,9 @@ export default {
       let nHeight = document.body.clientHeight
       let inputing = nHeight < height && nWidth === width ? true : false
       let isLandscape = nWidth > width ? true : false
-      // TODO
-      // store.dispatch(types.UPDATE_INPUTING, inputing)
-      // store.dispatch(types.UPDATE_LANDSCAPE, isLandscape)
+
+      this.SET_INPUTING(inputing)
+      this.SET_LANDSCAPE(isLandscape)
     }
   }
 

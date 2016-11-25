@@ -55,7 +55,8 @@ export default {
 
       // 禁用状态
       if (this.disabled) {
-        style['color'] =  getColor(this.fill && this.color ? '#ffffff' : color, 0.5)
+        document.styleSheets[0].insertRule(`#${this.id}:active{border: none}` ,0)
+        style['color'] =  getColor(this.fill && this.color ? '#ffffff' : color, 0.6)
         if (this.fill) {
           style['backgroundColor'] = getColor(this.color, 0.6)
         }

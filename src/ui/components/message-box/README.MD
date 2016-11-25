@@ -34,7 +34,7 @@ MessageBox({
 ```
 此外，MessageBox 还提供了 alert、confirm 和 prompt 三个方法，它们都返回一个 Promise
 
-## 扩展及格式
+## 支持类型
 
 ### alert
 
@@ -59,7 +59,7 @@ MessageBox.confirm(message, title, options);
 ```
 
 ```JavaScript
-MessageBox.confirm('message').then(function(action) {
+MessageBox.confirm('message').then((action) => {
 
 });
 ```
@@ -89,6 +89,19 @@ MessageBox.prompt(null, '数量', {
   console.log(value);
   console.log(action);
   return;
+})
+```
+
+## 捕获取消
+```JavaScript
+MessageBox.confirm('删除所选商品？', '', {
+  confirmButtonText: '删除'
+}).then(action => {
+  // 删除执行
+  console.log(action)
+}).catch(err => {
+  // 取消执行
+  console.log(err)
 })
 ```
 

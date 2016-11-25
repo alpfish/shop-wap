@@ -1,6 +1,6 @@
 <template>
   <cell :class="{'weui-cell_warn': state == 'warn' && !focus}" v-clickoutside="onBlur">
-    <label slot="left" v-if="label" :for="id" class="weui-label">{{label}}</label>
+    <label slot="left" v-show="label" :for="id" class="weui-label" v-text="label"></label>
     <textarea
       class="weui-textarea"
       ref="textarea"

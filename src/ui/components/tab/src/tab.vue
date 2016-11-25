@@ -32,7 +32,7 @@ export default {
     },
     disabledColor: {
       type: String,
-      default: '#ddd',
+      default: 'gray',
     },
     animate: {
       type: Boolean,

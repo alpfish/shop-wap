@@ -1,7 +1,7 @@
 <!-- Loading -->
 <template>
   <div v-show="show" :class="loadingClass">
-    <spinner type="lines" :color="color" :size="size"></spinner>
+    <spinner type="android" :color="color" :size="size"></spinner>
     <span class="loading-text"><slot>{{text}}</slot></span>
   </div>
 </template>

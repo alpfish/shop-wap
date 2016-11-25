@@ -1,15 +1,14 @@
 import Vue from 'vue';
-import { Toast } from '../../components/toast/index.js';
-
+import { MessageBox } from '../../components/message-box/index.js'
 export default {
   install (Vue, options) {
     if (!Vue.$toast) {
-      Vue.$toast = Vue.prototype.$toast = Toast;
+      Vue.$messageBox = Vue.prototype.$messageBox = MessageBox
     }
 
     Vue.mixin({
       created: function () {
-        this.$toast = Vue.$toast
+        this.$messageBox = Vue.$messageBox
       }
     })
   }

@@ -1,6 +1,7 @@
 import { Badge } from './badge/index.js'
 import { Cell, Cells } from './cells/index.js'
 import { Checkbox, Textfield } from './forms/index.js'
+import { Currency } from './currency/index.js'
 import { Icon } from './icon/index.js'
 import { Loading } from './loading/index.js'
 import { Popup } from './popup/index.js'
@@ -11,6 +12,7 @@ import { TouchRipple } from './touch-ripple/index.js'
 import { ViewBox } from './view-box/index.js'
 import { XButton } from './x-button/index.js'
 import { XHeader } from './x-header/index.js'
+import { XImg } from './x-img/index.js'
 import { XNumber } from './x-number/index.js'
 
 
@@ -26,6 +28,7 @@ const ui = {
   Cell,
   Cells,
   Checkbox,
+  Currency,
   Icon,
   Loading,
   MessageBox,
@@ -41,6 +44,7 @@ const ui = {
   ViewBox,
   XButton,
   XHeader,
+  XImg,
   XNumber,
 }
 

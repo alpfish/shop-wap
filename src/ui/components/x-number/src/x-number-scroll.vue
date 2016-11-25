@@ -108,7 +108,7 @@ export default {
 
     // 去抖动触发事件
     onChange: _.debounce (function() {
-      // 使用 input 事件双向绑定
+      // 使用 input 事件双向绑定，调用组件时即可使用 v-model
       this.$emit('input', this.currentValue)
       this.$emit('on-change', this.currentValue)
     }, 500),

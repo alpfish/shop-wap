@@ -1,14 +1,15 @@
 <template>
-  <div v-show="visible">
+  <div v-show="show">
     <div class="weui-mask_transparent"></div>
     <div class="weui-toast" :style="styles">
-        <icon v-if="icon" :name="icon" size="55px" :color="iconColor"></icon>
+        <icon v-if="icon && icon !== 'loading'" :name="icon" size="55px" :color="iconColor"></icon>
+        <spinner class="toast-loading" v-if="icon && icon === 'loading'" type="android" color="white" size="40px"></spinner>
         <p class="weui-toast__content" :class="{'toast-text-no-icon': !icon}">{{ message }}</p>
     </div>
   </div>
 </template>
 
-<style scoped lang="less">
+<style lang="less">
 @import '../../../styles/weui/widget/weui-tips/weui-mask.less';
 @import '../../../styles/weui/widget/weui-tips/weui-toast.less';
 
@@ -18,18 +19,24 @@
     max-width: 80%;
     // transform: translate(-50%, -50%); // UC不支持，使用计算负值 margin-left 居中对齐
 
+    .toast-loading {
+      margin: 28px 0 20px 0;
+    }
+
     .toast-text-no-icon {
-      margin: 15px;
+      margin: 10px;
     }
   }
 </style>
 
 <script type="text/babel">
   import { Icon } from '../../icon/index.js'
+  import { Spinner } from '../../spinner/index.js'
 
   export default {
     components: {
-      Icon
+      Icon,
+      Spinner
     },
     props: {
       message: {
@@ -45,7 +52,7 @@
 
     data() {
       return {
-        visible: false
+        show: false
       };
     },
 

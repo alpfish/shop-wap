@@ -6,21 +6,21 @@ position 属性指定了 popup 的位置。比如，position 为 'bottom' 时，
 将 v-model 绑定到一个本地变量，通过操作这个变量即可控制 popup 的显示与隐藏。
 
 ```html
-<mt-popup
+<popup
   v-model="popupVisible"
   position="bottom">
   ...
-</mt-popup>
+</popup>
 ```
 
 若省略 position 属性，则 popup 会相对于屏幕居中显示（若不想让其居中，可通过 CSS 对其重新定位）。此时建议将动效设置为 popup-fade，这样在显示/隐藏时会有淡入/淡出效果。
 
 ```html
-<mt-popup
+<popup
   v-model="popupVisible"
   popup-transition="popup-fade">
   ...
-</mt-popup>
+</popup>
 ```
 
 # API

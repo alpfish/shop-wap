@@ -3,17 +3,19 @@ import _ from 'lodash'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
-import Cache from './libs/cache'
+
 import App from './App'
 import store from './store'
 import routes from './routes'
 import toast from 'ui/plugins/toast'
 import loading from 'ui/plugins/loading'
+import messageBox from 'ui/plugins/message-box'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
-Vue.use(toast)
-Vue.use(loading)
+Vue.use(toast)  // $toast
+Vue.use(loading) //$loading
+Vue.use(messageBox) //$messageBox
 
 const router = new VueRouter({
   routes
@@ -24,16 +26,12 @@ router.beforeEach((to, from, next) => {
   // 认证路由
   if (to.matched.some(record => record.meta.auth) && !store.state.member.auth) {
     // token 登录失败则手动登录
-    // 这里使用action: tokenLogin 中Api的 Promise
-    // 一个 store.dispatch 在不同模块中可以触发多个 action 函数。
-    // 在这种情况下，只有当所有触发函数完成后，返回的 Promise 才会执行。
-    store.dispatch('tokenLogin')
-    .then(() => next() )
-    .then(() => {
-      // 使用 replace 代替 next(), 解决后退异常
-      router.replace({
-          path: '/login',
-          query: { redirect: to.fullPath }
+    // actions 只能接受一个参数？
+    store.dispatch('tokenLogin', {
+      success: () => next(),
+      error: () => next({
+            path: '/login',
+            query: { redirect: to.fullPath }
       })
     })
   } else {
@@ -47,10 +45,14 @@ router.afterEach(( to, from ) => {
   if (!store.state.member.auth) {
     store.dispatch('tokenLogin')
   }
-  // TODO 加载购物车（未加载或进入购物车页面时）
-  // if (!store.state.cart.loaded || to.name == 'cart') {
-  //   loadCart(store)
-  // }
+  // 加载购物车
+  if (!store.state.cart.loaded || to.path == '/cart') {
+    // 进入购物车加载数据是为了最大限度同步库存数
+    // 使用延时防止与 token 登录或其他异步并发产生异常(如与tokenLogin放一起处理会比较麻烦)
+    setTimeout(() => {
+      store.dispatch('loadCart')
+    }, 500)
+  }
 })
 
 new Vue({

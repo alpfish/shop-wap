@@ -27,16 +27,19 @@ let removeDom = event => {
 };
 
 ToastConstructor.prototype.close = function() {
-  this.visible = false;
+  this.show = false;
   this.$el.addEventListener('transitionend', removeDom);
   this.closed = true;
   returnAnInstance(this);
 };
 
 let Toast = (options = {}) => {
+  // 默认自动隐藏，autoHide 为 false 时，可用 instance.show = false 隐藏
+  let autoHide = options.autoHide === false ? false : true
   let duration = options.duration || 1500;
 
   let instance = getAnInstance();
+
   instance.closed = false;
   clearTimeout(instance.timer);
   instance.message = typeof options === 'string' ? options : options.message;
@@ -44,13 +47,17 @@ let Toast = (options = {}) => {
   instance.iconColor = options.iconColor || '';
 
   document.body.appendChild(instance.$el);
+
   Vue.nextTick(function() {
-    instance.visible = true;
+    instance.show = true;
     instance.$el.removeEventListener('transitionend', removeDom);
-    instance.timer = setTimeout(function() {
-      if (instance.closed) return;
-      instance.close();
-    }, duration);
+    // 自动隐藏
+    if (autoHide) {
+      instance.timer = setTimeout(function() {
+        if (instance.closed) return;
+        instance.close();
+      }, duration);
+    }
   });
   return instance;
 };

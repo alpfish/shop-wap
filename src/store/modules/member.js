@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import Api from 'src/libs/api'
 import Cache from 'src/libs/cache'
 import {
@@ -25,14 +26,14 @@ const member = {
         if (value.isdefault) { // 更新默认地址只有一个
           _.forEach(state.addresses, (value, key) => {
             value.isdefault = false
-            state.addresses.$set(key, value)
+            Vue.set(state.addresses, key, value)
           })
         }
         let index = _.findIndex(state.addresses, {
           'id': value.id
         })
         if (index >= 0) {
-          state.addresses.$set(index, value) // 更新
+          Vue.set(state.addresses, index, value) // 更新
         } else {
           state.addresses.push(value) // 添加
         }
@@ -46,25 +47,42 @@ const member = {
   // END mutations
 
   actions: {
-    tokenLogin({commit}) {
-      if (!Cache.get(TOKEN_KEY)) return
+    tokenLogin({commit}, payload = {}) {
+      if (!Cache.get(TOKEN_KEY))  {
+        payload.error && payload.error()
+        return
+      }
       Api.request (
         {url: 'member/login/token'},
         (res) => {
           commit('SET_AUTH', res.data.member)
           console.log('TOKEN LOGIN');
+          payload.success && payload.success()
         },
         (res) => {
           commit('CANCEL_AUTH')
           Cache.delete(TOKEN_KEY)
+          payload.error && payload.error()
         }
       )
     },
+
     logout({commit}) {
       commit('CANCEL_AUTH')
       Cache.delete(TOKEN_KEY)
-      // TODO 清空购物车
-    }
+      commit('CLEAR_CART')
+      commit('SET_CART_LOADED', false)
+    },
+
+    // 获取地址列表
+    // 地址管理、订单结算等均会使用，所以封装在 action 中
+    fetchAddresses({commit}) {
+      Api.request (
+        {url: 'member/address/list'},
+        (res) => commit('SET_ADDRESSES', res.data.addresses),
+        (res) => {}
+      )
+    },
 
   }
 }

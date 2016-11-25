@@ -42,13 +42,13 @@ class Api {
    * @return function error   失败回调
    */
   request(options = {}, success, error) {
+
     let params = options.params === Object(options.params) ? options.params : {}
 
     // 返回认证 token
     // 使用 Authorization 头传送 token 会产生两次请求，故采用参数传送
-    if (Cache.get(TOKEN_KEY)) {
-      Object.assign(params, { 'token': Cache.get(TOKEN_KEY) })
-    }
+    let token = Cache.get(TOKEN_KEY)
+    if (token) Object.assign(params, { 'token': token })
 
     Vue.http({
         // 服务器地址
@@ -66,9 +66,9 @@ class Api {
       .then((response) => {
         success(response)
       }, (response) => { // 错误回调
-        error(response)
+        error && error(response)
         if (response.status >= 500) {
-          console.log(`==> 服务器错误! status: ${response.status}  message: ${response.statusText}`);
+          console.log('服务器异常');
         }
       })
   }
