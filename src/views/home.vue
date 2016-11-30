@@ -9,17 +9,18 @@
       <x-button mini color="blue" @click.native="toastHandle()">Handle<x-button>
     </div>
 
+
+
     <tab>
       <tab-item :selected="demo === item" v-for="item in list" @click="demo = item">{{item}}</tab-item>
     </tab>
-
 
   <p v-for="i in 20">&nbsp;</p>
   </view-box>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 import {
   Cell,
@@ -66,25 +67,14 @@ export default {
     }
   },
 
-  // computed: mapState({
-  //   count: state => state.count,
-  //   test: state => state.test,
-  //   test1() {
-  //     return 'test'
-  //   },
-  // }),
+
 
   computed: {
-    // ...mapState({
-    //   count: state => state.count,
-    //   test: state => state.test,
-    // }),
     ...mapState([
       'member',
     ]),
-    test() {
-      return 'test'
-    },
+    ...mapGetters([
+    ])
   },
 
   methods: {
@@ -98,7 +88,11 @@ export default {
         toast.show = false
       }, 4500);
     }
-  }
+  },
+
+  mounted() {
+
+  },
 
 }
 
@@ -106,6 +100,6 @@ export default {
 
 <style scoped lang="less">
 @import "../ui/styles/_vars.less";
-
+@import "../ui/styles/_mixins.less";
 
 </style>

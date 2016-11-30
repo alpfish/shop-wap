@@ -4,6 +4,7 @@
 // 个人整理，勿删！ alpfish
 
 @import './mixin/ellipsis.less';
+@import './mixin/setArrow.less';
 
 // 兼容
 .transition(@d) {
@@ -52,10 +53,11 @@
   }
 }
 
-// 1px 解决方案 {{ 已完成 }}
-// 参考 weui(.weui-btn) 与 vue-carbon(_mixins.less中的.hairline)
-// 父容器需是相对定位： position: relative;
-// 以 onePxBorder 为基础， 可在上面移除各边，或指定保留一边
+// 1px 边框
+// 不足之处：设置后点击内部元素无效，所以只适用于4条边框的情况下使用
+// 一条或两条请使用 .hairline()
+// 参考 weui(.weui-btn)
+// 父容器：position: relative;
 // 可指定@color 和 @radius
 // 可在外部通过 :before 伪类修改特定样式， 如：
 // .box {
@@ -63,11 +65,11 @@
 //    height: 5rem;
 //    width: 5rem;
 //   .onePxBorder(@semi, 10px);
-//   .onePxBorderRemove(right);
 //   &:before {
 //     border-style: dashed;
 //     border-radius: 10px 0 0 10px;
 //     border-top-color: @red;
+//     border-bottom-width: 0;
 //   }
 // }
 .onePxBorder(@color:#C7C7C7, @radius:0) {
@@ -85,49 +87,77 @@
     border-radius: @radius;
   }
 }
-.onePxBorderRemove(@position) when (@position = top) {
+
+// 发线 借鉴于 weui
+// 可同时设置上下或左右两条发线
+// 不影响点击
+.hairline(@position, @color:#C7C7C7) when (@position = top) {
   &:before {
-    border-top-width: 0;
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid @color;
+    color: @color;
+    .transform-origin(0 0);
+    .transform(scaleY(0.5));
+    html.pixel-ratio-3 & {
+      .transform(scaleY(0.33));
+    }
   }
 }
-.onePxBorderRemove(@position) when (@position = bottom) {
-  &:before {
-    border-bottom-width: 0;
+.hairline(@position, @color:#C7C7C7) when (@position = bottom) {
+  &:after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid @color;
+    color: @color;
+    .transform-origin(0 0);
+    .transform(scaleY(0.5));
+    html.pixel-ratio-3 & {
+      .transform(scaleY(0.33));
+    }
   }
 }
-.onePxBorderRemove(@position) when (@position = left) {
+.hairline(@position, @color:#C7C7C7) when (@position = left) {
   &:before {
-    border-left-width: 0;
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    bottom: 0;
+    border-left: 1px solid @color;
+    color: @color;
+    .transform-origin(0 0);
+    .transform(scaleX(0.5));
+    html.pixel-ratio-3 & {
+      .transform(scaleX(0.33));
+    }
   }
 }
-.onePxBorderRemove(@position) when (@position = right) {
-  &:before {
-    border-right-width: 0;
+.hairline(@position, @color:#C7C7C7) when (@position = right) {
+  &:after {
+    content: " ";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1px;
+    bottom: 0;
+    border-right: 1px solid @color;
+    color: @color;
+    .transform-origin(0 0);
+    .transform(scaleX(0.5));
+    html.pixel-ratio-3 & {
+      .transform(scaleX(0.33));
+    }
   }
-}
-.onePxBorderOnly(@position, @color:#C7C7C7, @radius:0) when (@position = top) {
-  .onePxBorder(@color, @radius);
-  .onePxBorderRemove(bottom);
-  .onePxBorderRemove(left);
-  .onePxBorderRemove(right);
-}
-.onePxBorderOnly(@position, @color:#C7C7C7, @radius:0) when (@position = bottom) {
-  .onePxBorder(@color, @radius);
-  .onePxBorderRemove(top);
-  .onePxBorderRemove(left);
-  .onePxBorderRemove(right);
-}
-.onePxBorderOnly(@position, @color:#C7C7C7, @radius:0) when (@position = left) {
-  .onePxBorder(@color, @radius);
-  .onePxBorderRemove(top);
-  .onePxBorderRemove(bottom);
-  .onePxBorderRemove(right);
-}
-.onePxBorderOnly(@position, @color:#C7C7C7, @radius:0) when (@position = right) {
-  .onePxBorder(@color, @radius);
-  .onePxBorderRemove(top);
-  .onePxBorderRemove(bottom);
-  .onePxBorderRemove(left);
 }
 
 // Encoded SVG Background

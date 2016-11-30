@@ -1,0 +1,81 @@
+@import "../../../styles/weui/base/fn.less";
+@import "../../../styles/_fn.less";
+@import "../../../styles/_mixins.less";
+
+.list {
+    position: relative;
+    background-color: #FFF;
+    font-size: 14px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+.list-line {
+  .hairline(top, @border-color);
+  .hairline(bottom, @border-color);
+}
+.list-title {
+    margin-top: 15px; // 15px - 行高
+    margin-bottom: 8px; // 8px - 行高
+    padding-left: 15px;
+    padding-right: 15px;
+    color: @black;
+    font-size: 14px;//@weuiCellTipsFontSize;
+    & + .list {
+        margin-top: 0;
+    }
+}
+
+.list-item {
+  display: block;
+  background-color: #fff;
+  // 子元素分隔线, 注意如果<list-item>外部嵌套<list-label>等组件时需要包含 list-item-wrap 类，否则分隔线不显示
+  &:not(:last-child) {
+    .list-item-line {
+      // border-bottom: 1px solid @border-color;//@weuiCellBorderColor;
+      position: relative;
+      .hairline(bottom, @border-color);
+    }
+  }
+
+  .list-item-top, .list-item-bottom {
+      padding: 0 0 0 15px;
+  }
+
+  // 列表子元素
+  .list-item-middle {
+      display: flex;
+      align-items: center;
+      color: @content-color;
+      padding: 0 15px;
+      min-height: 45px;
+      .list-item-left,
+      .list-item-right {
+          flex: none; // 内容确定宽度, 自动水平居左/居右对齐
+          max-width: 50%;
+      }
+      .list-item-body {
+          flex: auto; // 自动伸缩
+      }
+      .arrow {
+          &:after {
+              content: " ";
+              top: -1px;
+              margin-left: 0.3em;
+              .setArrow(right, 8px, #C8C8CD, 1px);
+          }
+      }
+      .title, .subtitle {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          line-height: 45px;//@weuiCellLineHeight;
+      }
+      .title {
+          font-size: 16px; //@weuiCellFontSize;
+          color: @title-color;
+      }
+      .subtitle {
+          font-size: 14px;
+          color: @subtitle-color;
+      }
+  }
+}

@@ -84,11 +84,11 @@ export default {
 
 .checkbox-icon {
   position: relative;
-  width: 22px;
-  min-width: 22px;
-  height: 22px;
-  min-height: 22px;
-  border-radius: 11px;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  min-height: 20px;
+  border-radius: 10px;
   border-width: 1px;
   border-style: solid;
   border-color: @gray;
@@ -97,10 +97,10 @@ export default {
   &:after {
     left: 50%;
     top: 50%;
-    margin-left: -3px;
+    margin-left: -2px;
     margin-top: -7px;
-    width: 6px;
-    height: 11px;
+    width: 5px;
+    height: 10px;
     transform: rotate(45deg);
     opacity: 0;
     transition: opacity .1s ease;
@@ -117,7 +117,7 @@ export default {
 
 .checkbox-label{
   // color: @black;
-  font-size: 16*2/75rem;
+  font-size: 14px;
   margin-left: 10px;
   margin-right: auto;
 }

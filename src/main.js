@@ -40,7 +40,9 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach(( to, from ) => {
-  Vue.$loading.hide()
+  setTimeout(() => {
+    Vue.$loading.hide()
+  }, 300);
   // (首次)进入页面后token自动登录
   if (!store.state.member.auth) {
     store.dispatch('tokenLogin')
@@ -53,6 +55,10 @@ router.afterEach(( to, from ) => {
       store.dispatch('loadCart')
     }, 500)
   }
+  // 一次性获取所有促销信息
+  setTimeout(() => {
+    store.dispatch('fetchPromotions')
+  }, 2000);
 })
 
 new Vue({

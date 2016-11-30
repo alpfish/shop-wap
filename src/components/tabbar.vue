@@ -26,7 +26,7 @@ export default {
       return !this.inputing && (path == '/' || path == '/category' || path == '/cart' || path == '/member')
     },
     cartCount () {
-      return _.toString(_.sumBy(this.added, (item) => item.buy_nums))
+      return this.isCart ? '' : _.toString(this.added.length)
     },
     isHome () {
       return this.$route.path == '/'

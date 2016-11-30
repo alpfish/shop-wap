@@ -15,21 +15,15 @@ const parentMixin = {
       }
     }
   },
-  // props: {
-  //   index: {
-  //     type: Number,
-  //     default: -1
-  //   }
-  // },
   watch: {
     index (val, oldVal) {
-      oldVal > 0 && this.$children[oldVal] && (this.$children[oldVal].currentSelected = false)
-      val > 0 && (this.$children[val].currentSelected = true)
+      oldVal > -1 && this.$children[oldVal] && (this.$children[oldVal].currentSelected = false)
+      val > -1 && (this.$children[val].currentSelected = true)
     }
   },
   data () {
     return {
-      index: 0,
+      index: -1,
       number: this.$children.length
     }
   }
@@ -41,7 +35,7 @@ const childMixin = {
   },
   data () {
     return {
-      index: 0,
+      index: -1,
       currentSelected: this.selected
     }
   },
@@ -69,9 +63,6 @@ const childMixin = {
       if (val) {
         // 进入
         this.$parent.index = this.index
-      } else {
-        // 退出, 不要修改 index ，否则定位不准
-        // this.$parent.index = 0 // 原来代码
       }
     }
   },

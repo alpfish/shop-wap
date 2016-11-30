@@ -1,6 +1,6 @@
 <!-- XHeader -->
 <template>
-<div class="header-bar" :class="{ 'fixed': fixed }" :style="styles">
+<div class="header-bar" :class="{ 'fixed': fixed, 'hairline': bgAlpha === 1 }" :style="styles">
   <div class="left">
     <icon name="back" @click.native="onBack" v-if="back" :size="18" :color="textColor"></icon>
     <icon name="close" @click.native="$emit('on-close')" v-if="close" :size="18" :color="textColor"></icon>
@@ -52,10 +52,6 @@ export default {
       let styles = {}
       styles['color'] = this.textColor
       styles['background-color'] = getColor(this.bgColor, this.bgAlpha)
-      if (this.bgColor) {
-        styles['border'] = 'none'
-      }
-
       return styles
     },
 
@@ -73,23 +69,23 @@ export default {
 @import "../../../styles/_fn.less";
 
 .header-bar {
+  position: relative;
   display: flex;
   align-self: flex-start;
   justify-content: flex-start;
   align-items: center;
   font-size: 15px;
-  // color: @header-text-color;
-  // background-color: @bg-header; //#FAFAFA
   height: @height-header;
   line-height: @height-header;
   z-index: @zindex-header;
   width: 100%;
-  border-bottom: 1px solid @border-color;
-  // box-shadow: 0 1px 5*2/75rem lighten(@gray, 20%);
   .flex-shrink(0);
   &.fixed {
     position: fixed;
     top: 0;
+  }
+  &.hairline {
+    .hairline(bottom, @border-color);
   }
   > .left,
   > .right {

@@ -3,8 +3,8 @@
 <view-box>
   <x-header back title="地址管理"></x-header>
 
-  <list>
-    <list-item class="address-item" @click.native="select(address.id)" v-for="address in addresses" track-by="$index" :class="{'selected': selectedId == address.id}" height="80px" line-space="0">
+  <cells>
+    <cell class="address-item" @click.native="select(address.id)" v-for="address in addresses" track-by="$index" :class="{'selected': selectedId == address.id}">
       <div slot="left" class="left">
         <div class="name">{{ address.name }}</div>
         <span class="default" v-if="address.isdefault">默认</span>
@@ -14,8 +14,8 @@
         <p class="detail">{{ address.district }}{{ address.address }}</p>
       </div>
       <icon slot="right" class="right" @click.native="onEdit(address)" name="bianji" color="semi" :size="18"></icon>
-    </list-item>
-  </list>
+    </cell>
+  </cells>
 
   <div slot="bottom" style="margin: 15px">
     <x-button @click.native="clickAdd" v-show="!editing" color="brand" fill><icon name="add" :size="20"></icon> 添加地址<x-button>
@@ -30,8 +30,8 @@ import Api from 'src/libs/api'
 import Editor from 'src/components/member/address-editor'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import {
-  List,
-  ListItem,
+  Cell,
+  Cells,
   Icon,
   ViewBox,
   XHeader,
@@ -40,8 +40,8 @@ import {
 
 export default {
   components: {
-    List,
-    ListItem,
+    Cell,
+    Cells,
     Editor,
     Icon,
     ViewBox,
@@ -137,12 +137,13 @@ export default {
 @import '../../ui/styles/_vars.less';
 
 .address-item {
+  min-height: 80px;
   .left {
     text-align: left;
+    // vertical-align: middle;
     width: 70px;
     line-height: 14px;
     .name {
-      width: 70px;
       color: @black;
       font-size: 14px;
     }

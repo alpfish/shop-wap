@@ -10,6 +10,17 @@ const cart = {
     added: [],
     // 加载状态
     loaded: false,
+    // 已选购物车商品
+    checked: [],
+    // 全场订单促销
+    promotions: {
+      // 促销列表，加载购物车时设置
+      lists: [],
+      // 所选满减/打折促销ID
+      selectedSalePromId: null,
+      // 所选赠品促销ID
+      selectedGiftPromId: null,
+    }
   },
 
   mutations: {
@@ -21,7 +32,7 @@ const cart = {
         let buy = buys[i]
         // 更新
         if (_.some(state.added, buy)) {
-          state.added.$set(_.findIndex(state.added, (v) => v.sku_id == buy.sku_id), buy)
+          Vue.set(state.added, _.findIndex(state.added, (v) => v.sku_id == buy.sku_id), buy)
           // 添加
         } else {
           state.added.push(buy)
@@ -42,12 +53,28 @@ const cart = {
       }
     },
 
-    CLEAR_CART (state) {
+    CLEAR_CART(state) {
       state.added = []
     },
 
-    SET_CART_LOADED (state, status) {
+    SET_CART_LOADED(state, status) {
       state.loaded = !!status
+    },
+
+    SET_CART_CHECKED(state, checked) {
+      state.checked = checked
+    },
+
+    SET_PROMOTIONS_LISTS(state, data) {
+      state.promotions.lists = data
+    },
+
+    SELECT_SALE_PROM_ID(state, id) {
+      state.promotions.selectedSalePromId = id
+    },
+
+    SELECT_GIFT_PROM_ID(state, id) {
+      state.promotions.selectedGiftPromId = id
     },
   },
   //END mutations
@@ -82,10 +109,12 @@ const cart = {
           // 清空是为了防止 ADD_TO_CART Mutation 重复添加历史条目
           commit('CLEAR_CART')
           commit('ADD_TO_CART', res.data.lists)
+          commit('SET_PROMOTIONS_LISTS', res.data.promotions)
         },
         (res) => {}
       )
     },
+    // END loadCart()
 
   },
   //END actions

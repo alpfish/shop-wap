@@ -6,20 +6,16 @@
 
   <order-prom></order-prom>
 
-  <list>
-    <list-item class="cart-item" v-for="item of addedSort" :key="item.sku_id" padding="10px 15px" line-space="0 0 0 50px">
-      <div slot="top" class="top" v-if="itemPromInfo(item)">
-        <tag>{{goodsPromTag(item)}}</tag>
-        <span class="goods-prom-text">{{itemPromInfo(item)}}</span>
-      </div>
+  <cells>
+    <cell v-for="item of addedSort" :key="item.sku_id" class="cart-item">
       <div slot="left" class="item-left">
         <checkbox class="checkitem" v-model="checked" :option="item.sku_id" :disabled="!canBuy(item) && !editing"></checkbox>
-        <x-img :tag="CntBuyTag(item)" tag-color="gray" :src="IMG_ROOT + item.sku_thumb" :width="(80/32)+'rem'" :height="(80/32)+'rem'" border :radius="4"></x-img>
+        <x-img :tag="tag(item)" :tag-color="tagColor(item)" :src="IMG_ROOT + item.sku_thumb" :width="(190/75)+'rem'" :height="(190/75)+'rem'" border :radius="4"></x-img>
       </div>
       <div class="item-body">
-        <div class="item-name">{{item.sku_name}}</div>
+        <span class="item-name">{{item.sku_name}}</span>
         <span class="item-spec" :class="{'item-spec-border': editing && spec(item)}" v-text="spec(item)"></span><br>
-        <!-- <span class="item-prom" :class="{'item-prom-border':itemPromInfo(item)}" v-text="itemPromInfo(item)"></span><br> -->
+        <span class="item-prom" :class="{'item-prom-border':itemPromInfo(item)}" v-text="itemPromInfo(item)"></span><br>
         <div class="price-and-nums">
           <currency :value="item.shop_price" color="black" size="14px" float-size="14px"></currency>
           <div class="nums">
@@ -28,8 +24,8 @@
           </div>
         </div>
       </div>
-    </list-item>
-  </list>
+    </cell>
+  </cells>
 
   <div class="empty-cart" v-if="emptyCart" @click="$router.push({path: '/'})">
     <icon name="cart" size="100px" color="#E7E7E7"></icon>
@@ -77,9 +73,6 @@ import {
   Checkbox,
   Currency,
   Icon,
-  List,
-  ListItem,
-  Tag,
   ViewBox,
   XImg,
   XHeader,
@@ -93,9 +86,6 @@ export default {
     Checkbox,
     Currency,
     Icon,
-    List,
-    ListItem,
-    Tag,
     ViewBox,
     XImg,
     XHeader,
@@ -253,7 +243,18 @@ export default {
     canBuy(item) {
       return item.is_onsale && item.sku_nums > 0 && item.buy_nums <= item.sku_nums
     },
-
+    tag(item) {
+      if (!item.is_onsale) return '下架'
+      if (item.sku_nums < 1) return '售罄'
+      if (item.sku_nums < item.buy_nums) return '超量'
+      if (item.prom_id) return item.prom_name
+    },
+    tagColor(item) {
+      if (!item.is_onsale) return 'gray'
+      if (item.sku_nums < 1) return 'gray'
+      if (item.sku_nums < item.buy_nums) return 'gray'
+      if (item.prom_id) return 'red'
+    },
     spec(item) {
       let _spec = ''
       if (!_.isEmpty(item.sku_spec)) {
@@ -265,24 +266,14 @@ export default {
       }
       return _spec
     },
-    goodsPromTag(item) {
-      if (this.canBuy(item)) {
-        if (item.prom_type == 'time') return '限时'
-        if (item.gift) return '满赠'
-        if (item.discounted) return '满减'
-      }
-    },
     itemPromInfo(item) {
+      let _info = ''
       if (this.canBuy(item)) {
-        if (item.gift) return `已享『${item.prom_name}』活动，立送：${item.gift.name}`
-        if (parseFloat(item.discounted) > 0 ) return `已享『${item.prom_name}』活动，立减${item.discounted}元`
+        if (item.gift) _info += '送赠品。'
+        if (parseFloat(item.discounted) > 0 ) _info += `立减${item.discounted}元`
       }
-    },
-    CntBuyTag(item) {
-      if (!item.is_onsale) return '下架'
-      if (item.sku_nums < 1) return '售罄'
-      if (item.sku_nums < item.buy_nums) return '超量'
-    },
+      return _info
+    }
   },
   // END methods
 
@@ -334,72 +325,43 @@ export default {
 .cart-item {
   // 顶部对齐
   align-items: flex-start;
-  .top {
-    display: inline-block;
-    width: 100%;
-    height: 30px;
-    margin-top: 10px;
-    padding-left: 4px;
-
-    line-height: 30px;
-    background: #F8F8F8;
-    .ellipsis;
-    .goods-prom-text {
-      margin-left: 4px;
-      color: @gray;
-      font-size: 12px;
-    }
-  }
-  // &:not(:first-child) {
-  //   .top {
-  //     margin-top: 0px;
-  //   }
-  // }
 }
 
 .item-left {
     display: flex;
     margin-right: 15px;
     .checkitem {
-        min-height: 80/32rem;
-        width: 35px;
+        height: 190/75rem;
+        width: 1.1rem;
         justify-content: flex-start;
     }
 }
 
 .item-body {
     position: relative;
-    min-height: 80/32rem;
+    height: 190/75rem;
     .item-name {
         margin-top: 2px;
         margin-bottom: 0px;
         color: @black;
         font-size: 14px;
         line-height: 16px;
+        height: 16px;
         .ellipsisLn(1);
     }
     .item-spec {
         display: inline-block;
         color: @gray;
         font-size: 12px;
-        line-height: 16px;
+        line-height: 12px;
+        height: 16px;
         overflow: hidden;
         vertical-align: middle;
         &.item-spec-border {
-            position: relative;
             display: inline-block;
-            width: 100%;
-            padding: 0px 4px;
-            // border: 1px dotted #DDD;
-            border-radius: 3px;
-            background-color: #F8F8F8;
-            &:after {
-                position: absolute;
-                content: " ";
-                right: 0px;
-                margin-right: 0.3em;
-                .setArrow(down, 6px, #666, 1px);
-            }
+            padding: 1px 6px;
+            border: 1px dotted #DDD;
+            border-radius: 8px;
         }
     }
     .item-prom {

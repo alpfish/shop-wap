@@ -1,6 +1,6 @@
 <template>
   <view-box>
-    <x-header title="会员中心" back more></x-header>
+    <x-header back>会员中心</x-header>
     <cells>
       <cell title="地址管理" :link="{path: '/address'}"></cell>
     </cells>

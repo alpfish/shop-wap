@@ -86,7 +86,7 @@ button, input {
       padding-right: 15px;
       width: 100%;
       color: @semi;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 45px;
       text-align: center;
       text-decoration: none;

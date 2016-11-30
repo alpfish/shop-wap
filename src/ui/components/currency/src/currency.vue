@@ -15,7 +15,7 @@ export default {
     value: [String, Number],
     currency: {
       type: String,
-      default: '￥'
+      default: '¥' //一横￥ 两横 ¥
     },
     decimals: {
       type: Number,

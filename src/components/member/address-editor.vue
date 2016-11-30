@@ -15,7 +15,7 @@
     <!-- POPUP 选择区域 -->
     <popup class="district-select" v-model="selecting" position="bottom">
       <view-box style="background-color: #fff;">
-        <tab slot="header" active-color="black" default-color="black">
+        <tab slot="header" active-color="semi" default-color="semi">
           <tab-item class="select-tab-item" v-for="i in 4"
             :selected="currLevel == i"
             :disabled="!district[i]"

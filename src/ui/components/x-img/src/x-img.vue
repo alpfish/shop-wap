@@ -18,11 +18,11 @@ export default {
     bgsrc: String,
     width: {
       type: [String, Number],
-      default: `${100/75}rem`,
+      default: `${80/75}rem`,
     },
     height: {
       type: [String, Number],
-      default: `${100/75}rem`,
+      default: `${80/75}rem`,
     },
     tag: String,
     tagColor: {
@@ -79,7 +79,7 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    line-height: 20px;
+    line-height: 22px;
     font-size: 12px;
     color: @white;
     text-align: center;
