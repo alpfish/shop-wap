@@ -22,14 +22,15 @@ const promotion = {
   },
 
   actions: {
+    // 以下数据需要在后台处理好后返回
+    // 1. 赠品
+    // 2. JSON 格式
     fetchPromotions({commit, state}) {
       if (state.fetched) return
       Api.request (
         {url: 'promotion/all'},
         (res) => {
-          console.log(res.data);
-          let data = res.data
-          commit('SET_PROMOTIONS', data)
+          commit('SET_PROMOTIONS', res.data)
           commit('SET_PROMOTION_FETCHED', true)
         },
         (res) => {

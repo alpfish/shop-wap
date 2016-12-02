@@ -3,13 +3,17 @@ import _ from 'lodash'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
-
 import App from './App'
 import store from './store'
 import routes from './routes'
 import toast from 'ui/plugins/toast'
 import loading from 'ui/plugins/loading'
 import messageBox from 'ui/plugins/message-box'
+
+import Cache from 'src/libs/cache'
+import {
+  TOKEN_KEY,
+} from 'src/config'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
@@ -47,13 +51,10 @@ router.afterEach(( to, from ) => {
   if (!store.state.member.auth) {
     store.dispatch('tokenLogin')
   }
-  // 加载购物车
-  if (!store.state.cart.loaded || to.path == '/cart') {
-    // 进入购物车加载数据是为了最大限度同步库存数
-    // 使用延时防止与 token 登录或其他异步并发产生异常(如与tokenLogin放一起处理会比较麻烦)
-    setTimeout(() => {
-      store.dispatch('loadCart')
-    }, 500)
+  // 无 token 加载本地购物车( token 登录成功自动加载用户购物车)
+  // 进入购物车加载同步库存数
+  if ((!store.state.cart.loaded && !Cache.get(TOKEN_KEY)) || to.path == '/cart') {
+    store.dispatch('loadCart')
   }
   // 一次性获取所有促销信息
   setTimeout(() => {

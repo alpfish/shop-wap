@@ -1,7 +1,7 @@
 <template>
-  <span class="tag" :style="styles">
+  <div class="tag" :style="styles">
     <slot></slot>
-  </span>
+  </div>
 </template>
 
 <script>

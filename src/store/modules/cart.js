@@ -57,12 +57,12 @@ const cart = {
       state.added = []
     },
 
-    SET_CART_LOADED(state, status) {
-      state.loaded = !!status
-    },
-
     SET_CART_CHECKED(state, checked) {
       state.checked = checked
+    },
+
+    SET_CART_LOADED(state, status) {
+      state.loaded = !!status
     },
 
     SET_PROMOTIONS_LISTS(state, data) {

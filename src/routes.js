@@ -29,7 +29,7 @@ const routes = [{
   component: resolve => require(['./views/member/address-add.vue'], resolve)
 },{
   path: '/cart',
-  component: resolve => require(['./views/cart/index.vue'], resolve)
+  component: resolve => require(['./views/cart/index.js'], resolve)
 },{
   path: '*',
   component: NotFound // '*'匹配404路由放在最后

@@ -47,7 +47,7 @@ const member = {
   // END mutations
 
   actions: {
-    tokenLogin({commit}, payload = {}) {
+    tokenLogin({commit, dispatch}, payload = {}) {
       if (!Cache.get(TOKEN_KEY))  {
         payload.error && payload.error()
         return
@@ -57,6 +57,9 @@ const member = {
         (res) => {
           commit('SET_AUTH', res.data.member)
           console.log('TOKEN LOGIN');
+          // token 登录成功直接加载用户购物车，无 token 在路由钩子中判断加载本地购物车
+          // 这里不同步购物车，放在手动登录成功后
+          dispatch('loadCart')
           payload.success && payload.success()
         },
         (res) => {
